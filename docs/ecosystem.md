@@ -68,6 +68,11 @@ flowchart LR
   BL -.->|push licences, sync phones, status| MA
   BL -.->|push licences, sync phones, status| MB
   BL -.->|push licences, sync phones, status| CS
+
+  class CS,CSDB,MA,DA,MB,DB2,BL,BLDB action
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
 ```
 
 ## sd-cs {#sd-cs}

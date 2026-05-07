@@ -102,14 +102,26 @@ that only works when the path is absolute.
 
 ## Ingestion pipeline (high level)
 
+<!-- TODO: missing reject/error branch — see workflow-design.md principle #9 -->
 ```mermaid
 flowchart LR
-  REPO[sd-docs git repo] --> BUILD[Docusaurus build]
-  BUILD --> RAW[Markdown + frontmatter]
-  RAW --> CHUNK[Section chunker]
-  CHUNK --> EMB[Embedding model]
-  EMB --> VDB[Vector DB]
-  VDB --> CHAT[Team chat / IDE assistant]
+  REPO(["sd-docs git repo"]) --> BUILD["Docusaurus build"]
+  BUILD --> RAW["Markdown + frontmatter"]
+  RAW --> CHUNK["Section chunker"]
+  CHUNK --> EMB[("Embedding model")]
+  EMB --> VDB[("Vector DB")]
+  VDB --> CHAT(["Team chat / IDE assistant"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class REPO,BUILD,RAW,CHUNK action
+  class EMB,VDB external
+  class CHAT success
 ```
 
 Reindex cadence: **on every merge to `main`** (CI hook).

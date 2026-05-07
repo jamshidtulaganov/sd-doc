@@ -95,8 +95,8 @@ sd-billing/
 ```mermaid
 flowchart LR
   subgraph Inbound["Money & data in"]
-    PG["Payment gateways<br/>Click · Payme · Paynet · MBANK · P2P"]
-    EXT["1C / external imports"]
+    PG[("Payment gateways<br/>Click · Payme · Paynet · MBANK · P2P")]
+    EXT[("1C / external imports")]
     PORTAL["Partner portal · admin UI"]
   end
   subgraph Bill["sd-billing (Yii 1.x)"]
@@ -108,12 +108,12 @@ flowchart LR
     NOT["notification + sms"]
   end
   subgraph Out["Outbound"]
-    TG["Telegram (bot proxy 10.0.0.2:3000)"]
-    SMS["SMS gateway (Eskiz / Mobizon)"]
+    TG[("Telegram (bot proxy 10.0.0.2:3000)")]
+    SMS[("SMS gateway (Eskiz / Mobizon)")]
     LIC["License files → sd-main"]
     STAT["Status pings → sd-cs"]
   end
-  subgraph DB[("MySQL 8 (d0_*)")]
+  subgraph DB["MySQL 8 (d0_*)"]
     direction TB
   end
   PG --> API
@@ -132,6 +132,12 @@ flowchart LR
   CR --> LIC
   API --> LIC
   CR --> STAT
+
+  class PG,EXT,TG,SMS external
+  class PORTAL,API,OP,DASH,PART,CR,NOT,LIC,STAT action
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
 ```
 
 ## See also

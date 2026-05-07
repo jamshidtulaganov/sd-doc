@@ -190,16 +190,27 @@ Different dealers can run **different versions of sd-main**. Tactics:
 
 ## Onboarding a new dealer
 
+<!-- TODO: missing reject/error branch — see workflow-design.md principle #9 -->
 ```mermaid
 flowchart LR
-  A["New dealer signs contract"] --> B["sd-billing creates Diler row"]
+  A(["New dealer signs contract"]) --> B["sd-billing creates Diler row"]
   B --> C["sd-billing pushes licence file"]
   C --> D["Dealer's sd-main is provisioned"]
   D --> E["Dealer DB credentials registered in HQ"]
   E --> F["DealerRegistry row inserted in cs_*"]
   F --> G["Test report against new dealer"]
   G --> H["Capability flags filled in registry"]
-  H --> I["Dealer included in default HQ reports"]
+  H --> I(["Dealer included in default HQ reports"])
+
+  class A action
+  class B,C,D,E,F,G,H action
+  class I success
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
 ```
 
 Pre-prod checklist:

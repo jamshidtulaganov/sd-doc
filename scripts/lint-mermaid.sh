@@ -17,11 +17,16 @@ trap 'rm -rf "$TMP"' EXIT
 if [ $# -gt 0 ]; then
   files=("$@")
 else
-  mapfile -t files < <(grep -rl '```mermaid' "$ROOT/docs")
+  files=()
+  while IFS= read -r line; do
+    files+=("$line")
+  done < <(grep -rl '```mermaid' "$ROOT/docs")
 fi
 
 failed=0
+count=0
 for f in "${files[@]}"; do
+  count=$((count + 1))
   # mmdc writes per-block .svg files when given a markdown input;
   # we don't care about the output, only the exit status / stderr.
   if ! npx -y -p @mermaid-js/mermaid-cli mmdc \
@@ -37,4 +42,4 @@ if [ "$failed" -ne 0 ]; then
   echo "Mermaid lint failed. See errors above." >&2
   exit 1
 fi
-echo "OK    $(printf '%s\n' "${files[@]}" | wc -l | tr -d ' ') file(s) linted clean."
+echo "OK    $count file(s) linted clean."

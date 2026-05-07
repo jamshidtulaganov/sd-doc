@@ -228,6 +228,172 @@ list and filter hash.
 7. Once shipped, instrument the **metrics** and review monthly in the
    workflow-health channel (`#sd-workflows`).
 
+## Mermaid styling cookbook
+
+A copy-pasteable reference for applying the visual taxonomy above to
+Mermaid diagrams. Workflow diagrams only — do not apply to
+`erDiagram`, `classDiagram`, or `sequenceDiagram` blocks.
+
+### Shape vocabulary
+
+One shape per node role. Pick by what the node *does*, not how it
+looks.
+
+```
+A(["Start / End"])           %% terminator — entry or final state
+B["Action"]                  %% standard step — agent does X
+C{"Decision?"}               %% branch — must have a measurable predicate
+D[("External system")]       %% 1C, Didox, Click, Payme, FCM, …
+E(["02:00 cron"])            %% time-driven step (cron, scheduled job)
+```
+
+### Colour classes
+
+Drop this block at the bottom of every workflow `flowchart`. The hex
+codes map 1:1 to the colour-taxonomy table above.
+
+```
+classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+classDef success  fill:#dcfce7,stroke:#166534,color:#000
+classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+classDef external fill:#f3f4f6,stroke:#374151,color:#000
+classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+```
+
+Assign with `class NodeId className` (one or more node IDs,
+comma-separated):
+
+```
+class A,B action
+class C approval
+```
+
+### Before / after — payment approval flow
+
+The simplest workflow on the site, from
+[`docs/modules/payment.md`](../modules/payment.md). Same semantics —
+shapes upgraded, classes assigned, nothing renamed.
+
+**Before:**
+
+```
+flowchart LR
+  A[Agent collects cash] --> B[Pay record created]
+  B --> C{Approval needed?}
+  C -- yes --> D[Cashier reviews]
+  D --> E[Approved / Rejected]
+  C -- no --> F[Auto-applied]
+  E --> F
+```
+
+**After:**
+
+```mermaid
+flowchart LR
+  A["Agent collects cash"] --> B["Pay record created"]
+  B --> C{"Approval needed?"}
+  C -- yes --> D["Cashier reviews [SLA 4h]"]
+  D --> E{"Approved?"}
+  E -- yes --> F(["Auto-applied"])
+  E -- no --> R(["Rejected"])
+  C -- no --> F
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+
+  class A,B action
+  class C,D,E approval
+  class F success
+  class R reject
+```
+
+The after-version splits the implicit "Approved / Rejected" node into
+an explicit reject branch (principle #9) and inlines an SLA hint
+(principle #8).
+
+### Swimlane recipe
+
+Use `subgraph` per role for any flow that crosses role boundaries.
+BPMN guidance: 3–7 lanes max, lanes name **roles** not individuals,
+named-role lanes (`"Cashier"`) not vague (`"Operations team"`). Each
+lane corresponds to principle #4 (explicit roles) and the lane order
+should match the stage order from principle #5.
+
+```mermaid
+flowchart TB
+  subgraph Agent
+    A1["Collect payment"]
+  end
+  subgraph Cashier
+    C1{"Amount > threshold?"}
+    C2["Review"]
+  end
+  subgraph System
+    S1[("Apply to debt")]
+    S2[("Write PaymentDeliverHistory")]
+  end
+  A1 --> C1
+  C1 -- yes --> C2 --> S1
+  C1 -- no --> S1
+  S1 --> S2
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+
+  class A1 action
+  class C1,C2 approval
+  class S1,S2 external
+```
+
+If parallel branches exist (principle #6), label both edges out of
+the fork with the role that takes them and merge them at an explicit
+join node.
+
+### SLA and audit annotations
+
+Inline SLA hints in node text with `[SLA <duration>]`; record audit
+side-effects with a `Note over` line. These hooks make principles #8
+(escalation) and #10 (audit) visible in the diagram itself.
+
+```
+D["Cashier reviews [SLA 4h]"]
+S2[("Write PaymentDeliverHistory")]
+
+%% In sequenceDiagrams:
+Note over System: writes OrderStatusHistory(actor, before, after, reason, ts)
+```
+
+Every transition that mutates business state must show or reference
+its audit row. If the audit table doesn't exist yet, that's a gap to
+file before the styling pass — see below.
+
+### Anti-patterns
+
+- Decision diamond without a measurable predicate. `{"Valid?"}` is
+  bad; `{"BALANS ≥ Package.PRICE?"}` is good (principle #7).
+- Only the happy path shown. Every workflow needs at least one
+  explicit reject / error / cancel branch (principle #9).
+- More than 7 swimlanes in one diagram. Split into two connected
+  diagrams keyed on a hand-off node.
+- Applying the colour taxonomy to `erDiagram`, `classDiagram`, or
+  `sequenceDiagram` blocks. Taxonomy is workflow-only.
+- Mermaid-only-experts diagrams. If a non-engineer reviewer cannot
+  read it on first pass, simplify.
+- Vague role lanes (`"Operations"`, `"Team"`). Lanes name a role from
+  the access-rights table or they don't go in (principle #4).
+
+### Before you make styling changes
+
+A styling pass changes colours, shapes, and class assignments — never
+semantics. If a diagram has the wrong nodes, missing branches, or a
+stale role, file an issue and fix that in a separate change. Mixing
+the two makes review impossible and silently drifts the model away
+from the running system.
+
 ## Useful references
 
 - [Cflow — Beginner's Guide to Workflow Design](https://www.cflowapps.com/workflow/workflow-design/)

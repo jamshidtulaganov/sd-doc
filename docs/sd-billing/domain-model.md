@@ -21,21 +21,103 @@ erDiagram
   PAYMENT }o--o| PAYNET_TRANSACTION : via
   USER }o--|| ROLE : assigned
 
-  DISTRIBUTOR { string ID PK string NAME float BALANS }
-  DILER { int DILER_ID PK string NAME string HOST int STATUS float BALANS float MIN_SUMMA float MIN_LICENSE float CREDIT_LIMIT date CREDIT_DATE date FREE_TO int MONTHLY bool IS_DEMO }
-  SUBSCRIPTION { string ID PK int DILER_ID FK int PACKAGE_ID FK date START_FROM date ACTIVE_TO bool IS_DELETED }
-  PACKAGE { int PACKAGE_ID PK string NAME string SUBSCRIP_TYPE int TYPE string PACKAGE_TYPE string CLIENT_TYPE float PRICE }
-  TARIFF { int ID PK string NAME }
-  TARIFF_PACKAGE { int ID PK int TARIFF_ID FK int PACKAGE_ID FK }
-  PAYMENT { string ID PK int DILER_ID FK string TYPE float SUMMA datetime DATE int CASHBOX_ID FK }
-  CASHBOX { int ID PK string NAME string CURRENCY }
-  CLICK_TRANSACTION { string ID PK int PAYMENT_ID FK string SIGN string STATE }
-  PAYME_TRANSACTION { string ID PK int PAYMENT_ID FK string STATE }
-  PAYNET_TRANSACTION { string ID PK int PAYMENT_ID FK string STATE }
-  SERVER { int ID PK int DILER_ID FK string HOST string DB_HOST string DB_USER string DB_PASS string STATUS }
-  DILER_BONUS { int DILER_ID PK FK float QUOTA }
-  USER { int USER_ID PK string LOGIN int ROLE bool IS_ADMIN }
-  ROLE { int ID PK string NAME }
+  DISTRIBUTOR {
+    string ID PK
+    string NAME
+    float BALANS
+  }
+  DILER {
+    int DILER_ID PK
+    string NAME
+    string HOST
+    int STATUS
+    float BALANS
+    float MIN_SUMMA
+    float MIN_LICENSE
+    float CREDIT_LIMIT
+    date CREDIT_DATE
+    date FREE_TO
+    int MONTHLY
+    bool IS_DEMO
+  }
+  SUBSCRIPTION {
+    string ID PK
+    int DILER_ID FK
+    int PACKAGE_ID FK
+    date START_FROM
+    date ACTIVE_TO
+    bool IS_DELETED
+  }
+  PACKAGE {
+    int PACKAGE_ID PK
+    string NAME
+    string SUBSCRIP_TYPE
+    int TYPE
+    string PACKAGE_TYPE
+    string CLIENT_TYPE
+    float PRICE
+  }
+  TARIFF {
+    int ID PK
+    string NAME
+  }
+  TARIFF_PACKAGE {
+    int ID PK
+    int TARIFF_ID FK
+    int PACKAGE_ID FK
+  }
+  PAYMENT {
+    string ID PK
+    int DILER_ID FK
+    string TYPE
+    float SUMMA
+    datetime DATE
+    int CASHBOX_ID FK
+  }
+  CASHBOX {
+    int ID PK
+    string NAME
+    string CURRENCY
+  }
+  CLICK_TRANSACTION {
+    string ID PK
+    int PAYMENT_ID FK
+    string SIGN
+    string STATE
+  }
+  PAYME_TRANSACTION {
+    string ID PK
+    int PAYMENT_ID FK
+    string STATE
+  }
+  PAYNET_TRANSACTION {
+    string ID PK
+    int PAYMENT_ID FK
+    string STATE
+  }
+  SERVER {
+    int ID PK
+    int DILER_ID FK
+    string HOST
+    string DB_HOST
+    string DB_USER
+    string DB_PASS
+    string STATUS
+  }
+  DILER_BONUS {
+    int DILER_ID PK
+    float QUOTA
+  }
+  USER {
+    int USER_ID PK
+    string LOGIN
+    int ROLE
+    bool IS_ADMIN
+  }
+  ROLE {
+    int ID PK
+    string NAME
+  }
 ```
 
 ## Core entities

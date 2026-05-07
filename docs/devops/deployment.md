@@ -29,6 +29,11 @@ flowchart LR
     subgraph "sd-cs (HQ)"
         C_IMG[no container today<br/>deployed via SFTP/rsync]
     end
+
+    class M_IMG,M_DB,M_R,B_IMG,B_DB,C_IMG action
+    classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+    classDef external fill:#f3f4f6,stroke:#374151,color:#000
+    classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
 ```
 
 Note that the two CRM-adjacent projects use different PHP runtimes

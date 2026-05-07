@@ -23,7 +23,7 @@ flowchart LR
     WB[Web Admin]
     MA[Mobile Agent]
     OS[Online Store]
-    EXT[External: 1C, Didox, Faktura.uz, Smartup]
+    EXT[(External: 1C, Didox, Faktura.uz, Smartup)]
   end
   subgraph Edge
     NX[Nginx]
@@ -63,6 +63,12 @@ flowchart LR
   JOBS --> DB
   CRON --> R1
   WEB --> FS
+
+  class WB,MA,OS,NX,WEB,A1,A3,A4,JOBS,CRON,DB,R0,R1,R2,FS action
+  class EXT external
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
 ```
 
 ## Tiers

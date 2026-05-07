@@ -79,6 +79,12 @@ flowchart LR
   APP -.-> D2[(Dealer B d0_*)]
   APP -.-> DN[(Dealer N d0_*)]
   APP --> RD[(Redis sessions)]
+
+  class HQ,APP,OWN,RD action
+  class D1,D2,DN external
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
 ```
 
 ## See also

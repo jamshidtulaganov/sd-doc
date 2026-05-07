@@ -31,6 +31,7 @@ All commands extend `BaseCommand`
 `SettlementCommand` (daily 01:00) computes monthly debts/credits
 between distributors and dealers.
 
+<!-- TODO: missing reject/error branch — see workflow-design.md principle #9 -->
 ```mermaid
 flowchart LR
   S(["01:00 cron"]) --> READ["Pull last-month payments grouped by Distributor + Diler"]
@@ -38,7 +39,17 @@ flowchart LR
   CALC --> DEB["Insert Payment TYPE=distribute (debit Distributor)"]
   DEB --> CRE["Insert Payment TYPE=distribute (credit Diler)"]
   CRE --> LOG["LogDistrBalans rolling balance row"]
-  LOG --> NOTIF["Telegram summary to ops"]
+  LOG --> NOTIF[("Telegram summary to ops")]
+
+  class S cron
+  class READ,CALC,DEB,CRE,LOG action
+  class NOTIF external
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
 ```
 
 The pair of `Payment` rows nets out across distributors so the running
