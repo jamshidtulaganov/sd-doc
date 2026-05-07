@@ -1,6 +1,9 @@
 ---
 sidebar_position: 1
 title: Architecture overview
+audience: Backend / DevOps engineers
+summary: sd-main high-level architecture — server-rendered Yii 1.x PHP web app + REST API behind Nginx, MySQL + Redis (3 logical DBs) + queue workers + cron.
+topics: [architecture, sd-main, yii, nginx, mysql, redis, queue, cron]
 ---
 
 # Architecture overview
@@ -55,10 +58,10 @@ flowchart LR
   A3 --> R2
   A4 --> DB
   A4 --> R2
-  WEB --> JOBS
-  JOBS --> R1
+  WEB --> R1
+  R1 --> JOBS
   JOBS --> DB
-  CRON --> JOBS
+  CRON --> R1
   WEB --> FS
 ```
 
@@ -109,6 +112,6 @@ the filesystem mount.
 
 ## Why this stack
 
-See [ADR 0001 — keep Yii 1](../adr/0001-yii1-stay.md) and
-[ADR 0002 — DB-per-customer](../adr/0002-multi-tenant-db-per-customer.md)
+See [ADR 0001 — keep Yii 1](../adr/yii1-stay.md) and
+[ADR 0002 — DB-per-customer](../adr/multi-tenant-db-per-customer.md)
 for the historical decisions.

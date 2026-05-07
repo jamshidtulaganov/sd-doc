@@ -1,6 +1,9 @@
 ---
 sidebar_position: 2
 title: Ecosystem
+audience: All team members
+summary: The three sibling projects (sd-cs HQ, sd-main dealer CRM, sd-billing subscriptions) and how they depend on each other. Read this before any deeper section.
+topics: [ecosystem, three-projects, sd-cs, sd-main, sd-billing, dependency]
 ---
 
 # The SalesDoctor ecosystem
@@ -19,8 +22,11 @@ HQ            Dealer CRM       Subscriptions / licensing
 | **[`sd-main`](#sd-main)** | Dealer CRM | Each dealer's day-to-day operational system |
 | **[`sd-billing`](#sd-billing)** | Subscriptions, licensing, payments | The platform vendor managing dealer accounts |
 
-The arrows above describe **direction of dependency / read-flow**, not
-data ownership:
+The arrows above point from **consumer to producer** — i.e. each arrow
+means "reads from", not "pushes to". Direction of data flow at runtime
+is the opposite of the arrow for licence pushes / status pings, which
+is why the Mermaid diagram below renders both relationships
+explicitly:
 
 - **`sd-cs`** is at HQ. It opens **read** connections into many
   `sd-main` databases to produce consolidated reports.

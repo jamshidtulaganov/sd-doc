@@ -36,21 +36,51 @@ running.
       2. [Ecosystem](../ecosystem.md)
       3. [Architecture overview](../architecture/overview.md)
       4. [Tech stack](../architecture/tech-stack.md)
+- [ ] **Frontend track only** — also read:
+      [Frontend overview](../frontend/overview.md) →
+      [Getting started (frontend)](../frontend/getting-started.md).
 
 ## Week 1
 
 Goal: be able to run the system, read its data, and trace one full
 request.
 
-- [ ] Bring up sd-main locally:
-      [Local setup](../project/local-setup.md). Smoke-test login.
-- [ ] Bring up sd-billing locally:
-      [Local setup](../sd-billing/local-setup.md).
-- [ ] Read [Multi-tenancy](../architecture/multi-tenancy.md),
-      [Caching](../architecture/caching.md),
-      [Background jobs](../architecture/jobs-and-scheduling.md).
-- [ ] Read [Project structure](../project/structure.md) and
-      [Conventions](../project/conventions.md).
+**Must read** (everyone, in order):
+
+- [ ] [Introduction](../intro.md)
+- [ ] [Ecosystem](../ecosystem.md)
+- [ ] [Architecture overview](../architecture/overview.md)
+- [ ] [Local setup](../project/local-setup.md) — bring up sd-main
+      locally and smoke-test login.
+- [ ] [Project structure](../project/structure.md)
+- [ ] [Conventions](../project/conventions.md)
+- [ ] [Modules overview](../modules/overview.md)
+
+**Read as needed for your first ticket** (don't pre-read; pull these
+in when the ticket touches them):
+
+- Architecture deep-dives:
+  [Multi-tenancy](../architecture/multi-tenancy.md),
+  [Caching](../architecture/caching.md),
+  [Background jobs](../architecture/jobs-and-scheduling.md).
+- sd-billing local setup:
+  [sd-billing local setup](../sd-billing/local-setup.md).
+- Frontend track:
+  [Frontend conventions](../frontend/conventions.md),
+  [Adding a screen](../frontend/adding-a-screen.md),
+  [Yii views](../frontend/yii-views.md),
+  [JS plugins](../frontend/js-plugins.md),
+  [ng-modules](../frontend/ng-modules.md),
+  [Asset pipeline](../frontend/assets-pipeline.md).
+- UI patterns:
+  [Page layout](../ui/page-layout.md),
+  [tables](../ui/tables.md),
+  [filters](../ui/filters.md),
+  [forms](../ui/forms.md),
+  [modals](../ui/modals.md).
+
+**Then:**
+
 - [ ] Pick one user-visible flow and trace it end-to-end:
       Suggested flow: *agent submits a mobile order*.
       - Mobile request: [API v3 — `POST /api3/order/create`](../api/api-v3-mobile.md)
@@ -61,9 +91,26 @@ request.
       - Read the [Order lifecycle](../architecture/diagrams.md) sequence
 - [ ] Open one **starter ticket** (your manager will assign one).
       Recommended starters:
+
+      *Backend-flavoured:*
       - Add a translation row in `protected/messages/uz/...`.
       - Convert a `Distr::getFilter()` caller to `QueryBuilder`.
       - Write a unit test for an existing service method.
+
+      *Frontend-flavoured:*
+      - Add a new column to an existing list view (e.g. an `Agent`
+        column on the orders table) — touches a Yii view, the
+        DataTables config, and i18n keys in
+        `protected/messages/<locale>/orders.php`. Use
+        [Adding a screen](../frontend/adding-a-screen.md) as the
+        checklist.
+      - Convert one inline `style="..."` in a view to a named CSS
+        class.
+      - Add a missing `aria-label` to one row-actions `⋮` menu and
+        document it in [UI · Tables](../ui/tables.md).
+      - Add one missing `Yii::t()` call where a literal RU string
+        slipped through a view; add the corresponding `en` and
+        `uz` keys.
 - [ ] Submit your first PR. Follow
       [Coding standards](../quality/coding-standards.md) and
       [Contribution](../quality/contribution.md).

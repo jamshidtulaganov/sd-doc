@@ -31,6 +31,30 @@ subscriptions.
 | Distribute / settlement | `distribute` | `cron settlement` (see [Cron](./cron-and-settlement.md)) |
 | Service fee | `service` | manual |
 
+## Canonical `Payment.TYPE` enum
+
+The full enum is defined as class constants on the `Payment` model
+(`protected/models/Payment.php` in sd-billing). String labels above
+map to integer codes; new code MUST use the constants, not the bare
+integers or strings:
+
+| Constant | String label | Direction |
+|----------|--------------|-----------|
+| `Payment::TYPE_CASH` | `cash` | inbound (offline) |
+| `Payment::TYPE_CASHLESS` | `cashless` | inbound (offline) |
+| `Payment::TYPE_P2P` | `p2p` | inbound (offline) |
+| `Payment::TYPE_LICENSE` | `license` | outbound (consumed) |
+| `Payment::TYPE_DISTRIBUTE` | `distribute` | settlement |
+| `Payment::TYPE_SERVICE` | `service` | manual fee |
+| `Payment::TYPE_PAYMEONLINE` | `payme` | inbound (gateway) |
+| `Payment::TYPE_CLICKONLINE` | `click` | inbound (gateway) |
+| `Payment::TYPE_PAYNETONLINE` | `paynet` | inbound (gateway) |
+| `Payment::TYPE_MBANK` | `mbank` | inbound (gateway, KG) |
+
+The numeric integer values are intentionally not reproduced here so
+this doc can't drift from the model — read the constant declarations
+in `Payment.php` for the authoritative numbers.
+
 ## Click flow (canonical)
 
 ```mermaid
@@ -44,6 +68,7 @@ sequenceDiagram
   C->>API: prepare (sign)
   API->>API: ClickTransaction::checkSign
   API->>DB: insert ClickTransaction (state=prepared)
+  Note over API: Duplicate prepare/confirm requests return the same response (idempotent)
   API-->>C: 200
   C->>API: confirm (sign)
   API->>DB: ClickTransaction state=confirmed

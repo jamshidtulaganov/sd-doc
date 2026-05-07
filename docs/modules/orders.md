@@ -48,25 +48,41 @@ protected/modules/orders/
 
 ## Key entities
 
-| Entity | Model | Notes |
-|--------|-------|-------|
-| Order | `Order` | Header (~50 cols) |
-| Order line | `OrderProduct` | Per-product line with price, count, defects |
-| Order status history | `OrderStatusHistory` | Audit trail |
-| Defect | `Defect` | Per-line defect declarations |
-| Bonus | `Bonus*` | Promo bonus orders |
+| Entity | Model | Owned by module | Notes |
+|--------|-------|-----------------|-------|
+| Order | `Order` | `orders` | Header (~50 cols) |
+| Order line | `OrderProduct` | `orders` | Per-product line with price, count |
+| Order status history | `OrderStatusHistory` | `orders` | Audit trail |
+| **Defect** | `Defect` | **`orders`** | Per-line defect declarations on a delivered order. **Not** related to the `audit` module's `AFacing` / `AuditResult` (those record merchandising surveys, not delivery defects). |
+| **Reject** | handled inline on `Order` | **`orders`** | Whole-order rejection at delivery time. Distinct from per-line defect: a reject sends the entire order back to stock. |
+| Bonus | `Bonus*` | `orders` | Promo bonus orders linked via `BONUS_ORDER_ID` |
 
 ## Status machine
 
 See the diagram **sd-main · Order state machine** in
 [FigJam · sd-main · System Design](https://www.figma.com/board/tw0B3eE1bKNbvmmny8TVvx).
 
+```mermaid
+stateDiagram-v2
+  [*] --> Draft
+  Draft --> New
+  New --> Reserved
+  Reserved --> Loaded
+  Loaded --> Delivered
+  Delivered --> Paid
+  Paid --> Closed
+  New --> Cancelled
+  Reserved --> Cancelled
+  Delivered --> Defect
+  Defect --> Returned
+  Returned --> Closed
+  Cancelled --> [*]
+  Closed --> [*]
+  note right of Closed
+    SUB_STATUS carries fine-grained reasons
+    (e.g. "awaiting cashier").
+  end note
 ```
-0 Draft → 1 New → 2 Reserved → 3 Loaded → 4 Delivered → 5 Paid → 6 Closed
-                          ↘ Cancelled         ↘ Defect → Returned → Closed
-```
-
-`SUB_STATUS` carries fine-grained reasons (e.g. "awaiting cashier").
 
 ## Key feature flow — Create order
 
