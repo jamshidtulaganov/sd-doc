@@ -69,6 +69,11 @@ flowchart LR
   classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
   classDef external fill:#f3f4f6,stroke:#374151,color:#000
   classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  style Clients fill:#ffffff,stroke:#cccccc
+  style Edge fill:#ffffff,stroke:#cccccc
+  style App fill:#ffffff,stroke:#cccccc
+  style Data fill:#ffffff,stroke:#cccccc
 ```
 
 ## Tiers

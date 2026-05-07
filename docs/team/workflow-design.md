@@ -314,6 +314,22 @@ The after-version splits the implicit "Approved / Rejected" node into
 an explicit reject branch (principle #9) and inlines an SLA hint
 (principle #8).
 
+### Subgraph backgrounds — white only
+
+Workflow groups (subgraphs / swimlanes) MUST use a uniform white fill
+with a soft grey stroke. Don't tint groups by team / project /
+stage — group identity belongs in the **label**, not the fill colour.
+Coloured tints fight with the colour-coded *nodes* (the cookbook's
+classDef palette) and make diagrams harder to scan.
+
+```
+style SubgraphID fill:#ffffff,stroke:#cccccc
+```
+
+Apply this `style` line for every subgraph in every workflow and
+architecture flowchart. (ER diagrams, sequence diagrams, and state
+diagrams don't have subgraphs — skip.)
+
 ### Swimlane recipe
 
 Use `subgraph` per role for any flow that crosses role boundaries.

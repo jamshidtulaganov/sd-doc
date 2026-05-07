@@ -73,6 +73,110 @@ flowchart LR
   classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
   classDef external fill:#f3f4f6,stroke:#374151,color:#000
   classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  style HQ fill:#ffffff,stroke:#cccccc
+  style DealerA fill:#ffffff,stroke:#cccccc
+  style DealerB fill:#ffffff,stroke:#cccccc
+  style Vendor fill:#ffffff,stroke:#cccccc
+```
+
+## Inter-project integration map
+
+Concrete endpoints, DB connections, licence-file paths, and cron-driven
+pushes that wire the three projects together. This is the "how do they
+talk?" view — start here when changing any cross-project boundary.
+
+```mermaid
+flowchart TB
+  subgraph Billing["sd-billing (vendor)"]
+    B_API["api/license + api/host + api/click + api/payme"]
+    B_DB[("d0_* billing schema")]
+    B_CRON["cron: notify settlement status"]
+  end
+  subgraph Main["sd-main (per dealer)"]
+    M_API["api/billing (license + phone + status)"]
+    M_DB[("d0_* dealer schema")]
+    M_LIC["protected/license2/"]
+  end
+  subgraph CS["sd-cs (HQ)"]
+    CS_API["api/billing (status only)"]
+    CS_DB[("cs_* schema")]
+    CS_DEAL["dealer connection (read-only swap)"]
+  end
+
+  M_API -->|"POST buyPackages exchange info"| B_API
+  B_CRON -->|"POST license push + DELETE license"| M_API
+  B_CRON -->|"POST phone (Spravochnik)"| M_API
+  M_API -->|"writes/clears"| M_LIC
+  B_CRON -->|"GET status?app=sdmanager"| CS_API
+  CS_DEAL -.->|"read d0_* per-dealer"| M_DB
+  B_API --> B_DB
+  M_API --> M_DB
+  CS_API --> CS_DB
+
+  classDef action fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron fill:#ede9fe,stroke:#6d28d9,color:#000
+  class B_API,M_API,CS_API,CS_DEAL action
+  class B_DB,M_DB,CS_DB,M_LIC external
+  class B_CRON cron
+
+  style Billing fill:#ffffff,stroke:#cccccc
+  style Main fill:#ffffff,stroke:#cccccc
+  style CS fill:#ffffff,stroke:#cccccc
+```
+
+See [sd-billing integration](./sd-billing/integration.md) and
+[sd-cs ↔ sd-main integration](./sd-cs/sd-main-integration.md) for the
+detailed protocol per endpoint.
+
+## Key feature catalog by project
+
+The major capability areas of each project. Use this as a 30-second
+intro for stakeholders; drill into module pages for depth.
+
+```mermaid
+flowchart TB
+  subgraph SDMain["sd-main · Dealer CRM"]
+    direction TB
+    M_ORD["Orders (web + mobile + B2B online)"]
+    M_AGT["Agents · routes · KPI · vehicles"]
+    M_CLI["Clients · contracts · segments · debt"]
+    M_WHS["Warehouse · stock · inventory · transfers"]
+    M_PAY["Payments · cashier approval · cashbox"]
+    M_AUD["Audits · facing · photo reports"]
+    M_GPS["GPS tracking · geofence · trip playback"]
+    M_INT["Integrations 1C · Didox · Faktura.uz · Smartup"]
+    M_RPT["80+ reports · Excel export · pivots"]
+    M_OO["B2B online store · Telegram bot · WebApp"]
+  end
+
+  subgraph SDCs["sd-cs · HQ Country Sales"]
+    direction TB
+    CS_RPT["Consolidated reports across all dealers"]
+    CS_PIV["Pivots · RFM · SKU · expeditor"]
+    CS_DIR["HQ directory · brands · segments · plans"]
+    CS_MDB["Multi-DB read of dealer DBs (read-only)"]
+  end
+
+  subgraph SDBilling["sd-billing · Subscriptions and licensing"]
+    direction TB
+    B_SUB["Subscriptions · packages · tariffs · bonus"]
+    B_LIC["Licence files · feature gating per system"]
+    B_PAY["Click · Payme · Paynet · MBANK · P2P · cash"]
+    B_SET["Daily settlement distributor / dealer"]
+    B_NOT["Telegram + SMS notifications · expiry reminders"]
+    B_PRT["Partner portal · self-service"]
+  end
+
+  classDef action fill:#dbeafe,stroke:#1e40af,color:#000
+  class M_ORD,M_AGT,M_CLI,M_WHS,M_PAY,M_AUD,M_GPS,M_INT,M_RPT,M_OO action
+  class CS_RPT,CS_PIV,CS_DIR,CS_MDB action
+  class B_SUB,B_LIC,B_PAY,B_SET,B_NOT,B_PRT action
+
+  style SDMain fill:#ffffff,stroke:#cccccc
+  style SDCs fill:#ffffff,stroke:#cccccc
+  style SDBilling fill:#ffffff,stroke:#cccccc
 ```
 
 ## sd-cs {#sd-cs}

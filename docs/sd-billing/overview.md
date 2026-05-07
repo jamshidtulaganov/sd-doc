@@ -138,6 +138,11 @@ flowchart LR
   classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
   classDef external fill:#f3f4f6,stroke:#374151,color:#000
   classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  style Inbound fill:#ffffff,stroke:#cccccc
+  style Bill fill:#ffffff,stroke:#cccccc
+  style Out fill:#ffffff,stroke:#cccccc
+  style DB fill:#ffffff,stroke:#cccccc
 ```
 
 ## See also
