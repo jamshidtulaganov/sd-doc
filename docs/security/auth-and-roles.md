@@ -5,6 +5,10 @@ title: Auth & roles
 
 # Authentication & roles
 
+:::note Scope
+This page documents roles in **sd-main** (the dealer CRM). The numeric role IDs here are NOT the same as the role IDs in [sd-billing](../sd-billing/auth-and-access.md), even though the integers overlap. When a sd-main module page says "Approve: 1, 2, 9", refer to the table on this page.
+:::
+
 ## Roles (canonical)
 
 Defined in `protected/config/auth.php`:
@@ -38,8 +42,9 @@ only from `guest` and rely on per-permission grants in `authassignment`.
 ## Password policy
 
 - Minimum length **8** at create / change time.
-- Active hashing: MD5 (legacy) for old users; bcrypt for new. Migration
-  is opportunistic on next successful login.
+- Hashing (per-account): **MD5 only** — both `UserIdentity::authenticate`
+  and `User::validatePassword` compare `md5($plain)` against the stored
+  `PASSWORD` column. Migration to `password_hash()` (bcrypt) is pending.
 - No common-password list; this is a planned improvement.
 
 ## Failure handling

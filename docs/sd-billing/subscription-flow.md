@@ -13,7 +13,7 @@ flowchart LR
   S(["Dealer signs up"]) --> P["Pay (online or offline)"]
   P --> B["Diler.BALANS += summa"]
   B --> BUY["api/license/buyPackages"]
-  BUY --> CHK{"BALANS ≥ Package.PRICE<br/>+ MIN_SUMMA / MIN_LICENSE check<br/>+ currency match"}
+  BUY --> CHK{"Validation<br/>(see table below)"}
   CHK -- "no" --> ERR["Reject"]
   CHK -- "yes" --> SUB["Subscription rows<br/>[START_FROM, ACTIVE_TO]"]
   SUB --> NEG["Payment TYPE=license (negative)"]
@@ -21,6 +21,14 @@ flowchart LR
   SET --> SRV["Diler.HOST → Server.STATUS=SENT → OPENED"]
   SRV --> NOTIF["Telegram + SMS to dealer"]
 ```
+
+The `Validation` step rejects on any of these independent checks:
+
+| Check | Reject when |
+|-------|-------------|
+| Balance | `Diler.BALANS` < `Package.PRICE` (total across requested packages) |
+| Minimum thresholds | `MIN_SUMMA` or `MIN_LICENSE` anti-abuse limit not met |
+| Currency match | Posted currency ≠ `Diler.CURRENCY_ID` |
 
 ## Buy packages
 

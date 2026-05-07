@@ -3,6 +3,10 @@ sidebar_position: 2
 title: Coding standards
 ---
 
+:::warning Stub
+This page is a placeholder. The content is incomplete — verify against source before relying on it. See [the audit's stub-backfill list](#) for status.
+:::
+
 # Coding standards
 
 ## Style

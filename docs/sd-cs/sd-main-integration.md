@@ -108,6 +108,8 @@ foreach ($dealers as $dealer) {
     foreach ($sub as $r) {
         $rows[] = ['dealer' => $dealer['code'], 'd' => $r->d, 'total' => $r->total];
     }
+
+    Yii::app()->dealer->active = false; // release connection — see runbook below
 }
 
 // Aggregate in PHP — cross-DB joins are NOT allowed (different hosts).

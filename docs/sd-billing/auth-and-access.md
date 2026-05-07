@@ -5,6 +5,10 @@ title: Auth & access
 
 # Auth & access (sd-billing)
 
+:::note Scope
+This page documents roles in **sd-billing** (the subscriptions/licensing project). The numeric role IDs here are NOT the same as sd-main's. For sd-main RBAC see [security/auth-and-roles](../security/auth-and-roles.md). The two enums are independent — never cross-reference an integer between projects.
+:::
+
 Two layers of access control live side-by-side:
 
 ## 1. Session login

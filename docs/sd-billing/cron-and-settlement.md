@@ -55,6 +55,7 @@ sequenceDiagram
 
   loop every minute
     CR->>DB: SELECT * FROM d0_notify_cron WHERE sent=0 LIMIT 100
+    Note over CR,DB: Branch is keyed by row type column on d0_notify_cron
     alt Telegram
       CR->>DB: lookup d0_notify_bot
       CR->>TG: POST /addRequest

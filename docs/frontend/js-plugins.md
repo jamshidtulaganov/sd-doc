@@ -3,6 +3,10 @@ sidebar_position: 3
 title: JS plugins
 ---
 
+:::warning Stub
+This page is a placeholder. The content is incomplete — verify against source before relying on it. See [the audit's stub-backfill list](#) for status.
+:::
+
 # JS plugins
 
 `js_plugins/` holds vendored 3rd-party JS. Add new plugins here only when

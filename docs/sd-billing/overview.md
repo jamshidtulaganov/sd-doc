@@ -130,6 +130,7 @@ flowchart LR
   NOT --> TG
   NOT --> SMS
   CR --> LIC
+  API --> LIC
   CR --> STAT
 ```
 

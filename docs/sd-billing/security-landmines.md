@@ -12,7 +12,7 @@ target fix. The source of truth for status is
 
 | # | Issue | Severity | Where | Target fix |
 |---|-------|----------|-------|------------|
-| 1 | **MD5 password hashing** | Critical | `UserIdentity::authenticate`, `User::generatePassword` | Migrate to `password_hash()` (bcrypt). Transparent upgrade on next successful login. |
+| 1 | **MD5 password hashing** | Critical | `UserIdentity::authenticate`, `User::generatePassword` (sd-billing only — sd-main's status: see [security/auth-and-roles](../security/auth-and-roles.md)) | Migrate to `password_hash()` (bcrypt). Transparent upgrade on next successful login. |
 | 2 | **Hardcoded SMS / Telegram secrets in code** | Critical | `protected/components/Sms.php` (Eskiz creds, Mobizon API key); `SiteController::actionLogin` (Telegram bot token) | Move to env vars; rotate the publicly-leaked tokens immediately. |
 | 3 | **`Distr::getFilter()` is SQL-injectable** | Critical | string-interpolates user data | Migrate callers to `protected/helpers/QueryBuilder.php`. Don't extend `Distr::getFilter()`'s surface in the meantime. |
 | 4 | **`Controller::hasAccessIpAddress()` short-circuits** | High | The first line is `return true;`, the IP allowlist below is unreachable. | Replace with a real allowlist check; add tests. |
