@@ -27,6 +27,44 @@ and Workflow · Bug lifecycle (same file).
 4. **Bugs** — reproduce → file → triage → fix → verify → close.
 5. **Sign-off** — UAT, release notes, go / no-go.
 
+```mermaid
+flowchart LR
+  P(["Plan"]) --> P1["Read PRD"]
+  P1 --> P2["Risk-rank features"]
+  P2 --> P3["Define acceptance criteria"]
+  P3 --> D(["Design"])
+  D --> D1["Write test cases"]
+  D1 --> D2["Gather test data"]
+  D2 --> D3["Identify automation candidates"]
+  D3 --> E(["Execute"])
+  E --> E1["Smoke"]
+  E1 --> ESM{"Smoke passes?"}
+  ESM -- "no" --> BUG["File S1/S2 bug"]
+  ESM -- "yes" --> E2["Functional"]
+  E2 --> E3["Regression"]
+  E3 --> E4["E2E (mobile + web + api3 + api4)"]
+  E4 --> E5["Performance"]
+  E5 --> EQ{"Open S1/S2 bugs?"}
+  EQ -- "yes" --> BUG
+  EQ -- "no" --> S(["Sign-off"])
+  BUG --> RT["Re-test on fix"]
+  RT --> EQ
+  S --> S1["UAT"]
+  S1 --> S2["Release notes EN/RU/UZ"]
+  S2 --> GO{"Go / no-go?"}
+  GO -- "no-go" --> BLK(["Hold release"])
+  GO -- "go" --> RELEASE(["Release"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  class P,D,E,S,P1,P2,P3,D1,D2,D3,E1,E2,E3,E4,E5,S1,S2,RT action
+  class ESM,EQ,GO approval
+  class RELEASE success
+  class BUG,BLK reject
+```
+
 ## Test plan template
 
 ```md
@@ -89,6 +127,26 @@ and Workflow · Bug lifecycle (same file).
 | S2 | Major feature unusable, no workaround |
 | S3 | Major feature degraded, workaround exists |
 | S4 | Minor / cosmetic |
+
+## Bug lifecycle
+
+```mermaid
+stateDiagram-v2
+  [*] --> Reported
+  Reported --> Reproducing : QA picks up
+  Reproducing --> Triaged : sev + priority assigned
+  Reproducing --> CannotReproduce : reproducibility 0/5
+  CannotReproduce --> Closed : 7 days idle
+  Triaged --> InProgress : assigned to engineer
+  Triaged --> WontFix : product decision
+  WontFix --> Closed
+  InProgress --> Verifying : fix merged
+  InProgress --> Triaged : new info, reopen
+  Verifying --> Closed : QA verifies
+  Verifying --> InProgress : verification failed
+  Closed --> Reported : regression after release
+  Closed --> [*]
+```
 
 ## SalesDoctor-specific regression hot spots
 

@@ -26,6 +26,40 @@ and Workflow · Release train (same file).
 4. **Launch** — feature flag, release notes, train support, monitor.
 5. **Learn** — outcome vs hypothesis, iterate / kill / scale.
 
+```mermaid
+flowchart LR
+  D(["Discover"]) --> D1["Interviews / support / sales / analytics"]
+  D1 --> D2["Opportunity tree"]
+  D2 --> DEF(["Define"])
+  DEF --> DEF1["Problem + hypothesis + metric"]
+  DEF1 --> DEF2["PRD + wireframes + tech spike"]
+  DEF2 --> RICE{"RICE score above threshold?"}
+  RICE -- "no" --> KILL(["Kill / defer"])
+  RICE -- "yes" --> DEL(["Deliver"])
+  DEL --> DEL1["Backlog → sprint"]
+  DEL1 --> DEL2["Build"]
+  DEL2 --> DEL3["QA + UAT"]
+  DEL3 --> L(["Launch"])
+  L --> L1["Feature flag 5 percent"]
+  L1 --> L2["25 percent"]
+  L2 --> L3["100 percent"]
+  L3 --> LRN(["Learn"])
+  LRN --> LRN1["Outcome vs hypothesis"]
+  LRN1 --> DECIDE{"Hypothesis confirmed?"}
+  DECIDE -- "yes" --> SCALE(["Scale to all tenants"])
+  DECIDE -- "no" --> ITERATE["Iterate"]
+  ITERATE --> D
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  class D,DEF,DEL,L,LRN,D1,D2,DEF1,DEF2,DEL1,DEL2,DEL3,L1,L2,L3,LRN1,ITERATE action
+  class RICE,DECIDE approval
+  class SCALE success
+  class KILL reject
+```
+
 ## PRD / one-pager template
 
 ```md
@@ -94,6 +128,41 @@ Translate to **EN / RU / UZ** for every release. Template:
 ### Migration
 - DB: yes / no, see `m<id>_<name>.php`
 - Config: ...
+```
+
+## Release train
+
+```mermaid
+flowchart LR
+  PRD(["PRD signed off"]) --> BL["Backlog → sprint"]
+  BL --> BLD["Build"]
+  BLD --> QA(["QA"])
+  QA --> QAGATE{"All P0/P1 pass and 0 open S1/S2?"}
+  QAGATE -- "no" --> BUGFIX["Bugfix iteration"]
+  BUGFIX --> QA
+  QAGATE -- "yes" --> UAT(["UAT"])
+  UAT --> UATGATE{"Stakeholder sign-off?"}
+  UATGATE -- "no" --> BUGFIX
+  UATGATE -- "yes" --> CUT(["Cut release branch"])
+  CUT --> RN["Release notes EN/RU/UZ"]
+  RN --> FF["Feature flag default OFF"]
+  FF --> ROLL5["Roll to 5 percent (early-access)"]
+  ROLL5 --> M5{"Metrics nominal?"}
+  M5 -- "no" --> RB(["Roll back / hotfix"])
+  M5 -- "yes" --> ROLL25["Roll to 25 percent"]
+  ROLL25 --> M25{"Metrics nominal?"}
+  M25 -- "no" --> RB
+  M25 -- "yes" --> ROLL100(["Roll to 100 percent"])
+  ROLL100 --> POST["Post-release review"]
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  class PRD,QA,UAT,CUT,BL,BLD,RN,FF,ROLL5,ROLL25,BUGFIX,POST action
+  class QAGATE,UATGATE,M5,M25 approval
+  class ROLL100 success
+  class RB reject
 ```
 
 ## SalesDoctor-specific PM context
