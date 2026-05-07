@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(command -v nvm)",
+      "Bash(command -v fnm)",
+      "Bash(command -v volta)",
+      "Read(//Users/jamshid/**)",
+      "Bash(npm i *)"
+    ]
+  }
+}

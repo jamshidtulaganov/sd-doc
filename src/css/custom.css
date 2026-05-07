@@ -1,0 +1,58 @@
+/**
+ * Minimal theme overrides. SalesDoctor brand colors.
+ * Wireframe-only project — no deep token system here.
+ */
+
+:root {
+  --ifm-color-primary: #2563eb;
+  --ifm-color-primary-dark: #1d4ed8;
+  --ifm-color-primary-darker: #1e40af;
+  --ifm-color-primary-darkest: #1e3a8a;
+  --ifm-color-primary-light: #3b82f6;
+  --ifm-color-primary-lighter: #60a5fa;
+  --ifm-color-primary-lightest: #93c5fd;
+  --ifm-code-font-size: 92%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #60a5fa;
+  --ifm-color-primary-dark: #3b82f6;
+  --ifm-color-primary-darker: #2563eb;
+  --ifm-color-primary-darkest: #1d4ed8;
+  --ifm-color-primary-light: #93c5fd;
+  --ifm-color-primary-lighter: #bfdbfe;
+  --ifm-color-primary-lightest: #dbeafe;
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.10);
+}
+
+.wireframe {
+  border: 2px dashed var(--ifm-color-emphasis-400);
+  border-radius: 8px;
+  padding: 16px;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.wireframe img {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.wireframe-caption {
+  font-size: 13px;
+  color: var(--ifm-color-emphasis-700);
+  text-align: center;
+  margin-top: 8px;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--ifm-color-primary-lightest);
+  color: var(--ifm-color-primary-darkest);
+  margin-right: 6px;
+}

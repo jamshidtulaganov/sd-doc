@@ -1,0 +1,7 @@
+{
+  "theme.NotFound.title": { "message": "Страница не найдена" },
+  "theme.NotFound.p1": { "message": "Не удалось найти то, что вы искали." },
+  "theme.NotFound.p2": { "message": "Попробуйте перейти на главную страницу или поискать в поиске." },
+  "theme.docs.versions.unmaintainedVersionLabel": { "message": "Это документация для устаревшей версии {siteTitle} {versionLabel}." },
+  "theme.SearchBar.label": { "message": "Поиск" }
+}

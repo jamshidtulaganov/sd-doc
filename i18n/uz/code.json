@@ -1,0 +1,6 @@
+{
+  "theme.NotFound.title": { "message": "Sahifa topilmadi" },
+  "theme.NotFound.p1": { "message": "Siz qidirgan narsani topa olmadik." },
+  "theme.NotFound.p2": { "message": "Bosh sahifaga o'ting yoki qidiruvdan foydalaning." },
+  "theme.SearchBar.label": { "message": "Qidirish" }
+}
