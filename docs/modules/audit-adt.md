@@ -92,3 +92,159 @@ flowchart LR
 | Configure audit | 1 / 9 |
 | Run audit | 4 (agent) / dedicated auditors |
 | Review | 8 / 9 |
+
+## Workflows
+
+### Entry points
+
+| Trigger | Controller / Action / Job | Notes |
+|---|---|---|
+| Web — planned visit list | `AuditController::actionPlannedVisits` | JSON: visits scheduled but not yet completed |
+| Web — not-visited list | `AuditController::actionNotVisited` | JSON: scheduled visits with no recorded outcome |
+| Web — visit history grid | `AuditController::actionVisits` | JSON: completed visit records |
+| Web — rejection reasons | `AuditController::actionAjaxRejects` | JSON: visits rejected with reason |
+| Web — photo report (modern) | `AuditController::actionPhotoReport` | JSON: photo records per client/agent |
+| Web — auditor CRUD index | `AuditorController::actionIndex` | Renders auditor management grid |
+| Web — auditor create | `AuditorController::actionCreateAjax` | Creates `Auditor` + paired `User` (role 11) |
+| Web — auditor update | `AuditorController::actionUpdateAjax` | Updates `Auditor` record |
+| Web — visit summary grid | `AuditsController::actionIndex` | Aggregated visit grid |
+| Web — visit detail | `AuditsController::actionViewDetail` | Single visit breakdown |
+| Web — daily dashboard | `DashboardController::actionDaily` | Per-auditor visit counts and aggregations |
+| Web — shelf-share report | `FacingController::actionIndex` | Shelf-share % by brand/category |
+| Web — photo report view | `PhotoReportController::actionIndex` | Modern photo report page |
+| Web — photo report JSON (by client/agent) | `PhotoReportController::actionAjax` | JSON: photo records filtered by client/agent |
+| Web — photo report JSON (by user) | `PhotoReportController::actionAjax2` | JSON: photo records filtered by USER_ID |
+| Web — photo URL list | `PhotoReportController::actionAjax3` | JSON: raw photo URLs |
+| Web — poll management | `PollController::actionIndex` | Poll/question/variant CRUD |
+| Web — poll results aggregated | `PollResultController::actionIndex` | Aggregated poll result grid |
+| Web — poll result detail | `PollResultController::actionDetail` | Per-poll-question breakdown |
+| Web — price report | `PriceController::actionIndex` | Price min/max/avg report |
+| Web — price JSON | `PriceController::actionAjaxPrice` | JSON: price data per client/product |
+| Web — price client detail | `PriceController::actionDetailClients` | Per-client price drill-down |
+| Web — settings config | `SettingsController::actionIndex` | `AudBrands`/`AudCategory`/`AudProduct`/`AudPlaceType` CRUD |
+| Web — storecheck matrix | `StorecheckController::actionIndex` | MML compliance matrix per client/category |
+| Web — storecheck settings save | `StorecheckController::actionSetting` | Saves per-category MML product list to `audit_storchek_cat` |
+| Web — SKU presence report | `SkuController::actionIndex` | SKU presence report per client/category |
+| Mobile POST | `api3/AuditorController::actionSetphoto` | Writes new `PhotoReport` record during client visit |
+
+### Domain entities
+
+```mermaid
+erDiagram
+    PhotoReport {
+        string CLIENT_ID FK
+        string AGENT_ID FK
+        string USER_ID FK
+        string PARENT
+        string URL
+        string DATE
+        string RATING
+        string STATUS
+    }
+    AudCategory {
+        int ID PK
+        string NAME
+        int PARENT
+        int BRAND
+        int SORT
+        int ACTIVE
+        int FACING_CHECK
+        int MIN
+        int MAX
+    }
+    AudProduct {
+        int ID PK
+        int CAT_ID FK
+    }
+    AuditStorchekCat {
+        string CAT_ID FK
+        int TOTAL_INDEX
+        string MML_PRODUCT
+    }
+    AudSku {
+        string CLIENT_ID FK
+        string USER_ID FK
+        int CAT_ID FK
+        int PRODUCT_ID FK
+        decimal PRICE
+        string DATE
+    }
+    Client {
+        string CLIENT_ID PK
+    }
+
+    PhotoReport }o--|| Client : "CLIENT_ID"
+    AudSku }o--|| Client : "CLIENT_ID"
+    AudSku }o--|| AudCategory : "CAT_ID"
+    AudSku }o--|| AudProduct : "PRODUCT_ID"
+    AuditStorchekCat }o--|| AudCategory : "CAT_ID"
+    AudProduct }o--|| AudCategory : "CAT_ID"
+```
+
+### Workflow 1.1 — Photo-report capture and review
+
+A mobile auditor uploads photos of client shelf state during a visit via the `api3` endpoint; a web reviewer later loads the photo report grid and rates each photo. The audit module's web controllers are purely read-side — they never write to `photo_report` directly.
+
+```mermaid
+sequenceDiagram
+    participant Mobile
+    participant api3
+    participant DB
+    participant Web
+    participant PhotoReportController
+
+    Mobile->>api3: POST /api3/auditor/setphoto (photo file + CLIENT_ID + PARENT)
+    api3->>api3: api3/AuditorController::actionSetphoto — validate + build PhotoReport
+    api3->>DB: INSERT photo_report (URL, CLIENT_ID, AGENT_ID, DATE, STATUS)
+    api3-->>Mobile: 200 OK (saved record ID)
+
+    Web->>PhotoReportController: GET /audit/photo-report (date range + CLIENT_ID filter)
+    PhotoReportController->>DB: SELECT photo_report WHERE CLIENT_ID, DATE (PhotoReportController::actionAjax)
+    DB-->>PhotoReportController: photo_report rows with URL, RATING, STATUS
+    PhotoReportController-->>Web: JSON photo record list
+    Web->>PhotoReportController: POST rating update (RATING field)
+    PhotoReportController->>DB: UPDATE photo_report SET RATING
+    PhotoReportController-->>Web: 200 OK
+```
+
+### Workflow 1.2 — Storecheck (MML) compliance check
+
+An admin configures a minimum must-have product list (MML) per category via `StorecheckController::actionSetting`, which persists the list as a JSON array in `audit_storchek_cat.MML_PRODUCT`. When the storecheck report loads, `StorecheckController::actionIndex` evaluates each client against each category's MML and joins `orders.OrderDetail` to surface the last-order date alongside the compliance result.
+
+```mermaid
+flowchart TD
+    A[Web requests storecheck matrix\nStorecheckController::actionIndex]
+    A -- fetch configs --> B[Load all AuditStorchekCat rows\nReport::getSpravochnikResult]
+    B -- fetch categories --> C[Load all AudCategory configs\nAudCategory::model]
+    C -- loop clients --> D[For each client row]
+    D -- loop categories --> E[For each AuditStorchekCat config]
+    E --> F{MML_PRODUCT\nnon-empty?}
+    F -- No --> G[Mark category: N/A]
+    F -- Yes --> H[json_decode MML_PRODUCT\ninto product ID list]
+    H -- query SKUs --> I[SELECT aud_sku WHERE CLIENT_ID\nAND CAT_ID AND DATE range]
+    I -- evaluate --> J{All MML product IDs\nfound in aud_sku?}
+    J -- Yes --> K[Mark category: Compliant]
+    J -- No --> L[Mark category: Missing — list absent IDs]
+    K -- join orders --> M[JOIN orders.OrderDetail ON CLIENT_ID\nget MAX order date]
+    L -- join orders --> M
+    G -- join orders --> M
+    M -- update row --> N[Append last-order date to client row]
+    N --> O{More categories?}
+    O -- Yes --> E
+    O -- No --> P{More clients?}
+    P -- Yes --> D
+    P -- No --> Q[Render compliance matrix to Web]
+```
+
+### Cross-module touchpoints
+
+- Reads: `clients.Client` (CLIENT_ID lookup in photo report, SKU, and facing queries), `agents.Agent` / `staff.User` (USER_ID and AGENT_ID joins for auditor identity), `orders.OrderDetail` (last-order date JOIN in `StorecheckController::actionIndex`).
+- Writes: `photo_report` from `api3/AuditorController::actionSetphoto`. NO writes from the audit module's own controllers — the audit module is read-only over the data tables; only `SettingsController` writes to `AudBrands`/`AudCategory`/`AudProduct`/`AudPlaceType`, and `StorecheckController::actionSetting` writes to `audit_storchek_cat`.
+- APIs: `POST /api3/auditor/setphoto` → `photo_report` insert. (The `actionAudit`, `actionAuditResult`, and `actionPollResult` endpoints in `api3/AuditorController` belong to the `adt` module's data flow — out of scope here.)
+
+### Gotchas
+
+- The audit module's web reports read `aud_sku`, `aud_facing`, and `poll_result`, but the modern mobile (`api3`) write path writes to `AdtAuditResult` / `AdtPollResult` (in the `adt` module). The actual writer of `aud_sku` / `aud_facing` is **not the api3 AuditorController** — verify before assuming an end-to-end pipeline.
+- `AuditStorchekCat.MML_PRODUCT` is stored as a JSON array of product IDs (varchar/text column). It is decoded inline in `StorecheckController::actionIndex` via `json_decode` — not through a typed accessor. Schema changes here will break the compliance report silently.
+- `Auditor` rows pair 1:1 with a `User` row of role 11 (created in `AuditorController::actionCreateAjax`). Deactivating only the `Auditor` record without deactivating the paired `User` leaves a stale login.
+- No background jobs touch this module — all data is request-driven.
