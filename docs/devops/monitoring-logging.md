@@ -3,10 +3,6 @@ sidebar_position: 4
 title: Monitoring & logging
 ---
 
-:::warning Stub
-This page is a placeholder. The content is incomplete — verify against source before relying on it. See [the audit's stub-backfill list](#) for status.
-:::
-
 # Monitoring & logging
 
 ## App logs

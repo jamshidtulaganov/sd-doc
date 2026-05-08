@@ -52,7 +52,6 @@ protected/modules/warehouse/
 See **Feature · Warehouse + Stock + Inventory** in
 [FigJam · sd-main · Feature Flows](https://www.figma.com/board/MyvyaeEluqvHofH4E2qIoU).
 
-<!-- TODO: missing reject/error branch — see workflow-design.md principle #9 -->
 ```mermaid
 flowchart LR
   S(["Open Add doc"]) --> WT["Pick warehouse + type"]

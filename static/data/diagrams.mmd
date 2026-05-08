@@ -1,78 +1,9 @@
----
-sidebar_position: 7
-title: Diagrams · paste-ready bundle
-audience: Anyone drawing diagrams in Figma / FigJam
-summary: All 33 Mermaid diagrams from the docs site, with titles, source paths and Mermaid kind. Drop each into a Mermaid plugin (FigJam Diagrams, Eraser, etc.) to render in Figma. Single source-of-truth file lives at /static/data/diagrams.mmd.
-topics: [diagrams, mermaid, figma, paste-ready, bundle]
----
+%% SalesDoctor — every Mermaid diagram in the docs site, concatenated.
+%% Generated: 33 diagrams.
+%% Each diagram is preceded by a `%% TITLE:` comment naming it + the source page.
+%% Paste each block into your Mermaid renderer (FigJam Diagrams, Eraser, Mermaid Live, etc.).
 
-# Diagrams · paste-ready bundle
-
-This page lists every Mermaid diagram in the docs site — **33 total** — in one place, ordered for easy paste into Figma. Each block is also kept inline on its source page so the docs stay self-contained.
-
-**Tip**: install one of these Figma plugins, then paste a block:
-
-- **FigJam Diagrams** (built-in) — `Resources → Plugins → Diagrams`
-- **Eraser** — `figma.com/plugins/Eraser`
-- **Mermaid Chart** — official Mermaid plugin for Figma
-
-Or open the raw bundle: [`/static/data/diagrams.mmd`](/data/diagrams.mmd)
-
-## Index
-
-| # | Kind | Title | Source page |
-|---|------|-------|-------------|
-| 01 | `flowchart` | The SalesDoctor ecosystem | `ecosystem` |
-| 02 | `flowchart` | Inter-project integration map | `ecosystem` |
-| 03 | `flowchart` | Key feature catalog by project | `ecosystem` |
-| 04 | `flowchart` | High-level diagram | `architecture/overview` |
-| 05 | `flowchart` | Settlement | `sd-billing/cron-and-settlement` |
-| 06 | `sequence` | Notifications cron | `sd-billing/cron-and-settlement` |
-| 07 | `er` | sd-billing domain model | `sd-billing/domain-model` |
-| 08 | `sequence` | Integration with sd-main & sd-cs | `sd-billing/integration` |
-| 09 | `flowchart` | Architecture diagram | `sd-billing/overview` |
-| 10 | `sequence` | Click flow (canonical) | `sd-billing/payment-gateways` |
-| 11 | `sequence` | Payme flow | `sd-billing/payment-gateways` |
-| 12 | `flowchart` | Subscription & licensing | `sd-billing/subscription-flow` |
-| 13 | `flowchart` | Architecture (diagram) | `sd-cs/overview` |
-| 14 | `flowchart` | Onboarding a new dealer | `sd-cs/sd-main-integration` |
-| 15 | `flowchart` | Key feature flow — Visit & GPS | `modules/agents` |
-| 16 | `flowchart` | Key feature flow — Submission | `modules/audit-adt` |
-| 17 | `flowchart` | Approval workflow | `modules/clients` |
-| 18 | `flowchart` | Key feature flow — Order export | `modules/integration` |
-| 19 | `flowchart` | Key feature flow — Stocktake | `modules/inventory` |
-| 20 | `flowchart` | Key feature flow — Online order | `modules/onlineOrder` |
-| 21 | `state` | Status machine | `modules/orders` |
-| 22 | `sequence` | Key feature flow — Create order | `modules/orders` |
-| 23 | `flowchart` | Approval flow | `modules/payment` |
-| 24 | `flowchart` | Key feature flow — Report run | `modules/report` |
-| 25 | `sequence` | Key feature flow — SMS dispatch | `modules/sms` |
-| 26 | `flowchart` | Key feature flow — Defect & Return | `modules/stock` |
-| 27 | `flowchart` | Key feature flow — Goods receipt | `modules/warehouse` |
-| 28 | `er` | Mermaid (full graph) | `data/erd-real` |
-| 29 | `er` | Entity-relationship diagram | `data/erd` |
-| 30 | `flowchart` | Ingestion pipeline (high level) | `team/rag-indexing` |
-| 31 | `flowchart` | Before / after — payment approval flow | `team/workflow-design` |
-| 32 | `flowchart` | Swimlane recipe | `team/workflow-design` |
-| 33 | `flowchart` | Topology overview | `devops/deployment` |
-
-## Counts by kind
-
-| Mermaid kind | Count |
-|--------------|-------|
-| `er` | 3 |
-| `flowchart` | 23 |
-| `sequence` | 6 |
-| `state` | 1 |
-
-## Diagrams (in suggested paste order)
-
-### 01. The SalesDoctor ecosystem
-
-- Kind: `flowchart`
-- Source: `ecosystem`
-
-````mermaid
+%% === [01] FLOWCHART · The SalesDoctor ecosystem · (ecosystem.md) ===
 flowchart LR
   subgraph HQ["Brand owner / HQ"]
     CS["sd-cs"]
@@ -109,14 +40,8 @@ flowchart LR
   style DealerA fill:#ffffff,stroke:#cccccc
   style DealerB fill:#ffffff,stroke:#cccccc
   style Vendor fill:#ffffff,stroke:#cccccc
-````
 
-### 02. Inter-project integration map
-
-- Kind: `flowchart`
-- Source: `ecosystem`
-
-````mermaid
+%% === [02] FLOWCHART · Inter-project integration map · (ecosystem.md) ===
 flowchart TB
   subgraph Billing["sd-billing (vendor)"]
     B_API["api/license + api/host + api/click + api/payme"]
@@ -154,14 +79,8 @@ flowchart TB
   style Billing fill:#ffffff,stroke:#cccccc
   style Main fill:#ffffff,stroke:#cccccc
   style CS fill:#ffffff,stroke:#cccccc
-````
 
-### 03. Key feature catalog by project
-
-- Kind: `flowchart`
-- Source: `ecosystem`
-
-````mermaid
+%% === [03] FLOWCHART · Key feature catalog by project · (ecosystem.md) ===
 flowchart TB
   subgraph SDMain["sd-main · Dealer CRM"]
     direction TB
@@ -203,14 +122,8 @@ flowchart TB
   style SDMain fill:#ffffff,stroke:#cccccc
   style SDCs fill:#ffffff,stroke:#cccccc
   style SDBilling fill:#ffffff,stroke:#cccccc
-````
 
-### 04. High-level diagram
-
-- Kind: `flowchart`
-- Source: `architecture/overview`
-
-````mermaid
+%% === [04] FLOWCHART · High-level diagram · (architecture/overview.md) ===
 flowchart LR
   subgraph Clients
     WB[Web Admin]
@@ -267,14 +180,8 @@ flowchart LR
   style Edge fill:#ffffff,stroke:#cccccc
   style App fill:#ffffff,stroke:#cccccc
   style Data fill:#ffffff,stroke:#cccccc
-````
 
-### 05. Settlement
-
-- Kind: `flowchart`
-- Source: `sd-billing/cron-and-settlement`
-
-````mermaid
+%% === [05] FLOWCHART · Settlement · (sd-billing/cron-and-settlement.md) ===
 flowchart LR
   S(["01:00 cron"]) --> READ["Pull last-month payments grouped by Distributor + Diler"]
   READ --> CALC["Compute share % per agreement"]
@@ -292,14 +199,8 @@ flowchart LR
   classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
   classDef external fill:#f3f4f6,stroke:#374151,color:#000
   classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
-````
 
-### 06. Notifications cron
-
-- Kind: `sequence`
-- Source: `sd-billing/cron-and-settlement`
-
-````mermaid
+%% === [06] SEQUENCE · Notifications cron · (sd-billing/cron-and-settlement.md) ===
 sequenceDiagram
   participant CR as cron notify
   participant DB as MySQL
@@ -320,14 +221,8 @@ sequenceDiagram
       CR->>DB: mark sent
     end
   end
-````
 
-### 07. sd-billing domain model
-
-- Kind: `er`
-- Source: `sd-billing/domain-model`
-
-````mermaid
+%% === [07] ER · sd-billing domain model · (sd-billing/domain-model.md) ===
 erDiagram
   DISTRIBUTOR ||--o{ DILER : owns
   DILER ||--o{ SUBSCRIPTION : has
@@ -440,14 +335,8 @@ erDiagram
     int ID PK
     string NAME
   }
-````
 
-### 08. Integration with sd-main & sd-cs
-
-- Kind: `sequence`
-- Source: `sd-billing/integration`
-
-````mermaid
+%% === [08] SEQUENCE · Integration with sd-main & sd-cs · (sd-billing/integration.md) ===
 sequenceDiagram
   participant B as sd-billing
   participant M as sd-main (dealer)
@@ -467,14 +356,8 @@ sequenceDiagram
   Note over B,M: Licence expiry
   B->>M: api/billing/license (DELETE)
   M->>M: clear protected/license2/*
-````
 
-### 09. Architecture diagram
-
-- Kind: `flowchart`
-- Source: `sd-billing/overview`
-
-````mermaid
+%% === [09] FLOWCHART · Architecture diagram · (sd-billing/overview.md) ===
 flowchart LR
   subgraph Inbound["Money & data in"]
     PG[("Payment gateways<br/>Click · Payme · Paynet · MBANK · P2P")]
@@ -525,14 +408,8 @@ flowchart LR
   style Bill fill:#ffffff,stroke:#cccccc
   style Out fill:#ffffff,stroke:#cccccc
   style DB fill:#ffffff,stroke:#cccccc
-````
 
-### 10. Click flow (canonical)
-
-- Kind: `sequence`
-- Source: `sd-billing/payment-gateways`
-
-````mermaid
+%% === [10] SEQUENCE · Click flow (canonical) · (sd-billing/payment-gateways.md) ===
 sequenceDiagram
   participant U as User
   participant C as Click
@@ -551,14 +428,8 @@ sequenceDiagram
   API->>D: Diler.BALANS += summa (DB trigger)
   API->>D: deleteLicense() + refresh()
   API-->>C: 200
-````
 
-### 11. Payme flow
-
-- Kind: `sequence`
-- Source: `sd-billing/payment-gateways`
-
-````mermaid
+%% === [11] SEQUENCE · Payme flow · (sd-billing/payment-gateways.md) ===
 sequenceDiagram
   participant Pa as Payme
   participant API as api/payme
@@ -571,14 +442,8 @@ sequenceDiagram
   Pa->>API: PerformTransaction
   API->>DB: PaymeTransaction (performed) + Payment TYPE=payme
   API-->>Pa: result
-````
 
-### 12. Subscription & licensing
-
-- Kind: `flowchart`
-- Source: `sd-billing/subscription-flow`
-
-````mermaid
+%% === [12] FLOWCHART · Subscription & licensing · (sd-billing/subscription-flow.md) ===
 flowchart LR
   S(["Dealer signs up"]) --> P["Pay (online or offline)"]
   P --> B["Diler.BALANS += summa"]
@@ -602,14 +467,8 @@ flowchart LR
   classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
   classDef external fill:#f3f4f6,stroke:#374151,color:#000
   classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
-````
 
-### 13. Architecture (diagram)
-
-- Kind: `flowchart`
-- Source: `sd-cs/overview`
-
-````mermaid
+%% === [13] FLOWCHART · Architecture (diagram) · (sd-cs/overview.md) ===
 flowchart LR
   HQ[HQ users] --> APP[sd-cs]
   APP --> OWN[(MySQL cs_*)]
@@ -623,14 +482,8 @@ flowchart LR
   classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
   classDef external fill:#f3f4f6,stroke:#374151,color:#000
   classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
-````
 
-### 14. Onboarding a new dealer
-
-- Kind: `flowchart`
-- Source: `sd-cs/sd-main-integration`
-
-````mermaid
+%% === [14] FLOWCHART · Onboarding a new dealer · (sd-cs/sd-main-integration.md) ===
 flowchart LR
   A(["New dealer signs contract"]) --> B["sd-billing creates Diler row"]
   B --> C["sd-billing pushes licence file"]
@@ -650,14 +503,8 @@ flowchart LR
   classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
   classDef external fill:#f3f4f6,stroke:#374151,color:#000
   classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
-````
 
-### 15. Key feature flow — Visit & GPS
-
-- Kind: `flowchart`
-- Source: `modules/agents`
-
-````mermaid
+%% === [15] FLOWCHART · Key feature flow — Visit & GPS · (modules/agents.md) ===
 flowchart LR
   CK(["Tap Check-in"]) --> POS["Read GPS"]
   POS --> POST["POST /api3/visit"]
@@ -676,14 +523,8 @@ classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
 class CK,POS,POST,WORK,CO action
 class OK success
 class WARN reject
-````
 
-### 16. Key feature flow — Submission
-
-- Kind: `flowchart`
-- Source: `modules/audit-adt`
-
-````mermaid
+%% === [16] FLOWCHART · Key feature flow — Submission · (modules/audit-adt.md) ===
 flowchart LR
   V(["At client"]) --> Q["Answer poll"]
   Q --> F["Mark facing"]
@@ -703,14 +544,8 @@ flowchart LR
   class V,Q,F,P,SUB,AR action
   class RV approval
   class KPI success
-````
 
-### 17. Approval workflow
-
-- Kind: `flowchart`
-- Source: `modules/clients`
-
-````mermaid
+%% === [17] FLOWCHART · Approval workflow · (modules/clients.md) ===
 flowchart LR
   A["Agent creates client"] --> P["ClientPending"]
   P --> M["Manager review"]
@@ -728,14 +563,8 @@ class M approval
 class C success
 class R reject
 class X external
-````
 
-### 18. Key feature flow — Order export
-
-- Kind: `flowchart`
-- Source: `modules/integration`
-
-````mermaid
+%% === [18] FLOWCHART · Key feature flow — Order export · (modules/integration.md) ===
 flowchart LR
   S(["Order Loaded/Delivered"]) --> J["Enqueue ExportOrderJob"]
   J --> C{"Provider"}
@@ -757,14 +586,8 @@ classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
 class S,J,LOG,BACK action
 class S1,S2,S3 external
 class DONE success
-````
 
-### 19. Key feature flow — Stocktake
-
-- Kind: `flowchart`
-- Source: `modules/inventory`
-
-````mermaid
+%% === [19] FLOWCHART · Key feature flow — Stocktake · (modules/inventory.md) ===
 flowchart LR
   M(["Manager creates doc"]) --> SC["Operators scan"]
   SC --> CALC["Compute deltas vs Stock"]
@@ -782,14 +605,8 @@ flowchart LR
   class M,SC,CALC action
   class REV approval
   class POST success
-````
 
-### 20. Key feature flow — Online order
-
-- Kind: `flowchart`
-- Source: `modules/onlineOrder`
-
-````mermaid
+%% === [20] FLOWCHART · Key feature flow — Online order · (modules/onlineOrder.md) ===
 flowchart LR
   C(["Customer login api4"]) --> CAT["Catalog"]
   CAT --> CRT["Cart"]
@@ -810,14 +627,8 @@ flowchart LR
   class C,CAT,CRT,SUB,ORD,PAY,CB action
   class RDR external
   class AP success
-````
 
-### 21. Status machine
-
-- Kind: `state`
-- Source: `modules/orders`
-
-````mermaid
+%% === [21] STATE · Status machine · (modules/orders.md) ===
 stateDiagram-v2
   [*] --> Draft
   Draft --> New
@@ -837,14 +648,8 @@ stateDiagram-v2
     SUB_STATUS carries fine-grained reasons
     (e.g. "awaiting cashier").
   end note
-````
 
-### 22. Key feature flow — Create order
-
-- Kind: `sequence`
-- Source: `modules/orders`
-
-````mermaid
+%% === [22] SEQUENCE · Key feature flow — Create order · (modules/orders.md) ===
 sequenceDiagram
   participant A as Agent
   participant API as api3
@@ -859,14 +664,8 @@ sequenceDiagram
   else invalid
     API-->>A: error code
   end
-````
 
-### 23. Approval flow
-
-- Kind: `flowchart`
-- Source: `modules/payment`
-
-````mermaid
+%% === [23] FLOWCHART · Approval flow · (modules/payment.md) ===
 flowchart LR
   A["Agent collects cash"] --> B["Pay record created"]
   B --> C{"Approval needed?"}
@@ -883,14 +682,8 @@ classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
 class A,B,F action
 class D approval
 class E success
-````
 
-### 24. Key feature flow — Report run
-
-- Kind: `flowchart`
-- Source: `modules/report`
-
-````mermaid
+%% === [24] FLOWCHART · Key feature flow — Report run · (modules/report.md) ===
 flowchart LR
   U(["Open report"]) --> F["Set filters"]
   F --> CHK{"Cache hit?"}
@@ -911,14 +704,8 @@ flowchart LR
   class U,F,CHK,R,SQL,EX action
   class CACHE external
   class XLS success
-````
 
-### 25. Key feature flow — SMS dispatch
-
-- Kind: `sequence`
-- Source: `modules/sms`
-
-````mermaid
+%% === [25] SEQUENCE · Key feature flow — SMS dispatch · (modules/sms.md) ===
 sequenceDiagram
   participant E as Trigger
   participant Q as Queue
@@ -930,14 +717,8 @@ sequenceDiagram
   P-->>J: 202
   P->>CB: DLR
   CB->>J: status delivered/failed
-````
 
-### 26. Key feature flow — Defect & Return
-
-- Kind: `flowchart`
-- Source: `modules/stock`
-
-````mermaid
+%% === [26] FLOWCHART · Key feature flow — Defect & Return · (modules/stock.md) ===
 flowchart LR
   D(["Delivery"]) --> CHK{"All lines accepted (no defect)?"}
   CHK -->|yes| OK["STATUS=Delivered"]
@@ -952,14 +733,8 @@ classDef external fill:#f3f4f6,stroke:#374151,color:#000
 classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
 class D,DEF,RTS,RPT action
 class OK success
-````
 
-### 27. Key feature flow — Goods receipt
-
-- Kind: `flowchart`
-- Source: `modules/warehouse`
-
-````mermaid
+%% === [27] FLOWCHART · Key feature flow — Goods receipt · (modules/warehouse.md) ===
 flowchart LR
   S(["Open Add doc"]) --> WT["Pick warehouse + type"]
   WT --> ADD["Scan/pick lines"]
@@ -976,14 +751,8 @@ flowchart LR
 
   class S,WT,ADD,SAV,POST action
   class SYNC external
-````
 
-### 28. Mermaid (full graph)
-
-- Kind: `er`
-- Source: `data/erd-real`
-
-````mermaid
+%% === [28] ER · Mermaid (full graph) · (data/erd-real.md) ===
 erDiagram
   ADTAUDIT ||--o{ ADTAUDITPRODUCTS : has_many_AUDIT_ID
   ADTAUDIT ||--o{ ADTAUDITUSERS : has_many_AUDIT_ID
@@ -1078,14 +847,8 @@ erDiagram
   VISIT ||--o| ADTCOMMENTRESULT : has_one_VISIT_ID
   VISITINGAUD }o--|| STRUCTUREFILIAL : belongs_to_AUDITOR_ID
   VISITINGAUD }o--|| CLIENT : belongs_to_CLIENT_ID
-````
 
-### 29. Entity-relationship diagram
-
-- Kind: `er`
-- Source: `data/erd`
-
-````mermaid
+%% === [29] ER · Entity-relationship diagram · (data/erd.md) ===
 erDiagram
   FILIAL ||--o{ USER : has
   FILIAL ||--o{ AGENT : employs
@@ -1107,14 +870,8 @@ erDiagram
   AUDIT ||--o{ AUDIT_RESULT : produces
   AUDIT_RESULT }o--|| CLIENT : at
   GPS_TRACK }o--|| AGENT : from
-````
 
-### 30. Ingestion pipeline (high level)
-
-- Kind: `flowchart`
-- Source: `team/rag-indexing`
-
-````mermaid
+%% === [30] FLOWCHART · Ingestion pipeline (high level) · (team/rag-indexing.md) ===
 flowchart LR
   REPO(["sd-docs git repo"]) --> BUILD["Docusaurus build"]
   BUILD --> RAW["Markdown + frontmatter"]
@@ -1133,14 +890,8 @@ flowchart LR
   class REPO,BUILD,RAW,CHUNK action
   class EMB,VDB external
   class CHAT success
-````
 
-### 31. Before / after — payment approval flow
-
-- Kind: `flowchart`
-- Source: `team/workflow-design`
-
-````mermaid
+%% === [31] FLOWCHART · Before / after — payment approval flow · (team/workflow-design.md) ===
 flowchart LR
   A["Agent collects cash"] --> B["Pay record created"]
   B --> C{"Approval needed?"}
@@ -1159,14 +910,8 @@ flowchart LR
   class C,D,E approval
   class F success
   class R reject
-````
 
-### 32. Swimlane recipe
-
-- Kind: `flowchart`
-- Source: `team/workflow-design`
-
-````mermaid
+%% === [32] FLOWCHART · Swimlane recipe · (team/workflow-design.md) ===
 flowchart TB
   subgraph Agent
     A1["Collect payment"]
@@ -1191,14 +936,8 @@ flowchart TB
   class A1 action
   class C1,C2 approval
   class S1,S2 external
-````
 
-### 33. Topology overview
-
-- Kind: `flowchart`
-- Source: `devops/deployment`
-
-````mermaid
+%% === [33] FLOWCHART · Topology overview · (devops/deployment.md) ===
 flowchart LR
     subgraph "sd-main (dealer CRM)"
         M_IMG[php:7.3-fpm + nginx<br/>1 container]
@@ -1220,5 +959,4 @@ flowchart LR
     classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
     classDef external fill:#f3f4f6,stroke:#374151,color:#000
     classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
-````
 

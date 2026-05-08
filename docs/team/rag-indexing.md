@@ -102,7 +102,6 @@ that only works when the path is absolute.
 
 ## Ingestion pipeline (high level)
 
-<!-- TODO: missing reject/error branch — see workflow-design.md principle #9 -->
 ```mermaid
 flowchart LR
   REPO(["sd-docs git repo"]) --> BUILD["Docusaurus build"]

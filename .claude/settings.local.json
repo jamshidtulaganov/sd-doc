@@ -5,7 +5,9 @@
       "Bash(command -v fnm)",
       "Bash(command -v volta)",
       "Read(//Users/jamshid/**)",
-      "Bash(npm i *)"
+      "Bash(npm i *)",
+      "Bash(python3)",
+      "Bash(npx --no-install docusaurus build --no-minify)"
     ]
   }
 }

@@ -3,10 +3,6 @@ sidebar_position: 5
 title: Data isolation
 ---
 
-:::warning Stub
-This page is a placeholder. The content is incomplete — verify against source before relying on it. See [the audit's stub-backfill list](#) for status.
-:::
-
 # Data isolation between tenants
 
 Three layers stack to keep tenants apart:

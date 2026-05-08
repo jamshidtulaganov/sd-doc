@@ -125,7 +125,6 @@ const sidebars = {
             'data/erd-real',
             'data/schema-reference',
             'data/core-entities',
-            'data/diagrams-paste-ready',
             'data/conventions',
             'data/migrations',
           ],

@@ -55,7 +55,6 @@ governed by `params.excelFormat`:
 See **Feature · Report Run & Excel Export** in
 [FigJam · sd-main · Feature Flows](https://www.figma.com/board/MyvyaeEluqvHofH4E2qIoU).
 
-<!-- TODO: missing reject/error branch — see workflow-design.md principle #9 -->
 ```mermaid
 flowchart LR
   U(["Open report"]) --> F["Set filters"]

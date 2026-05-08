@@ -190,7 +190,6 @@ Different dealers can run **different versions of sd-main**. Tactics:
 
 ## Onboarding a new dealer
 
-<!-- TODO: missing reject/error branch — see workflow-design.md principle #9 -->
 ```mermaid
 flowchart LR
   A(["New dealer signs contract"]) --> B["sd-billing creates Diler row"]

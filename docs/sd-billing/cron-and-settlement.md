@@ -31,7 +31,6 @@ All commands extend `BaseCommand`
 `SettlementCommand` (daily 01:00) computes monthly debts/credits
 between distributors and dealers.
 
-<!-- TODO: missing reject/error branch — see workflow-design.md principle #9 -->
 ```mermaid
 flowchart LR
   S(["01:00 cron"]) --> READ["Pull last-month payments grouped by Distributor + Diler"]

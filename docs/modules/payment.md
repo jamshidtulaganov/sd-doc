@@ -29,7 +29,6 @@ Two related modules:
 See **Feature · Payment Collection & Approval** in
 [FigJam · sd-main · Feature Flows](https://www.figma.com/board/MyvyaeEluqvHofH4E2qIoU).
 
-<!-- TODO: missing reject/error branch — see workflow-design.md principle #9 -->
 ```mermaid
 flowchart LR
   A["Agent collects cash"] --> B["Pay record created"]

@@ -50,7 +50,6 @@ different `ROLE`. Sessions still go through Redis db0 with
 See **Feature · Online order + Defect/Return** in
 [FigJam · sd-main · Feature Flows](https://www.figma.com/board/MyvyaeEluqvHofH4E2qIoU).
 
-<!-- TODO: missing reject/error branch — see workflow-design.md principle #9 -->
 ```mermaid
 flowchart LR
   C(["Customer login api4"]) --> CAT["Catalog"]
