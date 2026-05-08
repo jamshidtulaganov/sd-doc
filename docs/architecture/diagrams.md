@@ -79,13 +79,87 @@ Each diagram in the master can be exported individually. Drop PNGs into `static/
 ![Ecosystem](/diagrams/ecosystem.png)
 ```
 
-## Re-generating
+## How to add or update a diagram
 
-Edit the Mermaid block in the matching source doc. To refresh the FigJam copy:
+The Mermaid in the source docs is canonical. The FigJam master is a regenerable copy. Edit the doc first, lint, then push the FigJam.
 
-1. Locate the diagram on the master board (note its current Section).
-2. Use `use_figma` to find and remove the existing diagram nodes.
-3. Use `generate_diagram` with `fileKey: y2kWMuxLwrpdaCGhVwYYYI` and the new Mermaid.
-4. Use `use_figma` to move the just-generated nodes back into the same Section.
+### Prerequisites
 
-The bracket-and-move pattern (snapshot top-level node IDs before generate; diff after) is documented in the resumption agent prompt history. Single-diagram regenerations are quick.
+- Figma MCP with `generate_diagram` and `use_figma` tools available. (At time of writing, the `959fd320-…` server that exposes both is intermittent. If only the read-only Figma MCP is connected, you can author + lint Mermaid in the docs but cannot push to FigJam — defer the FigJam refresh to a later session.)
+- Master `fileKey`: `y2kWMuxLwrpdaCGhVwYYYI`.
+- The cookbook: [Workflow design standards · Mermaid styling cookbook](../team/workflow-design.md#mermaid-styling-cookbook).
+
+### A. Update an existing diagram
+
+When the source Mermaid changes (e.g. a state transition added, a label tightened):
+
+1. **Edit the Mermaid block** in the source doc. Match the cookbook — measurable predicates, role-named action nodes, white subgraph fills, classDef colours.
+2. **Lint locally** to catch render errors before pushing:
+   ```bash
+   npm run lint:mermaid -- docs/path/to/file.md
+   ```
+   Or run against the whole repo: `npm run lint:mermaid`.
+3. **Find the existing diagram on the master** by name. Run a `use_figma` query:
+   ```js
+   // skillNames: "figma-use", fileKey: y2kWMuxLwrpdaCGhVwYYYI
+   const TARGET_NAME = "Order State Machine"; // exact diagram name
+   const sections = figma.root.children[0].children.filter(n => n.type === "SECTION");
+   const matches = [];
+   for (const s of sections) {
+     for (const child of s.children) {
+       if (child.name === TARGET_NAME || (child.children || []).some(c => c.name === TARGET_NAME)) {
+         matches.push({ sectionId: s.id, sectionName: s.name, nodeId: child.id, nodeName: child.name });
+       }
+     }
+   }
+   return { matches };
+   ```
+4. **Remove the old diagram nodes** from inside that Section (run a follow-up `use_figma` with the IDs returned). Keep the Section itself.
+5. **Generate the new Mermaid** into the file:
+   ```
+   generate_diagram(
+     name: "Order State Machine",
+     fileKey: "y2kWMuxLwrpdaCGhVwYYYI",
+     mermaidSyntax: <verbatim block from the doc, without the ```mermaid fences>,
+     userIntent: "Refresh after edit in docs/modules/orders.md"
+   )
+   ```
+6. **Move the new nodes back into the right Section** using the bracket-and-move pattern:
+   ```js
+   // Snapshot BEFORE generate (run as use_figma):
+   const page = figma.root.children[0];
+   await figma.setCurrentPageAsync(page);
+   return { ids: page.children.map(n => n.id) };
+   ```
+   ```js
+   // After generate, run use_figma with PRE_IDS captured above + TARGET_SECTION_ID:
+   const PRE_IDS = ["..."]; // from snapshot
+   const TARGET_SECTION_ID = "...";
+   const page = figma.root.children[0];
+   await figma.setCurrentPageAsync(page);
+   const newNodes = page.children.filter(n => !PRE_IDS.includes(n.id));
+   const target = await figma.getNodeByIdAsync(TARGET_SECTION_ID);
+   for (const n of newNodes) target.appendChild(n);
+   return { moved: newNodes.length };
+   ```
+7. **Commit the doc edit** with a message like `Update <flow> diagram (refreshed in master FigJam)`.
+
+### B. Add a brand-new diagram
+
+When a new feature flow joins the catalog:
+
+1. **Write the Mermaid block** in the right source doc (same module page where the prose lives — keep source-of-truth single-page-per-feature).
+2. **Lint** as above.
+3. **Decide the target Section** on the master (one of the six listed earlier on this page). If the diagram doesn't fit any existing section, propose a new section in PR review before pushing.
+4. **Note the Section's id** by reading `figma.root.children[0].children` once.
+5. **Bracket-and-move**: snapshot pre-generate IDs → call `generate_diagram` → diff and move into target Section. Same pattern as step 6 above.
+6. **Update this `diagrams.md` page** if the new diagram should appear in the per-section table.
+7. **Commit** the source doc + this page in one commit.
+
+### C. Tool unavailable today — what to do anyway
+
+If `generate_diagram` / `use_figma` are not connected:
+
+- Edit the Mermaid in the doc, lint with `npm run lint:mermaid`, commit. The doc lands; FigJam is stale.
+- Open a follow-up issue: `Sync <diagram name> to master FigJam`.
+- Next time the MCP is back, run the procedure in A or B for each pending diagram. The same Mermaid in the doc is still canonical — no rework needed.
