@@ -4,7 +4,7 @@ title: sd-main · Dealer CRM
 slug: /sd-main
 audience: All sd-main developers, PM, QA
 summary: Landing page for the sd-main project — the dealer CRM (Yii 1.x PHP, multi-tenant, mobile + web + B2B online). Sub-trees cover System Architecture, Workflows (modules + APIs + integrations + frontend + UI), and Data Schemes.
-topics: [sd-main, dealer-crm, yii, sales-force-automation, distribution]
+topics: [sd-main, dealer-crm, yii, distribution]
 ---
 
 # sd-main — Dealer CRM
