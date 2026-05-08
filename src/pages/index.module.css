@@ -1,0 +1,235 @@
+/* Homepage layout — project-first developer landing. */
+
+.hero {
+  padding: 4rem 0 3rem;
+  background: linear-gradient(
+    180deg,
+    var(--ifm-color-primary-lightest) 0%,
+    var(--ifm-background-color) 100%
+  );
+  text-align: left;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+  color: var(--ifm-color-primary-darkest);
+}
+
+.heroTagline {
+  font-size: 1.25rem;
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 1.25rem;
+  font-weight: 500;
+}
+
+.heroLede {
+  max-width: 720px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ifm-color-emphasis-800);
+  margin-bottom: 2rem;
+}
+
+.heroLede code {
+  background: var(--ifm-color-primary-lightest);
+  color: var(--ifm-color-primary-darkest);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.heroCtas {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+[data-theme='dark'] .hero {
+  background: linear-gradient(
+    180deg,
+    rgba(96, 165, 250, 0.12) 0%,
+    var(--ifm-background-color) 100%
+  );
+}
+
+[data-theme='dark'] .heroTitle {
+  color: var(--ifm-color-primary-lightest);
+}
+
+[data-theme='dark'] .heroLede code {
+  background: rgba(96, 165, 250, 0.18);
+  color: var(--ifm-color-primary-lightest);
+}
+
+/* Sections */
+
+.section {
+  padding: 3.5rem 0;
+}
+
+.sectionAlt {
+  background: var(--ifm-color-emphasis-100);
+}
+
+[data-theme='dark'] .sectionAlt {
+  background: var(--ifm-color-emphasis-200);
+}
+
+.sectionTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.sectionLede {
+  font-size: 1rem;
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 2rem;
+  max-width: 720px;
+}
+
+/* Project cards */
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 996px) {
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 12px;
+  background: var(--ifm-background-color);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.card:hover {
+  text-decoration: none;
+  color: inherit;
+  transform: translateY(-2px);
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.12);
+}
+
+.cardHead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.cardLabel {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary-darkest);
+}
+
+[data-theme='dark'] .cardLabel {
+  color: var(--ifm-color-primary-lightest);
+}
+
+.cardSublabel {
+  font-size: 0.95rem;
+  color: var(--ifm-color-emphasis-700);
+  font-weight: 500;
+}
+
+.cardSummary {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ifm-color-emphasis-800);
+  margin-bottom: 1rem;
+}
+
+.cardBullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.25rem;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.cardBullets li {
+  padding: 0.25rem 0;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.cardBullets li:first-child {
+  border-top: none;
+}
+
+.cardCta {
+  margin-top: auto;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ifm-color-primary);
+}
+
+/* Quick links */
+
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 996px) {
+  .linksGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.linksCol {
+  min-width: 0;
+}
+
+.linksTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 0.75rem;
+}
+
+.linksList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.linksList li {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  font-size: 0.95rem;
+}
+
+.linksList li:last-child {
+  border-bottom: none;
+}
+
+.linksList a {
+  color: var(--ifm-color-emphasis-900);
+  text-decoration: none;
+}
+
+.linksList a:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: underline;
+}
