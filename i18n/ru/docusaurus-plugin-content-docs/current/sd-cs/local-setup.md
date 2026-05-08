@@ -149,7 +149,7 @@ public function actionPing() {
 - **Сессии идут через Redis.** При недоступном Redis логин тихо
   падает (`CCacheHttpSession` не может persist`ить). Проверьте логи
   `protected/runtime` сначала, когда логин выглядит сломанным.
-- **Override`ы `themes/classic/` побеждают.** Если правка view не показывается,
+- **Оверрайды в `themes/classic/` побеждают.** Если правка view не показывается,
   проверьте, не затеняет ли `themes/classic/views/<...>` файл, который вы редактировали.
 - **Permissions на `assets/`.** `default_folders.php` создаёт её 0777, но
   если ваш webserver-юзер отличается от вашего CLI-юзера, регенерируйте или
