@@ -87,7 +87,7 @@ part of the auth hardening track**.
 
 ## See also
 
-- [sd-main billing module](/docs/billing/integration)
+- [sd-main billing-integration surface (legacy redirect)](/docs/billing/overview)
 - [Subscription flow](./subscription-flow.md)
 - [Cron & settlement](./cron-and-settlement.md)
 - [Security landmines](./security-landmines.md)

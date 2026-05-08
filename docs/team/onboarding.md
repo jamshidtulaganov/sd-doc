@@ -32,7 +32,7 @@ running.
       cd sd-docs && npm install && npm run start
       ```
 - [ ] Read these pages in order:
-      1. [Introduction](../intro.md)
+      1. [Introduction](/docs/intro)
       2. [Ecosystem](../ecosystem.md)
       3. [Architecture overview](../architecture/overview.md)
       4. [Tech stack](../architecture/tech-stack.md)
@@ -47,7 +47,7 @@ request.
 
 **Must read** (everyone, in order):
 
-- [ ] [Introduction](../intro.md)
+- [ ] [Introduction](/docs/intro)
 - [ ] [Ecosystem](../ecosystem.md)
 - [ ] [Architecture overview](../architecture/overview.md)
 - [ ] [Local setup](../project/local-setup.md) — bring up sd-main

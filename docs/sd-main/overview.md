@@ -17,9 +17,9 @@ The sub-trees below split sd-main's docs three ways. Pick the one that matches w
 
 | Sub-tree | What's inside | Start here when… |
 |----------|---------------|------------------|
-| **[System Architecture](./architecture/overview.md)** | Tech stack, multi-tenancy, caching, jobs & scheduling, project layout, security, deployment | You're onboarding, debugging cross-cutting behaviour, or operating the platform |
-| **[Workflows](./modules/overview.md)** | Every module + API surface + integrations + frontend + UI patterns | You're building or changing a feature |
-| **[Data Schemes](./data/overview.md)** | ERD, core entities, schema conventions, migrations | You're touching the database or writing a report |
+| **[System Architecture](../architecture/overview.md)** | Tech stack, multi-tenancy, caching, jobs & scheduling, project layout, security, deployment | You're onboarding, debugging cross-cutting behaviour, or operating the platform |
+| **[Workflows](../modules/overview.md)** | Every module + API surface + integrations + frontend + UI patterns | You're building or changing a feature |
+| **[Data Schemes](../data/overview.md)** | ERD, core entities, schema conventions, migrations | You're touching the database or writing a report |
 
 ## At a glance
 

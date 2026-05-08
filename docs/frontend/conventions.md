@@ -116,7 +116,7 @@ Wrap every visible string:
   [Tech stack](../architecture/tech-stack.md)).
 - Adding a new key in `ru` only is acceptable for an RU-first feature,
   but plan for EN + UZ within the same release. The
-  [onboarding starter ticket](../team/onboarding.md#starter-tickets)
+  [onboarding starter ticket](../team/onboarding.md#week-1)
   list includes "fill missing translations" tasks for this reason.
 
 ## Calling APIs from the frontend

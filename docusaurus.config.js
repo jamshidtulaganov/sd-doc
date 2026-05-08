@@ -59,6 +59,7 @@ const config = {
         logo: {
           alt: 'SalesDoctor',
           src: 'img/logo.svg',
+          href: '/docs/intro',
         },
         items: [
           {

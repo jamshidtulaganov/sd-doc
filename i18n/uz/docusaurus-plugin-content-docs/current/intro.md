@@ -11,7 +11,7 @@ slug: /intro
 ijarali CRM tizimi: vansel sotuv, merchandayzing, marshrut hisoboti.
 
 Ushbu hujjatlar **dasturchilar** uchun mo'ljallangan. Foydalanuvchilar
-uchun hujjatlar — [Mijoz hujjatlari](/client/intro).
+uchun hujjatlar alohida saqlanadi va ushbu saytga kirmaydi.
 
 ## Tizim nima qiladi
 

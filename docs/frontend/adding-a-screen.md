@@ -224,7 +224,7 @@ Per [Getting started · Smoke-test checklist](./getting-started.md#smoke-test-ch
 
 For a vanilla list-with-filter screen, the orders list view is the
 canonical example. Per
-[UI · Wireframes · Component cheat-sheet](../ui/wireframes.md#component-cheat-sheet),
+[UI · Component catalog](../ui/component-catalog.md),
 `protected/views/orders/list.php` exemplifies the default
 table + filter pattern. Read it before writing your own.
 
