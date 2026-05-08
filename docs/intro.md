@@ -3,15 +3,15 @@ sidebar_position: 1
 title: Introduction
 slug: /intro
 audience: New developers, all team members
-summary: SalesDoctor / Novus Distribution is a multi-tenant Sales Force Automation and Distribution CRM. Three projects — sd-cs (HQ), sd-main (dealer CRM), sd-billing (subscriptions). This site is the developer documentation, also fed into the team's RAG / vector DB knowledge base.
-topics: [overview, introduction, sales-force-automation, distribution, crm, multi-tenant]
+summary: SalesDoctor / Novus Distribution is a multi-tenant Distribution CRM platform. Three projects — sd-cs (HQ), sd-main (dealer CRM), sd-billing (subscriptions). This site is the developer documentation, also fed into the team's RAG / vector DB knowledge base.
+topics: [overview, introduction, distribution, crm, multi-tenant]
 ---
 
 # Introduction
 
 **SalesDoctor** (internal name **Novus Distribution**, codebase folder
-`sd-main`) is a multi-tenant **Sales Force Automation (SFA) and Distribution
-CRM** focused on field sales, van-selling, merchandising and route accounting.
+`sd-main`) is a multi-tenant **Distribution CRM** platform focused on
+field sales, van-selling, merchandising and route accounting.
 
 This documentation is for **developers** who build, deploy and operate the
 system. End-user documentation is maintained separately and is not part of this site.

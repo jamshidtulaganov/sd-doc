@@ -5,7 +5,7 @@ const { themes } = require('prism-react-renderer');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'SalesDoctor Docs',
-  tagline: 'Distribution & Sales Force Automation CRM — Developer Documentation',
+  tagline: 'Distribution CRM — Developer Documentation',
   favicon: 'img/favicon.ico',
 
   url: 'https://docs.salesdoc.io',
