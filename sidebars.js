@@ -46,6 +46,7 @@ const sidebars = {
             'security/sessions',
             'security/data-isolation',
             'security/sd-main-landmines',
+            'architecture/diagram-conventions',
             'devops/deployment',
             'devops/docker-compose',
             'devops/nginx',
