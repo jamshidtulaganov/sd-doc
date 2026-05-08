@@ -62,14 +62,32 @@ const config = {
         },
         items: [
           {
-            type: 'docSidebar',
-            sidebarId: 'developerSidebar',
+            type: 'doc',
+            docId: 'sd-main/overview',
             position: 'left',
-            label: 'Developer Docs',
+            label: 'sd-main',
           },
           {
-            href: 'https://www.figma.com/board/KH7PL28JoBs1GOvf6MxkJj',
+            type: 'doc',
+            docId: 'sd-cs/overview',
+            position: 'left',
+            label: 'sd-cs',
+          },
+          {
+            type: 'doc',
+            docId: 'sd-billing/overview',
+            position: 'left',
+            label: 'sd-billing',
+          },
+          {
+            type: 'doc',
+            docId: 'diagrams/index',
+            position: 'left',
             label: 'Diagrams',
+          },
+          {
+            href: 'https://www.figma.com/board/y2kWMuxLwrpdaCGhVwYYYI',
+            label: 'FigJam',
             position: 'right',
           },
           {
@@ -82,20 +100,30 @@ const config = {
         style: 'dark',
         links: [
           {
+            title: 'Projects',
+            items: [
+              { label: 'sd-main · Dealer CRM', to: '/docs/sd-main' },
+              { label: 'sd-cs · HQ Country Sales', to: '/docs/sd-cs/overview' },
+              { label: 'sd-billing · Subscriptions', to: '/docs/sd-billing/overview' },
+            ],
+          },
+          {
             title: 'Docs',
             items: [
-              { label: 'Overview', to: '/docs/intro' },
+              { label: 'Introduction', to: '/docs/intro' },
               { label: 'Ecosystem', to: '/docs/ecosystem' },
-              { label: 'API Reference', to: '/docs/api/overview' },
+              { label: 'Diagram gallery', to: '/docs/diagrams' },
+              { label: 'API reference', to: '/docs/api/overview' },
             ],
           },
           {
             title: 'Resources',
             items: [
               {
-                label: 'FigJam diagrams',
-                href: 'https://www.figma.com/board/KH7PL28JoBs1GOvf6MxkJj',
+                label: 'FigJam (master board)',
+                href: 'https://www.figma.com/board/y2kWMuxLwrpdaCGhVwYYYI',
               },
+              { label: 'Diagram inventory', to: '/docs/diagrams-inventory' },
               { label: 'Changelog', to: '/docs/changelog' },
               { label: 'Troubleshooting', to: '/docs/troubleshooting' },
             ],
