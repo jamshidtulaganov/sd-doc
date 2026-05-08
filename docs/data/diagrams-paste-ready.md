@@ -1,0 +1,1224 @@
+---
+sidebar_position: 7
+title: Diagrams · paste-ready bundle
+audience: Anyone drawing diagrams in Figma / FigJam
+summary: All 33 Mermaid diagrams from the docs site, with titles, source paths and Mermaid kind. Drop each into a Mermaid plugin (FigJam Diagrams, Eraser, etc.) to render in Figma. Single source-of-truth file lives at /static/data/diagrams.mmd.
+topics: [diagrams, mermaid, figma, paste-ready, bundle]
+---
+
+# Diagrams · paste-ready bundle
+
+This page lists every Mermaid diagram in the docs site — **33 total** — in one place, ordered for easy paste into Figma. Each block is also kept inline on its source page so the docs stay self-contained.
+
+**Tip**: install one of these Figma plugins, then paste a block:
+
+- **FigJam Diagrams** (built-in) — `Resources → Plugins → Diagrams`
+- **Eraser** — `figma.com/plugins/Eraser`
+- **Mermaid Chart** — official Mermaid plugin for Figma
+
+Or open the raw bundle: [`/static/data/diagrams.mmd`](/data/diagrams.mmd)
+
+## Index
+
+| # | Kind | Title | Source page |
+|---|------|-------|-------------|
+| 01 | `flowchart` | The SalesDoctor ecosystem | `ecosystem` |
+| 02 | `flowchart` | Inter-project integration map | `ecosystem` |
+| 03 | `flowchart` | Key feature catalog by project | `ecosystem` |
+| 04 | `flowchart` | High-level diagram | `architecture/overview` |
+| 05 | `flowchart` | Settlement | `sd-billing/cron-and-settlement` |
+| 06 | `sequence` | Notifications cron | `sd-billing/cron-and-settlement` |
+| 07 | `er` | sd-billing domain model | `sd-billing/domain-model` |
+| 08 | `sequence` | Integration with sd-main & sd-cs | `sd-billing/integration` |
+| 09 | `flowchart` | Architecture diagram | `sd-billing/overview` |
+| 10 | `sequence` | Click flow (canonical) | `sd-billing/payment-gateways` |
+| 11 | `sequence` | Payme flow | `sd-billing/payment-gateways` |
+| 12 | `flowchart` | Subscription & licensing | `sd-billing/subscription-flow` |
+| 13 | `flowchart` | Architecture (diagram) | `sd-cs/overview` |
+| 14 | `flowchart` | Onboarding a new dealer | `sd-cs/sd-main-integration` |
+| 15 | `flowchart` | Key feature flow — Visit & GPS | `modules/agents` |
+| 16 | `flowchart` | Key feature flow — Submission | `modules/audit-adt` |
+| 17 | `flowchart` | Approval workflow | `modules/clients` |
+| 18 | `flowchart` | Key feature flow — Order export | `modules/integration` |
+| 19 | `flowchart` | Key feature flow — Stocktake | `modules/inventory` |
+| 20 | `flowchart` | Key feature flow — Online order | `modules/onlineOrder` |
+| 21 | `state` | Status machine | `modules/orders` |
+| 22 | `sequence` | Key feature flow — Create order | `modules/orders` |
+| 23 | `flowchart` | Approval flow | `modules/payment` |
+| 24 | `flowchart` | Key feature flow — Report run | `modules/report` |
+| 25 | `sequence` | Key feature flow — SMS dispatch | `modules/sms` |
+| 26 | `flowchart` | Key feature flow — Defect & Return | `modules/stock` |
+| 27 | `flowchart` | Key feature flow — Goods receipt | `modules/warehouse` |
+| 28 | `er` | Mermaid (full graph) | `data/erd-real` |
+| 29 | `er` | Entity-relationship diagram | `data/erd` |
+| 30 | `flowchart` | Ingestion pipeline (high level) | `team/rag-indexing` |
+| 31 | `flowchart` | Before / after — payment approval flow | `team/workflow-design` |
+| 32 | `flowchart` | Swimlane recipe | `team/workflow-design` |
+| 33 | `flowchart` | Topology overview | `devops/deployment` |
+
+## Counts by kind
+
+| Mermaid kind | Count |
+|--------------|-------|
+| `er` | 3 |
+| `flowchart` | 23 |
+| `sequence` | 6 |
+| `state` | 1 |
+
+## Diagrams (in suggested paste order)
+
+### 01. The SalesDoctor ecosystem
+
+- Kind: `flowchart`
+- Source: `ecosystem`
+
+````mermaid
+flowchart LR
+  subgraph HQ["Brand owner / HQ"]
+    CS["sd-cs"]
+    CSDB[(MySQL cs_*)]
+  end
+  subgraph DealerA["Dealer A"]
+    MA["sd-main"]
+    DA[(MySQL sd_dealerA, d0_*)]
+  end
+  subgraph DealerB["Dealer B"]
+    MB["sd-main"]
+    DB2[(MySQL sd_dealerB, d0_*)]
+  end
+  subgraph Vendor["Platform vendor"]
+    BL["sd-billing"]
+    BLDB[(MySQL d0_* billing schema)]
+  end
+  CS --> CSDB
+  CS -.->|read d0_*| DA
+  CS -.->|read d0_*| DB2
+  MA --> DA
+  MB --> DB2
+  BL --> BLDB
+  BL -.->|push licences, sync phones, status| MA
+  BL -.->|push licences, sync phones, status| MB
+  BL -.->|push licences, sync phones, status| CS
+
+  class CS,CSDB,MA,DA,MB,DB2,BL,BLDB action
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  style HQ fill:#ffffff,stroke:#cccccc
+  style DealerA fill:#ffffff,stroke:#cccccc
+  style DealerB fill:#ffffff,stroke:#cccccc
+  style Vendor fill:#ffffff,stroke:#cccccc
+````
+
+### 02. Inter-project integration map
+
+- Kind: `flowchart`
+- Source: `ecosystem`
+
+````mermaid
+flowchart TB
+  subgraph Billing["sd-billing (vendor)"]
+    B_API["api/license + api/host + api/click + api/payme"]
+    B_DB[("d0_* billing schema")]
+    B_CRON["cron: notify settlement status"]
+  end
+  subgraph Main["sd-main (per dealer)"]
+    M_API["api/billing (license + phone + status)"]
+    M_DB[("d0_* dealer schema")]
+    M_LIC["protected/license2/"]
+  end
+  subgraph CS["sd-cs (HQ)"]
+    CS_API["api/billing (status only)"]
+    CS_DB[("cs_* schema")]
+    CS_DEAL["dealer connection (read-only swap)"]
+  end
+
+  M_API -->|"POST buyPackages exchange info"| B_API
+  B_CRON -->|"POST license push + DELETE license"| M_API
+  B_CRON -->|"POST phone (Spravochnik)"| M_API
+  M_API -->|"writes/clears"| M_LIC
+  B_CRON -->|"GET status?app=sdmanager"| CS_API
+  CS_DEAL -.->|"read d0_* per-dealer"| M_DB
+  B_API --> B_DB
+  M_API --> M_DB
+  CS_API --> CS_DB
+
+  classDef action fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron fill:#ede9fe,stroke:#6d28d9,color:#000
+  class B_API,M_API,CS_API,CS_DEAL action
+  class B_DB,M_DB,CS_DB,M_LIC external
+  class B_CRON cron
+
+  style Billing fill:#ffffff,stroke:#cccccc
+  style Main fill:#ffffff,stroke:#cccccc
+  style CS fill:#ffffff,stroke:#cccccc
+````
+
+### 03. Key feature catalog by project
+
+- Kind: `flowchart`
+- Source: `ecosystem`
+
+````mermaid
+flowchart TB
+  subgraph SDMain["sd-main · Dealer CRM"]
+    direction TB
+    M_ORD["Orders (web + mobile + B2B online)"]
+    M_AGT["Agents · routes · KPI · vehicles"]
+    M_CLI["Clients · contracts · segments · debt"]
+    M_WHS["Warehouse · stock · inventory · transfers"]
+    M_PAY["Payments · cashier approval · cashbox"]
+    M_AUD["Audits · facing · photo reports"]
+    M_GPS["GPS tracking · geofence · trip playback"]
+    M_INT["Integrations 1C · Didox · Faktura.uz · Smartup"]
+    M_RPT["80+ reports · Excel export · pivots"]
+    M_OO["B2B online store · Telegram bot · WebApp"]
+  end
+
+  subgraph SDCs["sd-cs · HQ Country Sales"]
+    direction TB
+    CS_RPT["Consolidated reports across all dealers"]
+    CS_PIV["Pivots · RFM · SKU · expeditor"]
+    CS_DIR["HQ directory · brands · segments · plans"]
+    CS_MDB["Multi-DB read of dealer DBs (read-only)"]
+  end
+
+  subgraph SDBilling["sd-billing · Subscriptions and licensing"]
+    direction TB
+    B_SUB["Subscriptions · packages · tariffs · bonus"]
+    B_LIC["Licence files · feature gating per system"]
+    B_PAY["Click · Payme · Paynet · MBANK · P2P · cash"]
+    B_SET["Daily settlement distributor / dealer"]
+    B_NOT["Telegram + SMS notifications · expiry reminders"]
+    B_PRT["Partner portal · self-service"]
+  end
+
+  classDef action fill:#dbeafe,stroke:#1e40af,color:#000
+  class M_ORD,M_AGT,M_CLI,M_WHS,M_PAY,M_AUD,M_GPS,M_INT,M_RPT,M_OO action
+  class CS_RPT,CS_PIV,CS_DIR,CS_MDB action
+  class B_SUB,B_LIC,B_PAY,B_SET,B_NOT,B_PRT action
+
+  style SDMain fill:#ffffff,stroke:#cccccc
+  style SDCs fill:#ffffff,stroke:#cccccc
+  style SDBilling fill:#ffffff,stroke:#cccccc
+````
+
+### 04. High-level diagram
+
+- Kind: `flowchart`
+- Source: `architecture/overview`
+
+````mermaid
+flowchart LR
+  subgraph Clients
+    WB[Web Admin]
+    MA[Mobile Agent]
+    OS[Online Store]
+    EXT[(External: 1C, Didox, Faktura.uz, Smartup)]
+  end
+  subgraph Edge
+    NX[Nginx]
+  end
+  subgraph App[App tier - PHP 7.3 + Yii 1.x]
+    WEB[Web]
+    A1[api]
+    A3[api3 mobile]
+    A4[api4 online]
+    JOBS[Queue Workers]
+    CRON[Cron]
+  end
+  subgraph Data
+    DB[(MySQL 8)]
+    R0[(Redis db0 sessions)]
+    R1[(Redis db1 queue)]
+    R2[(Redis db2 cache)]
+    FS[(File storage)]
+  end
+  WB --> NX
+  MA --> NX
+  OS --> NX
+  EXT --> NX
+  NX --> WEB
+  NX --> A1
+  NX --> A3
+  NX --> A4
+  WEB --> DB
+  WEB --> R0
+  WEB --> R2
+  A3 --> DB
+  A3 --> R2
+  A4 --> DB
+  A4 --> R2
+  WEB --> R1
+  R1 --> JOBS
+  JOBS --> DB
+  CRON --> R1
+  WEB --> FS
+
+  class WB,MA,OS,NX,WEB,A1,A3,A4,JOBS,CRON,DB,R0,R1,R2,FS action
+  class EXT external
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  style Clients fill:#ffffff,stroke:#cccccc
+  style Edge fill:#ffffff,stroke:#cccccc
+  style App fill:#ffffff,stroke:#cccccc
+  style Data fill:#ffffff,stroke:#cccccc
+````
+
+### 05. Settlement
+
+- Kind: `flowchart`
+- Source: `sd-billing/cron-and-settlement`
+
+````mermaid
+flowchart LR
+  S(["01:00 cron"]) --> READ["Pull last-month payments grouped by Distributor + Diler"]
+  READ --> CALC["Compute share % per agreement"]
+  CALC --> DEB["Insert Payment TYPE=distribute (debit Distributor)"]
+  DEB --> CRE["Insert Payment TYPE=distribute (credit Diler)"]
+  CRE --> LOG["LogDistrBalans rolling balance row"]
+  LOG --> NOTIF[("Telegram summary to ops")]
+
+  class S cron
+  class READ,CALC,DEB,CRE,LOG action
+  class NOTIF external
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+````
+
+### 06. Notifications cron
+
+- Kind: `sequence`
+- Source: `sd-billing/cron-and-settlement`
+
+````mermaid
+sequenceDiagram
+  participant CR as cron notify
+  participant DB as MySQL
+  participant TG as Telegram bot proxy (10.0.0.2:3000)
+  participant SD as sd-main
+
+  loop every minute
+    CR->>DB: SELECT * FROM d0_notify_cron WHERE sent=0 LIMIT 100
+    Note over CR,DB: Branch is keyed by row type column on d0_notify_cron
+    alt Telegram
+      CR->>DB: lookup d0_notify_bot
+      CR->>TG: POST /addRequest
+      TG-->>CR: ok
+      CR->>DB: mark sent
+    else License delete
+      CR->>SD: api/license/delete (HTTP)
+      SD-->>CR: ok
+      CR->>DB: mark sent
+    end
+  end
+````
+
+### 07. sd-billing domain model
+
+- Kind: `er`
+- Source: `sd-billing/domain-model`
+
+````mermaid
+erDiagram
+  DISTRIBUTOR ||--o{ DILER : owns
+  DILER ||--o{ SUBSCRIPTION : has
+  DILER ||--o{ PAYMENT : pays
+  DILER ||--|| SERVER : runs
+  DILER ||--o| DILER_BONUS : has
+  PACKAGE ||--o{ SUBSCRIPTION : referenced_by
+  TARIFF ||--o{ TARIFF_PACKAGE : bundles
+  PACKAGE ||--o{ TARIFF_PACKAGE : in
+  PAYMENT }o--|| CASHBOX : posted_to
+  PAYMENT }o--o| CLICK_TRANSACTION : via
+  PAYMENT }o--o| PAYME_TRANSACTION : via
+  PAYMENT }o--o| PAYNET_TRANSACTION : via
+  USER }o--|| ROLE : assigned
+
+  DISTRIBUTOR {
+    string ID PK
+    string NAME
+    float BALANS
+  }
+  DILER {
+    int DILER_ID PK
+    string NAME
+    string HOST
+    int STATUS
+    float BALANS
+    float MIN_SUMMA
+    float MIN_LICENSE
+    float CREDIT_LIMIT
+    date CREDIT_DATE
+    date FREE_TO
+    int MONTHLY
+    bool IS_DEMO
+  }
+  SUBSCRIPTION {
+    string ID PK
+    int DILER_ID FK
+    int PACKAGE_ID FK
+    date START_FROM
+    date ACTIVE_TO
+    bool IS_DELETED
+  }
+  PACKAGE {
+    int PACKAGE_ID PK
+    string NAME
+    string SUBSCRIP_TYPE
+    int TYPE
+    string PACKAGE_TYPE
+    string CLIENT_TYPE
+    float PRICE
+  }
+  TARIFF {
+    int ID PK
+    string NAME
+  }
+  TARIFF_PACKAGE {
+    int ID PK
+    int TARIFF_ID FK
+    int PACKAGE_ID FK
+  }
+  PAYMENT {
+    string ID PK
+    int DILER_ID FK
+    string TYPE
+    float SUMMA
+    datetime DATE
+    int CASHBOX_ID FK
+  }
+  CASHBOX {
+    int ID PK
+    string NAME
+    string CURRENCY
+  }
+  CLICK_TRANSACTION {
+    string ID PK
+    int PAYMENT_ID FK
+    string SIGN
+    string STATE
+  }
+  PAYME_TRANSACTION {
+    string ID PK
+    int PAYMENT_ID FK
+    string STATE
+  }
+  PAYNET_TRANSACTION {
+    string ID PK
+    int PAYMENT_ID FK
+    string STATE
+  }
+  SERVER {
+    int ID PK
+    int DILER_ID FK
+    string HOST
+    string DB_HOST
+    string DB_USER
+    string DB_PASS
+    string STATUS
+  }
+  DILER_BONUS {
+    int DILER_ID PK
+    float QUOTA
+  }
+  USER {
+    int USER_ID PK
+    string LOGIN
+    int ROLE
+    bool IS_ADMIN
+  }
+  ROLE {
+    int ID PK
+    string NAME
+  }
+````
+
+### 08. Integration with sd-main & sd-cs
+
+- Kind: `sequence`
+- Source: `sd-billing/integration`
+
+````mermaid
+sequenceDiagram
+  participant B as sd-billing
+  participant M as sd-main (dealer)
+  participant C as sd-cs (HQ)
+
+  Note over B,M: Subscription purchase
+  M->>B: api/license/buyPackages (UserIdentity sd/sd)
+  B->>B: validate, charge BALANS, insert Subscription
+  B-->>M: 200 + new licence file payload
+  M->>M: write protected/license2/<licence>
+  Note over B,C: Periodic status pings
+  B->>C: api/billing/status?app=sdmanager
+  C-->>B: { status:success, url, code }
+  Note over B,M: Phone directory sync
+  B->>M: api/billing/phone (sync)
+  M->>M: User.TEL updates from Spravochnik
+  Note over B,M: Licence expiry
+  B->>M: api/billing/license (DELETE)
+  M->>M: clear protected/license2/*
+````
+
+### 09. Architecture diagram
+
+- Kind: `flowchart`
+- Source: `sd-billing/overview`
+
+````mermaid
+flowchart LR
+  subgraph Inbound["Money & data in"]
+    PG[("Payment gateways<br/>Click · Payme · Paynet · MBANK · P2P")]
+    EXT[("1C / external imports")]
+    PORTAL["Partner portal · admin UI"]
+  end
+  subgraph Bill["sd-billing (Yii 1.x)"]
+    API["api module"]
+    OP["operation module"]
+    DASH["dashboard"]
+    PART["partner"]
+    CR["cron commands<br/>(notify, settlement, stat, cleaner, …)"]
+    NOT["notification + sms"]
+  end
+  subgraph Out["Outbound"]
+    TG[("Telegram (bot proxy 10.0.0.2:3000)")]
+    SMS[("SMS gateway (Eskiz / Mobizon)")]
+    LIC["License files → sd-main"]
+    STAT["Status pings → sd-cs"]
+  end
+  subgraph DB["MySQL 8 (d0_*)"]
+    direction TB
+  end
+  PG --> API
+  EXT --> API
+  PORTAL --> DASH
+  PORTAL --> OP
+  PORTAL --> PART
+  API --> DB
+  OP --> DB
+  DASH --> DB
+  PART --> DB
+  CR --> DB
+  CR --> NOT
+  NOT --> TG
+  NOT --> SMS
+  CR --> LIC
+  API --> LIC
+  CR --> STAT
+
+  class PG,EXT,TG,SMS external
+  class PORTAL,API,OP,DASH,PART,CR,NOT,LIC,STAT action
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  style Inbound fill:#ffffff,stroke:#cccccc
+  style Bill fill:#ffffff,stroke:#cccccc
+  style Out fill:#ffffff,stroke:#cccccc
+  style DB fill:#ffffff,stroke:#cccccc
+````
+
+### 10. Click flow (canonical)
+
+- Kind: `sequence`
+- Source: `sd-billing/payment-gateways`
+
+````mermaid
+sequenceDiagram
+  participant U as User
+  participant C as Click
+  participant API as api/click
+  participant DB as MySQL
+  participant D as Diler
+  U->>C: pay
+  C->>API: prepare (sign)
+  API->>API: ClickTransaction::checkSign
+  API->>DB: insert ClickTransaction (state=prepared)
+  Note over API: Duplicate prepare/confirm requests return the same response (idempotent)
+  API-->>C: 200
+  C->>API: confirm (sign)
+  API->>DB: ClickTransaction state=confirmed
+  API->>DB: insert Payment TYPE=clickonline
+  API->>D: Diler.BALANS += summa (DB trigger)
+  API->>D: deleteLicense() + refresh()
+  API-->>C: 200
+````
+
+### 11. Payme flow
+
+- Kind: `sequence`
+- Source: `sd-billing/payment-gateways`
+
+````mermaid
+sequenceDiagram
+  participant Pa as Payme
+  participant API as api/payme
+  participant DB as MySQL
+  Pa->>API: CheckPerformTransaction
+  API->>DB: validate dealer + amount
+  API-->>Pa: result
+  Pa->>API: CreateTransaction
+  API->>DB: PaymeTransaction (created)
+  Pa->>API: PerformTransaction
+  API->>DB: PaymeTransaction (performed) + Payment TYPE=payme
+  API-->>Pa: result
+````
+
+### 12. Subscription & licensing
+
+- Kind: `flowchart`
+- Source: `sd-billing/subscription-flow`
+
+````mermaid
+flowchart LR
+  S(["Dealer signs up"]) --> P["Pay (online or offline)"]
+  P --> B["Diler.BALANS += summa"]
+  B --> BUY["api/license/buyPackages"]
+  BUY --> CHK{"Validation passes?"}
+  CHK -- "no" --> ERR(["Reject"])
+  CHK -- "yes" --> SUB["Subscription rows<br/>[START_FROM, ACTIVE_TO]"]
+  SUB --> NEG["Payment TYPE=license (negative)"]
+  NEG --> SET["Diler.refresh() — recompute BALANS, FREE_TO, MONTHLY"]
+  SET --> SRV["Diler.HOST → Server.STATUS=SENT → OPENED"]
+  SRV --> NOTIF(["Telegram + SMS to dealer"])
+
+  class S action
+  class P,B,BUY,SUB,NEG,SET,SRV action
+  class CHK approval
+  class ERR reject
+  class NOTIF success
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+````
+
+### 13. Architecture (diagram)
+
+- Kind: `flowchart`
+- Source: `sd-cs/overview`
+
+````mermaid
+flowchart LR
+  HQ[HQ users] --> APP[sd-cs]
+  APP --> OWN[(MySQL cs_*)]
+  APP -.-> D1[(Dealer A d0_*)]
+  APP -.-> D2[(Dealer B d0_*)]
+  APP -.-> DN[(Dealer N d0_*)]
+  APP --> RD[(Redis sessions)]
+
+  class HQ,APP,OWN,RD action
+  class D1,D2,DN external
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+````
+
+### 14. Onboarding a new dealer
+
+- Kind: `flowchart`
+- Source: `sd-cs/sd-main-integration`
+
+````mermaid
+flowchart LR
+  A(["New dealer signs contract"]) --> B["sd-billing creates Diler row"]
+  B --> C["sd-billing pushes licence file"]
+  C --> D["Dealer's sd-main is provisioned"]
+  D --> E["Dealer DB credentials registered in HQ"]
+  E --> F["DealerRegistry row inserted in cs_*"]
+  F --> G["Test report against new dealer"]
+  G --> H["Capability flags filled in registry"]
+  H --> I(["Dealer included in default HQ reports"])
+
+  class A action
+  class B,C,D,E,F,G,H action
+  class I success
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+````
+
+### 15. Key feature flow — Visit & GPS
+
+- Kind: `flowchart`
+- Source: `modules/agents`
+
+````mermaid
+flowchart LR
+  CK(["Tap Check-in"]) --> POS["Read GPS"]
+  POS --> POST["POST /api3/visit"]
+  POST --> RAD{"Distance to client ≤ geofence radius?"}
+  RAD -->|yes| OK["Visit OK"]
+  RAD -->|no| WARN["Flagged out_of_zone"]
+  OK --> WORK["Audits, orders, payments"]
+  WARN --> WORK
+  WORK --> CO(["Check-out"])
+classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+classDef success  fill:#dcfce7,stroke:#166534,color:#000
+classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+classDef external fill:#f3f4f6,stroke:#374151,color:#000
+classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+class CK,POS,POST,WORK,CO action
+class OK success
+class WARN reject
+````
+
+### 16. Key feature flow — Submission
+
+- Kind: `flowchart`
+- Source: `modules/audit-adt`
+
+````mermaid
+flowchart LR
+  V(["At client"]) --> Q["Answer poll"]
+  Q --> F["Mark facing"]
+  F --> P["Photos"]
+  P --> SUB["POST /api3/auditor/index"]
+  SUB --> AR["AuditResult rows"]
+  AR --> RV["Supervisor review"]
+  RV --> KPI(["Compliance KPI"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class V,Q,F,P,SUB,AR action
+  class RV approval
+  class KPI success
+````
+
+### 17. Approval workflow
+
+- Kind: `flowchart`
+- Source: `modules/clients`
+
+````mermaid
+flowchart LR
+  A["Agent creates client"] --> P["ClientPending"]
+  P --> M["Manager review"]
+  M -->|approve| C["Client ACTIVE=Y"]
+  M -->|reject| R["Rejected, agent notified"]
+  C --> X[("Optional 1C export")]
+classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+classDef success  fill:#dcfce7,stroke:#166534,color:#000
+classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+classDef external fill:#f3f4f6,stroke:#374151,color:#000
+classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+class A,P action
+class M approval
+class C success
+class R reject
+class X external
+````
+
+### 18. Key feature flow — Order export
+
+- Kind: `flowchart`
+- Source: `modules/integration`
+
+````mermaid
+flowchart LR
+  S(["Order Loaded/Delivered"]) --> J["Enqueue ExportOrderJob"]
+  J --> C{"Provider"}
+  C -->|1C| S1[("POST 1C")]
+  C -->|Didox| S2[("POST Didox")]
+  C -->|Faktura| S3[("POST Faktura.uz")]
+  S1 --> LOG["integration_log"]
+  S2 --> LOG
+  S3 --> LOG
+  LOG --> RTY{"Retry count ≤ 6 and error?"}
+  RTY -->|yes| BACK["Retry backoff max 6"]
+  RTY -->|no| DONE(["Done"])
+classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+classDef success  fill:#dcfce7,stroke:#166534,color:#000
+classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+classDef external fill:#f3f4f6,stroke:#374151,color:#000
+classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+class S,J,LOG,BACK action
+class S1,S2,S3 external
+class DONE success
+````
+
+### 19. Key feature flow — Stocktake
+
+- Kind: `flowchart`
+- Source: `modules/inventory`
+
+````mermaid
+flowchart LR
+  M(["Manager creates doc"]) --> SC["Operators scan"]
+  SC --> CALC["Compute deltas vs Stock"]
+  CALC --> REV{"Manager approves?"}
+  REV -->|approve| POST(["Post adjustments"])
+  REV -->|adjust| SC
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class M,SC,CALC action
+  class REV approval
+  class POST success
+````
+
+### 20. Key feature flow — Online order
+
+- Kind: `flowchart`
+- Source: `modules/onlineOrder`
+
+````mermaid
+flowchart LR
+  C(["Customer login api4"]) --> CAT["Catalog"]
+  CAT --> CRT["Cart"]
+  CRT --> SUB["POST /api4/order/create"]
+  SUB --> ORD["Order STATUS=New"]
+  ORD --> PAY{"Pay now?"}
+  PAY -->|yes| RDR[("Redirect to provider")]
+  RDR --> CB["Callback verify"]
+  CB --> AP(["Mark paid"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class C,CAT,CRT,SUB,ORD,PAY,CB action
+  class RDR external
+  class AP success
+````
+
+### 21. Status machine
+
+- Kind: `state`
+- Source: `modules/orders`
+
+````mermaid
+stateDiagram-v2
+  [*] --> Draft
+  Draft --> New
+  New --> Reserved
+  Reserved --> Loaded
+  Loaded --> Delivered
+  Delivered --> Paid
+  Paid --> Closed
+  New --> Cancelled
+  Reserved --> Cancelled
+  Delivered --> Defect
+  Defect --> Returned
+  Returned --> Closed
+  Cancelled --> [*]
+  Closed --> [*]
+  note right of Closed
+    SUB_STATUS carries fine-grained reasons
+    (e.g. "awaiting cashier").
+  end note
+````
+
+### 22. Key feature flow — Create order
+
+- Kind: `sequence`
+- Source: `modules/orders`
+
+````mermaid
+sequenceDiagram
+  participant A as Agent
+  participant API as api3
+  participant DB as MySQL
+  participant Q as Queue
+  A->>API: POST /api3/order/create
+  API->>DB: validate client / limit / stock
+  alt valid
+    API->>DB: Insert Order STATUS=New
+    API->>Q: enqueue StockReserveJob
+    API-->>A: success
+  else invalid
+    API-->>A: error code
+  end
+````
+
+### 23. Approval flow
+
+- Kind: `flowchart`
+- Source: `modules/payment`
+
+````mermaid
+flowchart LR
+  A["Agent collects cash"] --> B["Pay record created"]
+  B --> C{"Approval needed?"}
+  C -- yes --> D["Cashier reviews"]
+  D --> E["Approved / Rejected"]
+  C -- no --> F["Auto-applied"]
+  E --> F
+classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+classDef success  fill:#dcfce7,stroke:#166534,color:#000
+classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+classDef external fill:#f3f4f6,stroke:#374151,color:#000
+classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+class A,B,F action
+class D approval
+class E success
+````
+
+### 24. Key feature flow — Report run
+
+- Kind: `flowchart`
+- Source: `modules/report`
+
+````mermaid
+flowchart LR
+  U(["Open report"]) --> F["Set filters"]
+  F --> CHK{"Cache hit?"}
+  CHK -->|yes| R["Render"]
+  CHK -->|no| SQL["Aggregate SQL"]
+  SQL --> CACHE[("redis_app TTL 300s")]
+  CACHE --> R
+  R --> EX{"Export?"}
+  EX -->|yes| XLS(["PHPExcel -> .xlsx"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class U,F,CHK,R,SQL,EX action
+  class CACHE external
+  class XLS success
+````
+
+### 25. Key feature flow — SMS dispatch
+
+- Kind: `sequence`
+- Source: `modules/sms`
+
+````mermaid
+sequenceDiagram
+  participant E as Trigger
+  participant Q as Queue
+  participant J as SendSmsJob
+  participant P as Provider
+  participant CB as Callback
+  E->>Q: enqueue
+  J->>P: send
+  P-->>J: 202
+  P->>CB: DLR
+  CB->>J: status delivered/failed
+````
+
+### 26. Key feature flow — Defect & Return
+
+- Kind: `flowchart`
+- Source: `modules/stock`
+
+````mermaid
+flowchart LR
+  D(["Delivery"]) --> CHK{"All lines accepted (no defect)?"}
+  CHK -->|yes| OK["STATUS=Delivered"]
+  CHK -->|no| DEF["Defect rows"]
+  DEF --> RTS["Return-to-stock job"]
+  RTS --> RPT["Defect KPI"]
+classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+classDef success  fill:#dcfce7,stroke:#166534,color:#000
+classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+classDef external fill:#f3f4f6,stroke:#374151,color:#000
+classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+class D,DEF,RTS,RPT action
+class OK success
+````
+
+### 27. Key feature flow — Goods receipt
+
+- Kind: `flowchart`
+- Source: `modules/warehouse`
+
+````mermaid
+flowchart LR
+  S(["Open Add doc"]) --> WT["Pick warehouse + type"]
+  WT --> ADD["Scan/pick lines"]
+  ADD --> SAV["Save doc"]
+  SAV --> POST["Stock += count"]
+  POST --> SYNC[("Optional 1C sync")]
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class S,WT,ADD,SAV,POST action
+  class SYNC external
+````
+
+### 28. Mermaid (full graph)
+
+- Kind: `er`
+- Source: `data/erd-real`
+
+````mermaid
+erDiagram
+  ADTAUDIT ||--o{ ADTAUDITPRODUCTS : has_many_AUDIT_ID
+  ADTAUDIT ||--o{ ADTAUDITUSERS : has_many_AUDIT_ID
+  ADTAUDITPRODUCTS }o--|| PRODUCT : belongs_to_PRODUCT_ID
+  ADTAUDITRESULT }o--|| ADTAUDIT : belongs_to_AUDIT_ID
+  ADTAUDITRESULT ||--o{ ADTAUDITRESULTDATA : has_many_RESULT_ID
+  ADTAUDITRESULT }o--|| CLIENT : belongs_to_CLIENT_ID
+  ADTAUDITRESULT }o--|| STRUCTUREFILIAL : belongs_to_POSITION_ID
+  ADTAUDITRESULT }o--|| VISIT : belongs_to_VISIT_ID
+  ADTAUDITRESULTDATA }o--|| ADTAUDITRESULT : belongs_to_RESULT_ID
+  ADTAUDITRESULTDATA }o--|| PRODUCT : belongs_to_PRODUCT_ID
+  ADTAUDITRESULTDATA }o--|| PRODUCTCOMPETITOR : belongs_to_PRODUCT_ID
+  ADTCOMMENTRESULT }o--|| ADTCOMMENT : belongs_to_COMMENT_ID
+  ADTCONFIG }o--|| STRUCTUREFILIAL : belongs_to_USER
+  ADTPOLL ||--o{ ADTPOLLQUESTION : has_many_POLL_ID
+  ADTPOLL ||--o{ ADTPOLLBIND : has_many_POLL_ID
+  ADTPOLL }o--|| USER : belongs_to_CREATE_BY
+  ADTPOLLQUESTION }o--|| ADTPOLL : belongs_to_POLL_ID
+  ADTPOLLQUESTION ||--o{ ADTPOLLVARIANT : has_many_QUES_ID
+  ADTPOLLQUESTION ||--o{ ADTPOLLRESULTDATA : has_many_QUESTION_ID
+  ADTPOLLRESULT }o--|| ADTPOLL : belongs_to_POLL_ID
+  ADTPOLLRESULT ||--o{ ADTPOLLRESULTDATA : has_many_RESULT_ID
+  ADTPOLLRESULTDATA }o--|| ADTPOLLQUESTION : belongs_to_QUESTION_ID
+  BONUSORDERDETAIL }o--|| PRODUCT : belongs_to_PRODUCT
+  CLIENT }o--|| CLIENTTYPE : belongs_to_TYPE
+  CLIENT }o--|| CLIENTCHANNEL : belongs_to_CHANNEL
+  CLIENTKASPITRANSACTION }o--|| ORDER : belongs_to_ORDER_ID
+  CLIENTODENGITRANSACTION }o--|| ORDER : belongs_to_ORDER_ID
+  CLIENTOPTIMATRANSACTION }o--|| ORDER : belongs_to_ORDER_ID
+  CLIENTPENDING }o--|| REGION : belongs_to_REGION
+  CLIENTPENDING }o--|| CITY : belongs_to_CITY
+  CONSUMPTIONHISTORY }o--|| CONSUMPTION : belongs_to_CONSUMPTION_ID
+  CONTRAGENT }o--|| CLIENTTYPE : belongs_to_TYPE
+  CONTRAGENT }o--|| CLIENTCHANNEL : belongs_to_CHANNEL
+  DILER }o--|| USER : belongs_to_DILER_ID
+  DILER ||--o{ PLAN : has_many_DILER_ID
+  DILER ||--o{ CLIENT : has_many_DILER_ID
+  DILER ||--o{ AGENT : has_many_DILER_ID
+  DILER ||--o{ PRICETYPE : has_many_DILER
+  FILIALMOVEMENTREQUEST ||--o{ FILIALMOVEMENTREQUESTDETAIL : has_many_REQUEST_ID
+  FILIALMOVEMENTREQUEST }o--|| FILIAL : belongs_to_REQUESTER_FILI
+  FILIALMOVEMENTREQUEST }o--|| FILIAL : belongs_to_PROVIDER_FILIA
+  FILIALMOVEMENTREQUEST }o--|| STORE : belongs_to_STORE_ID
+  FILIALMOVEMENTREQUEST }o--|| TRADEDIRECTION : belongs_to_TRADE_ID
+  FILIALMOVEMENTREQUESTDETAIL }o--|| FILIALMOVEMENTREQUEST : belongs_to_REQUEST_ID
+  FILIALMOVEMENTREQUESTDETAIL }o--|| PRODUCT : belongs_to_PRODUCT_ID
+  FILIALMOVEMENTREQUESTDETAIL }o--|| PRODUCTCATEGORY : belongs_to_PRODUCT_CAT_ID
+  INVENTORYHISTORY }o--|| INVENTORY : belongs_to_INVENTORY_ID
+  INVENTORYHISTORY }o--|| INVENTORYTYPE : belongs_to_INV_TYPE_ID
+  MUSTBUYRULE ||--o{ MUSTBUYRULEITEM : has_many_RULE_ID
+  ONLINEORDER }o--|| CONTACT : belongs_to_CONTACT_ID
+  ONLINEORDER ||--o{ ONLINEORDERDETAIL : has_many_ONLINE_ORDER_I
+  ONLINEORDER }o--|| ORDER : belongs_to_ORDER_ID
+  ONLINEORDERDETAIL }o--|| PRODUCT : belongs_to_PRODUCT
+  ORDERDEFECTDETAIL }o--|| PRODUCT : belongs_to_PRODUCT
+  ORDERREPLACEDETAIL }o--|| PRODUCT : belongs_to_PRODUCT
+  PRODUCT }o--|| PRODUCTGROUP : belongs_to_PRODUCT_GROUP_
+  PRODUCT }o--|| ADTPACK : belongs_to_PACK
+  PRODUCT }o--|| ADTSEGMENT : belongs_to_SEGMENT
+  PRODUCT }o--|| ADTBRANDS : belongs_to_BRAND
+  PRODUCT }o--|| ADTPRODUCER : belongs_to_PRODUCER
+  PRODUCT }o--|| USER : belongs_to_CREATE_BY
+  PRODUCT }o--|| USER : belongs_to_UPDATE_BY
+  PRODUCT }o--|| ADTPROPERTY : belongs_to_PROPERTY
+  PRODUCTCATEGORY }o--|| PRODUCT : belongs_to_PRODUCT_CAT_ID
+  PRODUCTCATEGORY }o--|| UNIT : belongs_to_UNIT
+  PRODUCTCOMPETITOR }o--|| PRODUCTGROUP : belongs_to_PRODUCT_GROUP_
+  PRODUCTCOMPETITOR }o--|| ADTPACK : belongs_to_PACK
+  PRODUCTCOMPETITOR }o--|| ADTSEGMENT : belongs_to_SEGMENT
+  PRODUCTCOMPETITOR }o--|| ADTBRANDS : belongs_to_BRAND
+  PRODUCTCOMPETITOR }o--|| ADTPRODUCER : belongs_to_PRODUCER
+  PRODUCTCOMPETITOR }o--|| USER : belongs_to_CREATE_BY
+  PRODUCTCOMPETITOR }o--|| USER : belongs_to_UPDATE_BY
+  PRODUCTPRICEMARKUP }o--|| PRODUCT : belongs_to_PRODUCT
+  PRODUCTSUBCATEGORY }o--|| PRODUCT : belongs_to_SUB_CAT_ID
+  PRODUCTUNIT }o--|| PRODUCT : belongs_to_PRODUCT_ID
+  STRUCTUREFILIAL }o--|| USER : belongs_to_USER_ID
+  TASKLOG }o--|| USER : belongs_to_USER_ID
+  TASKLOG }o--|| CLIENT : belongs_to_OLD_VALUE
+  TASKLOG }o--|| CLIENT : belongs_to_NEW_VALUE
+  TASKS }o--|| USER : belongs_to_TASK_FROM
+  TASKS }o--|| USER : belongs_to_TASK_TO
+  TASKS }o--|| CLIENT : belongs_to_CLIENT_ID
+  TASKS }o--|| TASKTYPE : belongs_to_TYPE_ID
+  TGBOT }o--|| TELEGRAMGROUP : belongs_to_GROUP_ID
+  USER }o--|| DILER : belongs_to_DILER_ID
+  USER }o--|| AGENT : belongs_to_AGENT_ID
+  VISIT }o--|| CLIENT : belongs_to_CLIENT_ID
+  VISIT }o--|| USER : belongs_to_USER_ID
+  VISIT }o--|| STRUCTUREFILIAL : belongs_to_POSITION_ID
+  VISIT ||--o| ADTNOTERESULT : has_one_VISIT_ID
+  VISIT ||--o| ADTCOMMENTRESULT : has_one_VISIT_ID
+  VISITINGAUD }o--|| STRUCTUREFILIAL : belongs_to_AUDITOR_ID
+  VISITINGAUD }o--|| CLIENT : belongs_to_CLIENT_ID
+````
+
+### 29. Entity-relationship diagram
+
+- Kind: `er`
+- Source: `data/erd`
+
+````mermaid
+erDiagram
+  FILIAL ||--o{ USER : has
+  FILIAL ||--o{ AGENT : employs
+  FILIAL ||--o{ CLIENT : owns
+  FILIAL ||--o{ ORDER : owns
+  FILIAL ||--o{ STOCK : owns
+  AGENT ||--o{ VISIT : performs
+  AGENT ||--o{ ORDER : creates
+  CLIENT ||--o{ ORDER : places
+  CLIENT ||--o{ VISIT : receives
+  CLIENT ||--o{ PAYMENT : pays
+  ORDER ||--|{ ORDER_LINE : contains
+  ORDER_LINE }o--|| PRODUCT : refers
+  PRODUCT }o--|| CATEGORY : in
+  PRODUCT ||--o{ STOCK : tracked
+  STOCK }o--|| WAREHOUSE : at
+  ORDER ||--o{ PAYMENT : settled_by
+  ORDER ||--o{ INVOICE : invoiced
+  AUDIT ||--o{ AUDIT_RESULT : produces
+  AUDIT_RESULT }o--|| CLIENT : at
+  GPS_TRACK }o--|| AGENT : from
+````
+
+### 30. Ingestion pipeline (high level)
+
+- Kind: `flowchart`
+- Source: `team/rag-indexing`
+
+````mermaid
+flowchart LR
+  REPO(["sd-docs git repo"]) --> BUILD["Docusaurus build"]
+  BUILD --> RAW["Markdown + frontmatter"]
+  RAW --> CHUNK["Section chunker"]
+  CHUNK --> EMB[("Embedding model")]
+  EMB --> VDB[("Vector DB")]
+  VDB --> CHAT(["Team chat / IDE assistant"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class REPO,BUILD,RAW,CHUNK action
+  class EMB,VDB external
+  class CHAT success
+````
+
+### 31. Before / after — payment approval flow
+
+- Kind: `flowchart`
+- Source: `team/workflow-design`
+
+````mermaid
+flowchart LR
+  A["Agent collects cash"] --> B["Pay record created"]
+  B --> C{"Approval needed?"}
+  C -- yes --> D["Cashier reviews [SLA 4h]"]
+  D --> E{"Approved?"}
+  E -- yes --> F(["Auto-applied"])
+  E -- no --> R(["Rejected"])
+  C -- no --> F
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+
+  class A,B action
+  class C,D,E approval
+  class F success
+  class R reject
+````
+
+### 32. Swimlane recipe
+
+- Kind: `flowchart`
+- Source: `team/workflow-design`
+
+````mermaid
+flowchart TB
+  subgraph Agent
+    A1["Collect payment"]
+  end
+  subgraph Cashier
+    C1{"Amount > threshold?"}
+    C2["Review"]
+  end
+  subgraph System
+    S1[("Apply to debt")]
+    S2[("Write PaymentDeliverHistory")]
+  end
+  A1 --> C1
+  C1 -- yes --> C2 --> S1
+  C1 -- no --> S1
+  S1 --> S2
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+
+  class A1 action
+  class C1,C2 approval
+  class S1,S2 external
+````
+
+### 33. Topology overview
+
+- Kind: `flowchart`
+- Source: `devops/deployment`
+
+````mermaid
+flowchart LR
+    subgraph "sd-main (dealer CRM)"
+        M_IMG[php:7.3-fpm + nginx<br/>1 container]
+        M_DB[(MySQL 8.0<br/>per-tenant DBs)]
+        M_R[(Redis 7)]
+        M_IMG --> M_DB
+        M_IMG --> M_R
+    end
+    subgraph "sd-billing"
+        B_IMG[php:7.2-apache<br/>1 container]
+        B_DB[(MySQL 8.0)]
+        B_IMG --> B_DB
+    end
+    subgraph "sd-cs (HQ)"
+        C_IMG[no container today<br/>deployed via SFTP/rsync]
+    end
+
+    class M_IMG,M_DB,M_R,B_IMG,B_DB,C_IMG action
+    classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+    classDef external fill:#f3f4f6,stroke:#374151,color:#000
+    classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+````
+
