@@ -2,12 +2,272 @@
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
+
+  // ═══════════════════════════════════════════════════════════════
+  // QA sidebar — narrow, role-focused
+  // Pinned to ~12 modules QA actually touches.
+  // The other 30+ modules are reachable via the dev sidebar.
+  // ═══════════════════════════════════════════════════════════════
+  qaSidebar: [
+    {
+      type: 'doc',
+      id: 'intro',
+      label: '👋 Start here',
+    },
+    {
+      type: 'doc',
+      id: 'quality/glossary',
+      label: '📖 Glossary',
+    },
+    {
+      type: 'doc',
+      id: 'quality/page-to-module-map',
+      label: '🗺️ Page-to-module map',
+    },
+
+    {
+      type: 'category',
+      label: '📘 QA workflow guides',
+      collapsed: false,
+      items: [
+        {
+          type: 'category',
+          label: '📦 Orders',
+          collapsed: true,
+          link: { type: 'doc', id: 'quality/orders/index' },
+          items: [
+            'quality/orders/create-order-web',
+            'quality/orders/create-order-mobile',
+            'quality/orders/status-transitions',
+            'quality/orders/partial-defect',
+            'quality/orders/whole-return',
+            'quality/orders/edit-order',
+            'quality/orders/mobile-payment',
+            'quality/orders/discounts',
+            'quality/orders/bonuses',
+            'quality/orders/cis-code-check',
+            'quality/orders/order-list-and-history',
+          ],
+        },
+        {
+          type: 'category',
+          label: '👥 Team',
+          collapsed: true,
+          link: { type: 'doc', id: 'quality/team/index' },
+          items: [
+            'quality/team/role-agent',
+            'quality/team/role-supervisor',
+            'quality/team/role-expeditor',
+            'quality/team/create-edit-agent',
+            'quality/team/create-edit-supervisor',
+            'quality/team/create-edit-expeditor',
+            'quality/team/agents-packet',
+            'quality/team/expeditor-packet',
+            'quality/team/kpi-setup-and-views',
+            'quality/team/tasks',
+            'quality/team/product-distribution',
+          ],
+        },
+        {
+          type: 'category',
+          label: '👤 Clients',
+          collapsed: true,
+          link: { type: 'doc', id: 'quality/clients/index' },
+          items: [
+            'quality/clients/create-edit-client',
+            'quality/clients/mobile-client-creation',
+            'quality/clients/verification',
+            'quality/clients/categorisation',
+            'quality/clients/bulk-import',
+            'quality/clients/duplicate-merge',
+          ],
+        },
+        {
+          type: 'category',
+          label: '💰 Finans (ledger)',
+          collapsed: true,
+          link: { type: 'doc', id: 'quality/finans/index' },
+          items: [
+            'quality/finans/client-debt-view',
+            'quality/finans/transaction-types',
+            'quality/finans/manual-correction',
+            'quality/finans/settlement',
+            'quality/finans/multi-currency',
+            'quality/finans/cashbox-balance',
+          ],
+        },
+        {
+          type: 'category',
+          label: '🏬 Stock & Warehouses',
+          collapsed: true,
+          link: { type: 'doc', id: 'quality/stock/index' },
+          items: [
+            'quality/stock/store-crud',
+            'quality/stock/stock-balance-view',
+            'quality/stock/stock-receipt',
+            'quality/stock/stock-transfer',
+            'quality/stock/defect-and-van-stock',
+            'quality/stock/inventory-and-correction',
+          ],
+        },
+        {
+          type: 'category',
+          label: '⚙️ Settings',
+          collapsed: true,
+          link: { type: 'doc', id: 'quality/settings/index' },
+          items: [
+            'quality/settings/cashbox-management',
+            'quality/settings/price-types',
+            'quality/settings/trade-and-channel',
+            'quality/settings/rbac-and-users',
+            'quality/settings/bonus-rules',
+            'quality/settings/discount-rules',
+            'quality/settings/server-toggles-and-period-close',
+          ],
+        },
+        {
+          type: 'category',
+          label: '💳 Payment & cashbox flows',
+          collapsed: true,
+          link: { type: 'doc', id: 'quality/payment/index' },
+          items: [
+            'quality/payment/payment-approval',
+            'quality/payment/expenses-and-pnl',
+            'quality/payment/supplier-finance',
+          ],
+        },
+        {
+          type: 'category',
+          label: '📈 Reports',
+          collapsed: true,
+          link: { type: 'doc', id: 'quality/report/index' },
+          items: [
+            'quality/report/report-agent',
+            'quality/report/report-customer',
+            'quality/report/report-volume-sku',
+            'quality/report/report-expeditor',
+            'quality/report/report-visit',
+          ],
+        },
+        {
+          type: 'category',
+          label: '🔍 Audit (v1 + v2)',
+          collapsed: true,
+          link: { type: 'doc', id: 'quality/audit/index' },
+          items: [
+            'quality/audit/visit-audit',
+            'quality/audit/facing-and-sku',
+            'quality/audit/photo-reports',
+            'quality/audit/audit-settings',
+          ],
+        },
+        {
+          type: 'category',
+          label: '🏷️ Markirovka (CIS)',
+          collapsed: true,
+          link: { type: 'doc', id: 'quality/markirovka/index' },
+          items: [
+            'quality/markirovka/incoming-invoices',
+            'quality/markirovka/outgoing-invoices',
+          ],
+        },
+        {
+          type: 'category',
+          label: '📱 Mobile (GPS / sync / SMS)',
+          collapsed: true,
+          link: { type: 'doc', id: 'quality/mobile/index' },
+          items: [
+            'quality/mobile/gps-tracking',
+            'quality/mobile/sync-flow',
+            'quality/mobile/sms-broadcast',
+            'quality/mobile/notifications',
+          ],
+        },
+        {
+          type: 'category',
+          label: '🔌 Integrations & B2B',
+          collapsed: true,
+          link: { type: 'doc', id: 'quality/integrations/index' },
+          items: [
+            'quality/integrations/online-orders',
+            'quality/integrations/online-contacts',
+            'quality/integrations/faktura-uz',
+            'quality/integrations/idokon-pos',
+          ],
+        },
+      ],
+    },
+
+    {
+      type: 'category',
+      label: '📌 Modules QA touches often',
+      collapsed: false,
+      items: [
+        'modules/orders',
+        'modules/agents',
+        'modules/clients',
+        'modules/stock',
+        'modules/payment',
+        'modules/finans',
+        'modules/audit-adt',
+        'modules/dashboard',
+        'modules/report',
+        'modules/sync',
+        'modules/onlineOrder',
+        'modules/integration',
+      ],
+    },
+
+    {
+      type: 'category',
+      label: '🌐 sd-cs reports (HQ)',
+      collapsed: true,
+      link: { type: 'doc', id: 'sd-cs/workflows/index' },
+      items: [
+        'sd-cs/workflows/report-sale',
+        'sd-cs/workflows/report-agent',
+        'sd-cs/workflows/report-debt',
+        'sd-cs/workflows/report-plan',
+        'sd-cs/workflows/report-inventory',
+        'sd-cs/workflows/pivot-akb',
+      ],
+    },
+
+    {
+      type: 'category',
+      label: '💳 sd-billing flows',
+      collapsed: true,
+      link: { type: 'doc', id: 'sd-billing/workflows/index' },
+      items: [
+        'sd-billing/workflows/api-click',
+        'sd-billing/workflows/operation-payment',
+        'sd-billing/workflows/operation-subscription',
+      ],
+    },
+
+    {
+      type: 'category',
+      label: '🔧 Reference',
+      collapsed: true,
+      items: [
+        'quality/testing',
+        'troubleshooting',
+        'changelog',
+      ],
+    },
+  ],
+
+  // ═══════════════════════════════════════════════════════════════
+  // Developer sidebar — full surface across all three projects
+  // (QA Test Guides removed — they live in qaSidebar now)
+  // ═══════════════════════════════════════════════════════════════
   developerSidebar: [
     'intro',
     'ecosystem',
     {
       type: 'category',
-      label: 'Diagram gallery',
+      label: '🗺️ Diagram gallery',
+      collapsed: true,
       link: { type: 'doc', id: 'diagrams/index' },
       items: [
         'diagrams/ecosystem',
@@ -23,13 +283,15 @@ const sidebars = {
     // ─── 1. sd-main · Dealer CRM ───────────────────────────────
     {
       type: 'category',
-      label: 'sd-main · Dealer CRM',
+      label: '🏢 sd-main · Dealer CRM',
+      collapsed: false,
       link: { type: 'doc', id: 'sd-main/overview' },
       items: [
         {
           type: 'category',
           label: 'System Architecture',
           key: 'sd-main-system-architecture',
+          collapsed: true,
           items: [
             'architecture/overview',
             'architecture/tech-stack',
@@ -59,6 +321,7 @@ const sidebars = {
           type: 'category',
           label: 'Workflows',
           key: 'sd-main-workflows',
+          collapsed: true,
           items: [
             'modules/overview',
             'modules/orders',
@@ -96,29 +359,13 @@ const sidebars = {
             'integrations/fcm',
             'integrations/sms',
             'integrations/gps',
-            'frontend/overview',
-            'frontend/getting-started',
-            'frontend/conventions',
-            'frontend/adding-a-screen',
-            'frontend/yii-views',
-            'frontend/jquery-patterns',
-            'frontend/js-plugins',
-            'frontend/ng-modules',
-            'frontend/assets-pipeline',
-            'ui/wireframes',
-            'ui/component-catalog',
-            'ui/build-a-page',
-            'ui/page-layout',
-            'ui/filters',
-            'ui/tables',
-            'ui/forms',
-            'ui/modals',
           ],
         },
         {
           type: 'category',
           label: 'Data Schemes',
           key: 'sd-main-data-schemes',
+          collapsed: true,
           items: [
             'data/overview',
             'data/erd',
@@ -135,13 +382,15 @@ const sidebars = {
     // ─── 2. sd-cs · HQ Country Sales ───────────────────────────
     {
       type: 'category',
-      label: 'sd-cs · HQ Country Sales',
+      label: '🌐 sd-cs · HQ Country Sales',
+      collapsed: true,
       link: { type: 'doc', id: 'sd-cs/overview' },
       items: [
         {
           type: 'category',
           label: 'System Architecture',
           key: 'sd-cs-system-architecture',
+          collapsed: true,
           items: [
             'sd-cs/architecture',
             'sd-cs/multi-db',
@@ -153,6 +402,7 @@ const sidebars = {
           type: 'category',
           label: 'Workflows',
           key: 'sd-cs-workflows',
+          collapsed: true,
           items: [
             'sd-cs/modules',
             'sd-cs/sd-main-integration',
@@ -161,6 +411,7 @@ const sidebars = {
               type: 'category',
               label: 'Feature workflows',
               key: 'sd-cs-feature-workflows',
+              collapsed: true,
               link: { type: 'doc', id: 'sd-cs/workflows/index' },
               items: [
                 'sd-cs/workflows/report-sale',
@@ -178,6 +429,7 @@ const sidebars = {
           type: 'category',
           label: 'Data Schemes',
           key: 'sd-cs-data-schemes',
+          collapsed: true,
           items: [
             'sd-cs/data-schemes',
           ],
@@ -188,13 +440,15 @@ const sidebars = {
     // ─── 3. sd-billing · Subscriptions & licensing ─────────────
     {
       type: 'category',
-      label: 'sd-billing · Subscriptions',
+      label: '💳 sd-billing · Subscriptions',
+      collapsed: true,
       link: { type: 'doc', id: 'sd-billing/overview' },
       items: [
         {
           type: 'category',
           label: 'System Architecture',
           key: 'sd-billing-system-architecture',
+          collapsed: true,
           items: [
             'sd-billing/modules',
             'sd-billing/auth-and-access',
@@ -207,6 +461,7 @@ const sidebars = {
           type: 'category',
           label: 'Workflows',
           key: 'sd-billing-workflows',
+          collapsed: true,
           items: [
             'sd-billing/subscription-flow',
             'sd-billing/cron-and-settlement',
@@ -217,6 +472,7 @@ const sidebars = {
               type: 'category',
               label: 'Feature workflows',
               key: 'sd-billing-feature-workflows',
+              collapsed: true,
               link: { type: 'doc', id: 'sd-billing/workflows/index' },
               items: [
                 'sd-billing/workflows/api-click',
@@ -231,6 +487,7 @@ const sidebars = {
           type: 'category',
           label: 'Data Schemes',
           key: 'sd-billing-data-schemes',
+          collapsed: true,
           items: [
             'sd-billing/domain-model',
             'sd-billing/data-scheme',
@@ -240,38 +497,11 @@ const sidebars = {
       ],
     },
 
-    // ─── QA test guides (plain-language, workflow-led) ─────────
-    {
-      type: 'category',
-      label: 'QA Test Guides',
-      key: 'qa-test-guides',
-      items: [
-        {
-          type: 'category',
-          label: 'Orders module',
-          key: 'qa-orders-module',
-          link: { type: 'doc', id: 'quality/orders/index' },
-          items: [
-            'quality/orders/create-order-web',
-            'quality/orders/create-order-mobile',
-            'quality/orders/status-transitions',
-            'quality/orders/partial-defect',
-            'quality/orders/whole-return',
-            'quality/orders/edit-order',
-            'quality/orders/mobile-payment',
-            'quality/orders/discounts',
-            'quality/orders/bonuses',
-            'quality/orders/cis-code-check',
-            'quality/orders/order-list-and-history',
-          ],
-        },
-      ],
-    },
-
     // ─── Cross-cutting reference ───────────────────────────────
     {
       type: 'category',
-      label: 'Reference & cross-cutting',
+      label: '🔧 Reference & cross-cutting',
+      collapsed: true,
       key: 'reference-cross-cutting',
       items: [
         'architecture/cross-project-integration',

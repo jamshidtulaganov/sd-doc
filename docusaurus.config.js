@@ -88,6 +88,12 @@ const config = {
             label: 'Diagrams',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'qaSidebar',
+            position: 'left',
+            label: 'QA',
+          },
+          {
             href: 'https://www.figma.com/board/y2kWMuxLwrpdaCGhVwYYYI',
             label: 'FigJam',
             position: 'right',

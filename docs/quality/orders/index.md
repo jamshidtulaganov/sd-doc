@@ -42,6 +42,8 @@ Each feature has its own page. Read the **index page first** (this page), then j
 
 ## Glossary — the words and numbers you will see in screenshots, logs, and bug reports
 
+> The full cross-module glossary lives at [QA glossary](../glossary.md). The shortlist below covers the order-specific terms; everything else is on the main glossary page.
+
 ### Order statuses
 
 The order moves through five named statuses. Internally the system stores them as numbers; you will see those numbers in logs and database tools. **Always use the name in test cases.**
