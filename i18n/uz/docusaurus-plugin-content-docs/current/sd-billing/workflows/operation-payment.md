@@ -222,15 +222,15 @@ to'g'ri qilganidek `(pay.AMOUNT + pay.DISCOUNT) AS amount`.
 
 ## 8. Yana qarang
 
-- [To'lov shlyuzlari](./payment-gateways.md) — `api/*` kontrollerlar orqali
+- [To'lov shlyuzlari](../payment-gateways.md) — `api/*` kontrollerlar orqali
   `Payment` qatorlarini ham hosil qiladigan Click/Payme/Paynet oqimlari.
-- [Domen modeli](./domain-model.md) — `Payment`, `Diler`, `Cashbox` va
+- [Domen modeli](../domain-model.md) — `Payment`, `Diler`, `Cashbox` va
   shlyuz tranzaksiya jadval sxemalari.
-- [Cron va settlement](./cron-and-settlement.md) — `TYPE_DISTRIBUTE (11)`
+- [Cron va settlement](../cron-and-settlement.md) — `TYPE_DISTRIBUTE (11)`
   qatorlarini yaratadigan `SettlementCommand` va `d0_notify_cron` navbatini
   qayta ishlaydigan `notify` cron (bu xususiyat tomonidan navbatga qo'yilgan
   litsenziya-o'chirish kirishlarini ham o'z ichiga oladi).
-- [Balans va pul matematikasi](./balance-and-money-math.md) — nima uchun
+- [Balans va pul matematikasi](../balance-and-money-math.md) — nima uchun
   `Diler.BALANS` PHP-saqlanadi, o'chirilgan trigger migratsiyasi va
   `updateBalance()` SUM qayta hisoblash xavfsizlik to'ri.
 - Manba: `protected/modules/operation/controllers/PaymentController.php`

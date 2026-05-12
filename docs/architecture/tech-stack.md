@@ -28,7 +28,7 @@ title: Tech stack
 Pinned because of legacy Yii 1.x and a number of vendored libraries that
 break on PHP 8+ strict typing. There is an open ADR proposal to upgrade to
 PHP 8.2 with a Yii 1.1 fork that ships PHP 8 fixes — see
-[ADR 0001](../adr/0001-yii1-stay.md).
+[ADR 0001](../adr/yii1-stay.md).
 
 ## What we *don't* use (intentionally)
 

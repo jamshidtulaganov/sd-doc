@@ -193,7 +193,7 @@ sequenceDiagram
 - [report · Sale](./report-sale.md) — отчёт по продажам в разбивке по
   продуктам, использующий тот же паттерн скоупинга
   `getOwnModels()` / `UserProduct`.
-- [report · Agent Visit](./report-agent-visit.md) — сопутствующий
+- **report · Agent Visit** — сопутствующий
   отчёт, фокусирующийся на частоте визитов, а не на результатах продаж
   (`AgentVisitController`).
 - [`protected/modules/report/controllers/AgentController.php`](https://github.com/salesdoctor/sd-cs/blob/master/protected/modules/report/controllers/AgentController.php) — исходный файл.

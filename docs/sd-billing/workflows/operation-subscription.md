@@ -149,7 +149,7 @@ Invoked via `php cron.php botLicenseReminder`. Queries for active dealers (`STAT
 
 ## 8. See also
 
-- [Subscription & licensing flow](./subscription-flow.md) — end-to-end flow from dealer signup through payment to `sd-main` licence unlock; covers `api/license/buyPackages`, renewal, bonus packages, and the `botLicenseReminder` expiry notifications.
-- [Domain model](./domain-model.md) — ERD and field-level descriptions for `Subscription`, `Package`, `Diler`, `Payment`, and related tables.
-- [Balance & money math](./balance-and-money-math.md) — how `Diler.BALANS` is maintained, why DB triggers are disabled, and the `Payment::afterSave` → `Diler::changeBalans` chain.
+- [Subscription & licensing flow](../subscription-flow.md) — end-to-end flow from dealer signup through payment to `sd-main` licence unlock; covers `api/license/buyPackages`, renewal, bonus packages, and the `botLicenseReminder` expiry notifications.
+- [Domain model](../domain-model.md) — ERD and field-level descriptions for `Subscription`, `Package`, `Diler`, `Payment`, and related tables.
+- [Balance & money math](../balance-and-money-math.md) — how `Diler.BALANS` is maintained, why DB triggers are disabled, and the `Payment::afterSave` → `Diler::changeBalans` chain.
 - Source: `protected/modules/operation/controllers/SubscriptionController.php` and `protected/modules/operation/actions/subscription/`

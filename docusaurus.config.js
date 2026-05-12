@@ -11,11 +11,11 @@ const config = {
   url: 'https://docs.salesdoc.io',
   baseUrl: '/',
 
-  organizationName: 'salesdoctor',
-  projectName: 'sd-docs',
+  organizationName: 'jamshidtulaganov',
+  projectName: 'sd-doc',
 
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'throw',
 
   i18n: {
     defaultLocale: 'en',

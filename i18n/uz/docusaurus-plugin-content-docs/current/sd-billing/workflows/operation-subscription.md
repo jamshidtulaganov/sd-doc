@@ -236,13 +236,13 @@ o'tkazib yuboradi.
 
 ## 8. Yana qarang
 
-- [Obuna va litsenziyalash oqimi](./subscription-flow.md) — diler ro'yxatdan
+- [Obuna va litsenziyalash oqimi](../subscription-flow.md) — diler ro'yxatdan
   o'tishidan to'lov orqali `sd-main` litsenziya qulflashgacha bo'lgan to'liq
   oqim; `api/license/buyPackages`, yangilash, bonus paketlar va `botLicenseReminder`
   muddat o'tish bildirishnomalarini qamrab oladi.
-- [Domen modeli](./domain-model.md) — `Subscription`, `Package`, `Diler`,
+- [Domen modeli](../domain-model.md) — `Subscription`, `Package`, `Diler`,
   `Payment` va tegishli jadvallar uchun ERD va maydon-darajasidagi tavsiflar.
-- [Balans va pul matematikasi](./balance-and-money-math.md) — `Diler.BALANS`
+- [Balans va pul matematikasi](../balance-and-money-math.md) — `Diler.BALANS`
   qanday saqlanadi, nima uchun DB triggerlar o'chirilgan va `Payment::afterSave`
   → `Diler::changeBalans` zanjiri.
 - Manba: `protected/modules/operation/controllers/SubscriptionController.php`

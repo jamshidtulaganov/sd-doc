@@ -184,11 +184,11 @@ not apply here.
 
 ## See also
 
-- [Payment gateways](./payment-gateways.md) — canonical flow diagram, full
+- [Payment gateways](../payment-gateways.md) — canonical flow diagram, full
   `Payment.TYPE` enum, Payme and Paynet patterns, idempotency and failure-mode
   table.
-- [Balance & money math](./balance-and-money-math.md) — how `changeBalans`,
+- [Balance & money math](../balance-and-money-math.md) — how `changeBalans`,
   `updateBalance`, and `Payment::afterSave` interact to maintain `Diler.BALANS`.
-- [Modules](./modules.md) — `api` module overview; auth patterns across
+- [Modules](../modules.md) — `api` module overview; auth patterns across
   gateway controllers.
 - Source: `protected/modules/api/controllers/ClickController.php`

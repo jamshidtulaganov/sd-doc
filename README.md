@@ -1,5 +1,9 @@
 # SalesDoctor — Developer Documentation
 
+> ⚠️ **NOT FOR PUBLIC DEPLOYMENT — internal-only.**
+>
+> Several pages enumerate production tokens, HMAC signing recipes, multi-tenant DB layouts, security landmines, and infrastructure. The login screen at `/login` is a **UX hint, not a security boundary** — all content ships in the static JS bundle and is reachable by anyone who can `curl` the host. Deploy **only** behind a server-side gate (nginx basic-auth, Cloudflare Access, VPN). See [SECURITY.md](./SECURITY.md) and [`deploy/`](./deploy/) for the recommended setup.
+
 Comprehensive **developer documentation** for the SalesDoctor /
 Novus Distribution platform — covering all three projects:
 **sd-cs** (HQ), **sd-main** (dealer CRM) and **sd-billing**

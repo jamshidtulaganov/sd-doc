@@ -5,6 +5,10 @@ title: dashboard
 
 # `dashboard` moduli
 
+:::info Minimal sahifa
+Bu modul sahifasi — qoralama. Kontrollerlar va plitka shakli ro'yxatlangan, lekin KPI katalogi, kesh strategiyasi va role bo'yicha plitka mapping hali yoritilmagan. `sd-docs-author` skill orqali hissa qo'shing.
+:::
+
 Super-admin / admin / menejer / nazoratchi uchun KPI dashboardlari. Birlashmalar bilan og'ir — agressiv keshlang (60s TTL odatda).
 
 ## Kontrollerlar

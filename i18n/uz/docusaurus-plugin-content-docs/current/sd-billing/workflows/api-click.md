@@ -188,12 +188,12 @@ boshqaruv-tekisligi ma'lumotlar bazasi yo'q; sd-cs hujjatlarida tasvirlangan
 
 ## Yana qarang
 
-- [To'lov shlyuzlari](./payment-gateways.md) — kanonik oqim diagrammasi, to'liq
+- [To'lov shlyuzlari](../payment-gateways.md) — kanonik oqim diagrammasi, to'liq
   `Payment.TYPE` enum, Payme va Paynet patternlari, idempotentlik va muvaffaqiyatsizlik-rejimi
   jadvali.
-- [Balans va pul matematikasi](./balance-and-money-math.md) — `changeBalans`,
+- [Balans va pul matematikasi](../balance-and-money-math.md) — `changeBalans`,
   `updateBalance` va `Payment::afterSave` `Diler.BALANS`ni saqlash uchun qanday
   o'zaro ta'sir qiladi.
-- [Modullar](./modules.md) — `api` modul umumiy ko'rinishi; shlyuz kontrollerlar
+- [Modullar](../modules.md) — `api` modul umumiy ko'rinishi; shlyuz kontrollerlar
   bo'yicha auth patternlari.
 - Manba: `protected/modules/api/controllers/ClickController.php`

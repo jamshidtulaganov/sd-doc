@@ -194,7 +194,7 @@ Ustun ma'lumotnomasi uchun [data schemes](../data-schemes.md) ga qarang.
   `setFilial()` mexanizmi.
 - [report · Sale](./report-sale.md) — bir xil `getOwnModels()` /
   `UserProduct` qamrov shabloniga ega mahsulot bo'yicha sotuv hisoboti.
-- [report · Agent Visit](./report-agent-visit.md) — sotuv natijalari
+- **report · Agent Visit** — sotuv natijalari
   emas, balki tashrif chastotasiga e'tibor qaratuvchi hamroh hisobot
   (`AgentVisitController`).
 - [`protected/modules/report/controllers/AgentController.php`](https://github.com/salesdoctor/sd-cs/blob/master/protected/modules/report/controllers/AgentController.php) — manba fayl.

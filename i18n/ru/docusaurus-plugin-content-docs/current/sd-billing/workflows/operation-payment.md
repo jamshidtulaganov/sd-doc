@@ -178,15 +178,15 @@ pay.DISCOUNT) AS amount`.
 
 ## 8. См. также
 
-- [Платёжные шлюзы](./payment-gateways.md) — потоки Click/Payme/Paynet, которые
+- [Платёжные шлюзы](../payment-gateways.md) — потоки Click/Payme/Paynet, которые
   тоже создают строки `Payment` через контроллеры `api/*`.
-- [Доменная модель](./domain-model.md) — схемы `Payment`, `Diler`, `Cashbox` и
+- [Доменная модель](../domain-model.md) — схемы `Payment`, `Diler`, `Cashbox` и
   таблиц транзакций шлюзов.
-- [Cron и сеттлемент](./cron-and-settlement.md) — `SettlementCommand`, который
+- [Cron и сеттлемент](../cron-and-settlement.md) — `SettlementCommand`, который
   создаёт строки `TYPE_DISTRIBUTE (11)`, и cron `notify`, обрабатывающий
   очередь `d0_notify_cron` (включая записи license-delete, поставленные в очередь
   этой фичей).
-- [Баланс и денежная математика](./balance-and-money-math.md) — почему `Diler.BALANS`
+- [Баланс и денежная математика](../balance-and-money-math.md) — почему `Diler.BALANS`
   поддерживается в PHP, какая миграция триггеров отключена, и
   страховочная сетка SUM-перерасчёта `updateBalance()`.
 - Source: `protected/modules/operation/controllers/PaymentController.php`

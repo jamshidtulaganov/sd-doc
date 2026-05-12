@@ -178,15 +178,15 @@ pay.DISCOUNT) AS amount`.
 
 ## 8. See also
 
-- [Payment gateways](./payment-gateways.md) — Click/Payme/Paynet flows that
+- [Payment gateways](../payment-gateways.md) — Click/Payme/Paynet flows that
   also produce `Payment` rows via the `api/*` controllers.
-- [Domain model](./domain-model.md) — `Payment`, `Diler`, `Cashbox`, and
+- [Domain model](../domain-model.md) — `Payment`, `Diler`, `Cashbox`, and
   gateway transaction table schemas.
-- [Cron & settlement](./cron-and-settlement.md) — `SettlementCommand` that
+- [Cron & settlement](../cron-and-settlement.md) — `SettlementCommand` that
   creates `TYPE_DISTRIBUTE (11)` rows, and the `notify` cron that processes
   the `d0_notify_cron` queue (including license-delete entries queued by
   this feature).
-- [Balance & money math](./balance-and-money-math.md) — why `Diler.BALANS`
+- [Balance & money math](../balance-and-money-math.md) — why `Diler.BALANS`
   is PHP-maintained, the trigger migration that is disabled, and the
   `updateBalance()` SUM recompute safety net.
 - Source: `protected/modules/operation/controllers/PaymentController.php`

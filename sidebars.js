@@ -157,6 +157,21 @@ const sidebars = {
             'sd-cs/modules',
             'sd-cs/sd-main-integration',
             'sd-cs/reports-pivots',
+            {
+              type: 'category',
+              label: 'Feature workflows',
+              key: 'sd-cs-feature-workflows',
+              link: { type: 'doc', id: 'sd-cs/workflows/index' },
+              items: [
+                'sd-cs/workflows/report-sale',
+                'sd-cs/workflows/report-agent',
+                'sd-cs/workflows/report-debt',
+                'sd-cs/workflows/report-plan',
+                'sd-cs/workflows/report-inventory',
+                'sd-cs/workflows/pivot-akb',
+                'sd-cs/workflows/style',
+              ],
+            },
           ],
         },
         {
@@ -185,6 +200,7 @@ const sidebars = {
             'sd-billing/auth-and-access',
             'sd-billing/local-setup',
             'sd-billing/security-landmines',
+            'sd-billing/api-reference',
           ],
         },
         {
@@ -196,6 +212,19 @@ const sidebars = {
             'sd-billing/cron-and-settlement',
             'sd-billing/payment-gateways',
             'sd-billing/integration',
+            'sd-billing/notifications',
+            {
+              type: 'category',
+              label: 'Feature workflows',
+              key: 'sd-billing-feature-workflows',
+              link: { type: 'doc', id: 'sd-billing/workflows/index' },
+              items: [
+                'sd-billing/workflows/api-click',
+                'sd-billing/workflows/operation-payment',
+                'sd-billing/workflows/operation-subscription',
+                'sd-billing/workflows/style',
+              ],
+            },
           ],
         },
         {
@@ -204,6 +233,36 @@ const sidebars = {
           key: 'sd-billing-data-schemes',
           items: [
             'sd-billing/domain-model',
+            'sd-billing/data-scheme',
+            'sd-billing/balance-and-money-math',
+          ],
+        },
+      ],
+    },
+
+    // ─── QA test guides (plain-language, workflow-led) ─────────
+    {
+      type: 'category',
+      label: 'QA Test Guides',
+      key: 'qa-test-guides',
+      items: [
+        {
+          type: 'category',
+          label: 'Orders module',
+          key: 'qa-orders-module',
+          link: { type: 'doc', id: 'quality/orders/index' },
+          items: [
+            'quality/orders/create-order-web',
+            'quality/orders/create-order-mobile',
+            'quality/orders/status-transitions',
+            'quality/orders/partial-defect',
+            'quality/orders/whole-return',
+            'quality/orders/edit-order',
+            'quality/orders/mobile-payment',
+            'quality/orders/discounts',
+            'quality/orders/bonuses',
+            'quality/orders/cis-code-check',
+            'quality/orders/order-list-and-history',
           ],
         },
       ],
@@ -215,6 +274,7 @@ const sidebars = {
       label: 'Reference & cross-cutting',
       key: 'reference-cross-cutting',
       items: [
+        'architecture/cross-project-integration',
         'architecture/diagrams',
         'security/overview',
         'team/index',

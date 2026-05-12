@@ -1,0 +1,60 @@
+# Example nginx server block for sd-docs with HTTP basic-auth.
+#
+# Customise:
+#   - server_name         → your DNS name
+#   - root                → wherever you uploaded `build/`
+#   - ssl_certificate     → your TLS chain (Let's Encrypt path shown)
+#   - auth_basic_user_file→ path to the htpasswd file you created
+#
+# Install at /etc/nginx/sites-available/sd-docs.conf and symlink into
+# /etc/nginx/sites-enabled/. Reload with `nginx -t && systemctl reload nginx`.
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name docs.salesdoc.io;
+
+    # Redirect everything to HTTPS.
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name docs.salesdoc.io;
+
+    ssl_certificate     /etc/letsencrypt/live/docs.salesdoc.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/docs.salesdoc.io/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+
+    # HSTS — only enable once you are sure HTTPS is permanent.
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "no-referrer" always;
+
+    root /var/www/sd-docs;
+    index index.html;
+
+    # Single auth realm for the whole site. Every request — HTML, JS, CSS,
+    # images — must pass this check. This is the real security boundary,
+    # not the client-side /login screen.
+    auth_basic           "SalesDoctor internal docs";
+    auth_basic_user_file /etc/nginx/.htpasswd-sd-docs;
+
+    # Long-cache the immutable hashed assets.
+    location ~* ^/assets/.*\.(js|css|woff2?|png|jpg|jpeg|svg|webp)$ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+
+    # SPA fallback — Docusaurus client-side routing handles unknown paths.
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Don't log noisy probes.
+    location = /favicon.ico { log_not_found off; access_log off; }
+    location = /robots.txt  { log_not_found off; access_log off; }
+}

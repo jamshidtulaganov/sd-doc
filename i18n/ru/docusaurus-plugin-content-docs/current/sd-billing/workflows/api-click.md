@@ -184,11 +184,11 @@ JSON-файлы в `log/click/YYYY-MM-DD/`.
 
 ## См. также
 
-- [Платёжные шлюзы](./payment-gateways.md) — каноническая диаграмма потока, полный
+- [Платёжные шлюзы](../payment-gateways.md) — каноническая диаграмма потока, полный
   enum `Payment.TYPE`, паттерны Payme и Paynet, таблица идемпотентности и
   режимов отказа.
-- [Баланс и денежная математика](./balance-and-money-math.md) — как `changeBalans`,
+- [Баланс и денежная математика](../balance-and-money-math.md) — как `changeBalans`,
   `updateBalance` и `Payment::afterSave` взаимодействуют для поддержки `Diler.BALANS`.
-- [Модули](./modules.md) — обзор модуля `api`; паттерны авторизации в
+- [Модули](../modules.md) — обзор модуля `api`; паттерны авторизации в
   контроллерах шлюзов.
 - Source: `protected/modules/api/controllers/ClickController.php`

@@ -190,7 +190,7 @@ For the column reference, see [data schemes](../data-schemes.md).
 - [report · Sale](./report-sale.md) — the per-product sales report
   that shares the same `getOwnModels()` / `UserProduct` scoping
   pattern.
-- [report · Agent Visit](./report-agent-visit.md) — the companion
+- **report · Agent Visit** — the companion
   report focusing on visit frequency rather than sales outcomes
   (`AgentVisitController`).
 - [`protected/modules/report/controllers/AgentController.php`](https://github.com/salesdoctor/sd-cs/blob/master/protected/modules/report/controllers/AgentController.php) — source file.

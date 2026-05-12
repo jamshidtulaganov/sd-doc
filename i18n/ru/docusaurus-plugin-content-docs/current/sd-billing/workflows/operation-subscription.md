@@ -149,7 +149,7 @@ stateDiagram-v2
 
 ## 8. См. также
 
-- [Поток подписки и лицензирования](./subscription-flow.md) — сквозной поток от регистрации дилера через платёж до разблокировки лицензии в `sd-main`; покрывает `api/license/buyPackages`, продление, бонусные пакеты и уведомления о сроке `botLicenseReminder`.
-- [Доменная модель](./domain-model.md) — ERD и описания полей для `Subscription`, `Package`, `Diler`, `Payment` и связанных таблиц.
-- [Баланс и денежная математика](./balance-and-money-math.md) — как поддерживается `Diler.BALANS`, почему DB-триггеры отключены, и цепочка `Payment::afterSave` → `Diler::changeBalans`.
+- [Поток подписки и лицензирования](../subscription-flow.md) — сквозной поток от регистрации дилера через платёж до разблокировки лицензии в `sd-main`; покрывает `api/license/buyPackages`, продление, бонусные пакеты и уведомления о сроке `botLicenseReminder`.
+- [Доменная модель](../domain-model.md) — ERD и описания полей для `Subscription`, `Package`, `Diler`, `Payment` и связанных таблиц.
+- [Баланс и денежная математика](../balance-and-money-math.md) — как поддерживается `Diler.BALANS`, почему DB-триггеры отключены, и цепочка `Payment::afterSave` → `Diler::changeBalans`.
 - Source: `protected/modules/operation/controllers/SubscriptionController.php` и `protected/modules/operation/actions/subscription/`

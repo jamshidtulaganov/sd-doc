@@ -1,12 +1,17 @@
-// Hardcoded user database for the client-side RBAC layer.
+// Hardcoded user database for the client-side UX gate.
 //
-// SECURITY NOTE: This file ships in the browser bundle, so anyone who
-// downloads the site can read these credentials in the source. This is a
-// UX gate, not a security boundary. For real protection, put the deployed
-// site behind Cloudflare Access, nginx basic-auth, or a similar server-side
-// gate.
-//
-// To add or change users, edit this list and rebuild.
+// ╔══════════════════════════════════════════════════════════════════════╗
+// ║ THIS IS NOT SECURITY. THIS IS A VISUAL HINT.                         ║
+// ║                                                                      ║
+// ║ This file is bundled into every visitor's browser. Credentials and   ║
+// ║ the full doc content ship in /assets/js/*.js, regardless of whether  ║
+// ║ a user "logs in". A determined visitor can read any restricted page  ║
+// ║ by inspecting the bundle.                                            ║
+// ║                                                                      ║
+// ║ For real protection, the deployment MUST sit behind a server-side    ║
+// ║ gate (nginx basic-auth, Cloudflare Access, VPN, etc).                ║
+// ║ See: deploy/README.md and SECURITY.md.                               ║
+// ╚══════════════════════════════════════════════════════════════════════╝
 
 const USERS = [
   { username: 'admin',     password: 'admin',     role: 'superadmin' },

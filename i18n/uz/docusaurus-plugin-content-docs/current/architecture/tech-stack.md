@@ -28,7 +28,7 @@ title: Tech stack
 Eski Yii 1.x va PHP 8+ qattiq tiplashda buziladigan bir qator vendor
 qilingan kutubxonalar tufayli pin qilingan. PHP 8 tuzatishlarini olib
 keladigan Yii 1.1 fork i bilan PHP 8.2 ga yangilashga ochiq ADR taklif
-mavjud — [ADR 0001](../adr/0001-yii1-stay.md) ga qarang.
+mavjud — [ADR 0001](../adr/yii1-stay.md) ga qarang.
 
 ## Nimani ishlatmaymiz (qasddan)
 
