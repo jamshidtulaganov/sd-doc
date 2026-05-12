@@ -40,6 +40,7 @@ const config = {
           path: 'docs',
           routeBasePath: 'docs',
           sidebarPath: require.resolve('./sidebars.js'),
+          editUrl: 'https://github.com/jamshidtulaganov/sd-doc/edit/main/',
         },
         blog: false,
         theme: {
