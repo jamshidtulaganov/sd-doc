@@ -363,3 +363,5 @@ flowchart TD
 - **Partial defect only allowed at STATUS 2 or 3.** The full-return path (STATUS → 4) is a separate status transition, not via `actionPartialDefect`. Do not confuse `Order.DEFECT` (partial defect count) with `Order.TYPE=2` (whole-order shelf return).
 - **`Create2Controller`, `Create3Controller`, `CreateOrder2Controller`, `CreateOrder3Controller` are `.obsolete`.** The active web creation path is `AddOrderController`. The active api3 path is `CreateController` + `CreateOrderAction`.
 - **`SetAction` (payment) writes `ClientTransaction.TRANS_TYPE=3`.** This is a payment receipt, distinct from the invoice row (`TRANS_TYPE=1`) written by `orderTransaction`. Both reference the same `ORDER_ID` via the `IDEN` field. The `payment` module reads these same rows — the `orders` module only writes the order-side receipt.
+
+added for testing don't read this
