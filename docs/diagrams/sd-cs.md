@@ -10,7 +10,7 @@ topics: [diagrams, sd, cs]
 
 Head-office app reading from many dealer DBs to produce consolidated reports.
 
-All 11 diagrams in this group, drawn inline.
+All 14 diagrams in this group, drawn inline.
 
 ## Index
 
@@ -24,9 +24,12 @@ All 11 diagrams in this group, drawn inline.
 | 06 | [Module → connection matrix](#d-06) | `flowchart` | [sd-cs/architecture](/docs/sd-cs/architecture) |
 | 07 | [Architecture (diagram)](#d-07) | `flowchart` | [sd-cs/overview](/docs/sd-cs/overview) |
 | 08 | [Onboarding a new dealer](#d-08) | `flowchart` | [sd-cs/sd-main-integration](/docs/sd-cs/sd-main-integration) |
-| 09 | [Workflow](#d-09) | `sequence` | [sd-cs/workflows/report-inventory](/docs/sd-cs/workflows/report-inventory) |
-| 10 | [Workflow](#d-10) | `sequence` | [sd-cs/workflows/report-sale](/docs/sd-cs/workflows/report-sale) |
-| 11 | [Workflow](#d-11) | `sequence` | [sd-cs/workflows/pivot-akb](/docs/sd-cs/workflows/pivot-akb) |
+| 09 | [Workflow](#d-09) | `sequence` | [sd-cs/workflows/report-agent](/docs/sd-cs/workflows/report-agent) |
+| 10 | [Workflow](#d-10) | `sequence` | [sd-cs/workflows/report-plan](/docs/sd-cs/workflows/report-plan) |
+| 11 | [Workflow](#d-11) | `sequence` | [sd-cs/workflows/report-inventory](/docs/sd-cs/workflows/report-inventory) |
+| 12 | [Workflow](#d-12) | `sequence` | [sd-cs/workflows/report-sale](/docs/sd-cs/workflows/report-sale) |
+| 13 | [Workflow](#d-13) | `sequence` | [sd-cs/workflows/report-debt](/docs/sd-cs/workflows/report-debt) |
+| 14 | [Workflow](#d-14) | `sequence` | [sd-cs/workflows/pivot-akb](/docs/sd-cs/workflows/pivot-akb) |
 
 ## 01. Two-DB connection map {#d-01}
 
@@ -283,6 +286,71 @@ flowchart LR
 ## 09. Workflow {#d-09}
 
 - **Kind**: `sequence`
+- **Source page**: [sd-cs/workflows/report-agent](/docs/sd-cs/workflows/report-agent)
+- **Originating section**: Workflow
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant U as Manager
+  participant W as sd-cs · /report/agent
+  participant CS as cs3_demo
+  participant BD as b_demo (per-filial)
+
+  U->>W: GET /report/agent
+  W->>CS: cs_user_filial (visible filials)
+  W->>CS: cs_user_product (blacklisted categories / brands)
+  W->>BD: d0_product_category, d0_adt_brand (filter dictionaries)
+  W-->>U: render filter form (date, filials, categories, brands, group-by)
+  U->>W: pick filters + Apply
+  W->>W: POST /report/agent/getData
+  loop for each visible filial fN
+    W->>BD: SELECT … FROM d0_fN_visiting / d0_fN_visit (OKB)
+    W->>BD: SELECT … FROM d0_fN_order_detail JOIN d0_fN_order (AKB + sales)
+    W->>BD: SELECT … FROM d0_fN_order_detail GROUP BY agent, group_by (line detail)
+  end
+  W-->>U: JSON array — one row per agent with OKB, AKB, totals, per-category/brand breakdown
+```
+
+## 10. Workflow {#d-10}
+
+- **Kind**: `sequence`
+- **Source page**: [sd-cs/workflows/report-plan](/docs/sd-cs/workflows/report-plan)
+- **Originating section**: Workflow
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant U as Manager
+  participant W as sd-cs · /report/plan
+  participant CS as cs3_demo
+  participant BD as b_demo (per-filial)
+
+  U->>W: GET /report/plan
+  W->>CS: cs_plan, cs_plan_category (filter dictionaries)
+  W->>BD: d0_product_category, d0_product_cat_group
+  W->>CS: cs_region, cs_territory, cs_filial_group (label dictionaries)
+  W-->>U: render filter form + empty grid
+  U->>W: GET /directory/api/getFilials (on country change or page load)
+  W->>CS: cs_filial_detail, cs_territory, cs_region, cs_filial_group
+  W-->>U: visible filial list (sorted by d0_filial.sort)
+  U->>W: pick month, date type, status, categories, label → Apply
+  W->>W: POST /directory/plan/getData
+  CS->>W: cs_plan + cs_plan_category rows for the chosen month
+  W->>W: POST /report/plan/sale
+  loop for each visible filial fN
+    W->>BD: SELECT SUM(t.VOLUME|SUMMA|COUNT), t.PRODUCT_CAT<br/>FROM d0_fN_order_detail t JOIN d0_fN_order<br/>WHERE date BETWEEN monthStart AND monthEnd
+  end
+  W-->>U: plan figures + actual figures → grid + bar chart
+  U->>W: adjust non-working days → re-POST /report/plan/sale
+  W-->>U: recalculated forecast %
+  U->>W: Export button → client-side tableToExcel
+  W-->>U: .xls download (no server round-trip)
+```
+
+## 11. Workflow {#d-11}
+
+- **Kind**: `sequence`
 - **Source page**: [sd-cs/workflows/report-inventory](/docs/sd-cs/workflows/report-inventory)
 - **Originating section**: Workflow
 
@@ -312,7 +380,7 @@ sequenceDiagram
   W-->>U: photo carousel (URLs use filial.domain)
 ```
 
-## 10. Workflow {#d-10}
+## 12. Workflow {#d-12}
 
 - **Kind**: `sequence`
 - **Source page**: [sd-cs/workflows/report-sale](/docs/sd-cs/workflows/report-sale)
@@ -341,7 +409,36 @@ sequenceDiagram
   W-->>U: PHPExcel .xlsx
 ```
 
-## 11. Workflow {#d-11}
+## 13. Workflow {#d-13}
+
+- **Kind**: `sequence`
+- **Source page**: [sd-cs/workflows/report-debt](/docs/sd-cs/workflows/report-debt)
+- **Originating section**: Workflow
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant U as Finance manager
+  participant W as sd-cs · /report/debt
+  participant CS as cs3_demo
+  participant BD as b_demo (per-filial)
+
+  U->>W: GET /report/debt
+  W->>CS: cs_user_filial (filial-visibility ACL for non-admins)
+  W->>BD: d0_filial (active='Y', ordered by sort)
+  W-->>U: render grid (one row per filial, totals footer)
+  U->>W: page load triggers POST /report/debt/getData
+  loop for each visible filial fN
+    W->>BD: SELECT SUM(BALANS>0), SUM(BALANS<0), SUM(BALANS)<br/>FROM d0_fN_client
+  end
+  W-->>U: JSON array — id, name, debt, prepayment, balance per filial
+  U->>W: click filial name → opens /directory/dealer/open?returnUrl=/clients/finans/report&id={id}
+  W-->>U: dealer detail page (new tab)
+  U->>W: click Export
+  W-->>U: client-side .xlsx via dataToExcel (no server round-trip)
+```
+
+## 14. Workflow {#d-14}
 
 - **Kind**: `sequence`
 - **Source page**: [sd-cs/workflows/pivot-akb](/docs/sd-cs/workflows/pivot-akb)

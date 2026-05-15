@@ -71,6 +71,81 @@ flowchart LR
   class SYNC external
 ```
 
+## Stock transfer between warehouses (intra-filial)
+
+`ExchangeController`
+(`protected/modules/warehouse/controllers/ExchangeController.php`)
+moves stock between two `Store` rows that belong to the same filial.
+`actionCreate` writes one `Exchange` header and one
+`ExchangeDetail` row per line; the actual stock move is a single
+transaction that decrements `StoreDetail.COUNT` on the source and
+increments it on the destination.
+
+```mermaid
+flowchart LR
+  W(["POST /warehouse/exchange/create (from, to, items[])"]) --> EC[ExchangeController::actionCreate]
+  EC --> V{"both Store rows ACTIVE? source COUNT >= req?"}
+  V -- "no" --> RJ([error: invalid store or shortage])
+  V -- "yes" --> TX[BEGIN transaction]
+  TX --> HD["INSERT exchange (FROM_STORE, TO_STORE, AGENT, DATE)"]
+  HD --> LN["INSERT exchange_detail x N"]
+  LN --> DEC["UPDATE StoreDetail SET COUNT -= req WHERE STORE_ID=from"]
+  DEC --> INC["UPDATE StoreDetail SET COUNT += req WHERE STORE_ID=to"]
+  INC --> CM[COMMIT]
+  CM --> OK(["respond exchange_id"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class W,EC,TX,HD,LN,DEC,INC,CM action
+  class V approval
+  class OK success
+  class RJ reject
+```
+
+## Inter-filial movement (two-leg)
+
+`FilialMovementController`
+(`protected/modules/warehouse/controllers/FilialMovementController.php`)
+dispatches to action classes under
+`application.modules.warehouse.actions.filialMovement.*`. The request
+flows draft -> pending -> approved; on approval the provider filial
+writes the **out leg** (`purchase_refund` for `TYPE_MOVEMENT`, or
+`Order` via `FilialClient` for `TYPE_PRIMARY`), and the requester
+filial gets the matching **in leg** via `FilialOrder::createMovement`.
+
+```mermaid
+flowchart TB
+  R(["Requester filial: POST create-request"]) --> CR[CreateRequest action]
+  CR --> RD["INSERT filial_movement_request STATUS=1 (draft)"]
+  RD --> CS[ChangeStatus: draft -> pending]
+  CS --> P(["Provider filial: POST approve-request"])
+  P --> AR[ApproveRequest action]
+  AR --> SB{"WarehouseService.getStockBalance OK?"}
+  SB -- "no" --> RJ([reject: STATUS=4])
+  SB -- "yes" --> T{"request TYPE?"}
+  T -- "1 movement" --> OUT["INSERT purchase_refund + purchase_refund_detail (out leg) + FilialOrder::createMovement (in leg)"]
+  T -- "2 primary" --> ORD["INSERT order + order_detail via FilialClient virtual client"]
+  OUT --> OK([UPDATE request STATUS=3 approved, RESULT_DOC_ID])
+  ORD --> OK
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class R,CR,RD,CS,P,AR,OUT,ORD action
+  class SB,T approval
+  class OK success
+  class RJ reject
+```
+
 ## Permissions
 
 | Action | Roles |

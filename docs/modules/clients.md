@@ -77,6 +77,41 @@ class R reject
 class X external
 ```
 
+## Field-created client (mobile, api3)
+
+When a field agent creates a client during a visit
+(`api3/ClientController::actionAddClient`,
+`protected/modules/api3/controllers/ClientController.php:388`), the
+record lands in `ClientPending` if the agent config has `client.verify`
+turned on. A back-office manager later approves via
+`ApprovalController::actionSave`, which copies the row into `Client`
+(`ACTIVE=Y`) and sets `CONFIRMED_BY` / `CONFIRMED_AT`.
+
+```mermaid
+flowchart LR
+  A(["Agent: POST /api3/client/addClient"]) --> V{"agentConfig client.verify == true?"}
+  V -- "no" --> CI["INSERT client ACTIVE=Y"]
+  V -- "yes" --> D{"ClientPending exists for XML_ID userId-clientId?"}
+  D -- "yes" --> RET(["return pending=true"])
+  D -- "no" --> P["INSERT client_pending CREATE_BY=user"]
+  P --> M["Manager: ApprovalController::actionSave"]
+  M --> AP{"approve?"}
+  AP -- "approve" --> OK(["INSERT client + Visiting + SalesCategory; DELETE client_pending"])
+  AP -- "reject" --> RJ(["actionDelete: DELETE client_pending"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class A,P,M action
+  class V,D,AP approval
+  class CI,OK,RET success
+  class RJ reject
+```
+
 ## API
 
 | Endpoint | Purpose |

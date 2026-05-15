@@ -1,0 +1,4615 @@
+[
+  {
+    "url": "/adt/adtAudit/fullReport",
+    "seed": "/adt/adtAudit/fullReport",
+    "role": "admin",
+    "status": 200,
+    "title": "Ритейл аудит",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/adt_adtAudit_fullReport.jpg",
+    "fields": [
+      {
+        "label": "Категория товара",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория товара",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиентов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиентов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Канал сбыта",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Канал сбыта",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип торговой точки",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип торговой точки",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Выбор аудитора",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Выбор аудитора",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Аудит",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Аудит",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Конкурентный анализ",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Конкурентный анализ",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Выбор опроса",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Выбор опроса",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Фильтр",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/adt/client",
+    "seed": "/adt/client",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Client",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/adt_client.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Экспорт в файл Google Earth",
+      "Групповая обработка",
+      "Добавить клиента",
+      "На карте",
+      "Мерчендайзер",
+      "Выбрать все",
+      "Убрать все",
+      "Территория",
+      "Категории клиентов",
+      "Тип цены",
+      "День",
+      "Активный",
+      "QR код",
+      "Локация",
+      "Тип ТТ",
+      "Канал сбыта",
+      "Экспорт",
+      "Импорт",
+      "×",
+      "Сбросить настройки",
+      "Отменить",
+      "Показать на карте",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/adt/dashboard",
+    "seed": "/adt/dashboard",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Dashboard",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/adt_dashboard.jpg",
+    "fields": [
+      {
+        "label": "Название задачи *",
+        "name": "NAME",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Дата выполнения *",
+        "name": null,
+        "type": "div",
+        "required": false
+      },
+      {
+        "label": "Комментарий",
+        "name": "COMMENT",
+        "type": "textarea",
+        "required": false
+      }
+    ],
+    "columns": [
+      "#",
+      "Имя",
+      "По плану",
+      "Вне плана",
+      "Начало",
+      "Конец",
+      "План",
+      "Посещено",
+      "Не посещено",
+      "Посещение",
+      "Посещено",
+      "Посещение",
+      "Опрос",
+      "Аудит",
+      "Фото",
+      "Коммент",
+      "Опрос",
+      "Аудит",
+      "Фото",
+      "Коммент"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Все картинки",
+      "📥Экспорт",
+      "Все картинки (0)",
+      "Открепить",
+      "Сбросить",
+      "Вернуться назад",
+      "Текущее фото",
+      "Все фото",
+      "Выбрать",
+      "angela (Мерчендайзер)",
+      "Полка",
+      "Загрузить еще",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/adt/mixReport/index",
+    "seed": "/adt/mixReport/index",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - MixReport",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/adt_mixReport_index.jpg",
+    "fields": [
+      {
+        "label": "Аудит",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Пользователи",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "ФИО",
+      "ОКБ",
+      "План Визит",
+      "План Посещено",
+      "дисциплина",
+      "аудит опрос (от план посещ)",
+      "Фото",
+      "Оценка по фотоотчетам",
+      "Ср. прод. Визит (Час:мин)",
+      "Дни до 9:30",
+      "Дни после 16:00",
+      "Наш прод",
+      "Конк прод",
+      "Общий",
+      "Полный",
+      "Не полный",
+      "% покрытия от план пос",
+      "Оцен от покрытие фото",
+      "Плохо",
+      "Неудов.",
+      "Удов.",
+      "Хорошо",
+      "Отлично"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Экспорт",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/adt/reports",
+    "seed": "/adt/reports",
+    "role": "admin",
+    "status": 200,
+    "title": "Отчёты",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/adt_reports.jpg",
+    "fields": [],
+    "columns": [
+      "Отчёт",
+      "Группа",
+      "Описание",
+      "Показать в меню"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/adt/settings",
+    "seed": "/adt/settings",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Settings",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/adt_settings.jpg",
+    "fields": [],
+    "columns": [
+      "Названия",
+      "Сортировка"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Добавить",
+      "×",
+      "Завершить",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/adt/visitReport",
+    "seed": "/adt/visitReport",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - VisitReport",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/adt_visitReport.jpg",
+    "fields": [],
+    "columns": [
+      "Первая активность",
+      "Последняя активность",
+      "Время у клиентов",
+      "Общее рабочее время",
+      "Успешные запланированные визиты",
+      "Незапланированные визиты",
+      "Все запланированные визиты",
+      "Все визиты"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/agents/kpiNew",
+    "seed": "/agents/kpiNew",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - KpiNew",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/agents_kpiNew.jpg",
+    "fields": [],
+    "columns": [
+      "Период",
+      "Агенты",
+      "Изменить"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Установить KPI",
+      "Добавить задачу",
+      "Задачи",
+      "Группировка",
+      "Установка",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/agents/kpiNew/superviser",
+    "seed": "/agents/kpiNew/superviser",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Superviser KpiNew",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/agents_kpiNew_superviser.jpg",
+    "fields": [],
+    "columns": [
+      "Период",
+      "Супервайзеры",
+      "Установка"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Установить KPI",
+      "Добавить задачу",
+      "Задачи",
+      "KPI Результаты",
+      "Установка",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/agents/limit",
+    "seed": "/agents/limit",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Limit",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/agents_limit.jpg",
+    "fields": [],
+    "columns": [
+      "Агент",
+      "Продукты по категориями",
+      "Количество",
+      "Тип",
+      "Изменить"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Текущий статус лимита",
+      "Создать ограничения",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/agents/taskNew",
+    "seed": "/agents/taskNew",
+    "role": "admin",
+    "status": 200,
+    "title": "Список задач",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/agents_taskNew.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Назначающий",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Назначающий",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Исполнитель",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Исполнитель",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Задание",
+      "Клиент",
+      "Назначающий",
+      "Исполнитель",
+      "Дата создания",
+      "Срок выполнения",
+      "Фото задачи",
+      "Фото результата",
+      "Тип задачи",
+      "Статус",
+      "Комментарий назначающего",
+      "Комментарий исполнителя"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Сбросить фильтр",
+      "Добавить",
+      "Показать по",
+      "Excel",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/audit/photoReport",
+    "seed": "/audit/photoReport",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - PhotoReport",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/audit_photoReport.jpg",
+    "fields": [
+      {
+        "label": "Название задачи *",
+        "name": "NAME",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Дата выполнения *",
+        "name": null,
+        "type": "div",
+        "required": false
+      },
+      {
+        "label": "Комментарий",
+        "name": "COMMENT",
+        "type": "textarea",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Дата",
+      "ИД ТТ",
+      "ТТ",
+      "Тел",
+      "Пользователь",
+      "Территория",
+      "Количество фото",
+      "Рейтинг",
+      "Оценка"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Сбросить",
+      "Вернуться назад",
+      "Текущее фото",
+      "Все фото",
+      "Выбрать",
+      "angela (Мерчендайзер)",
+      "Полка",
+      "Загрузить еще",
+      "Показать всех пользователей",
+      "Пользователи",
+      "Выбрать все",
+      "Убрать все",
+      "Территория",
+      "Категория",
+      "май 1 - май 15",
+      "По 20",
+      "Показ./Скр. столбцы",
+      "Excel",
+      "Блокировать",
+      "Разрешить",
+      "OK",
+      "Отменить"
+    ]
+  },
+  {
+    "url": "/clients/agentRoute",
+    "seed": "/clients/agentRoute",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - AgentRoute",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/clients_agentRoute.jpg",
+    "fields": [
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Супервайзер",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Супервайзер",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиента",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиента",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Дни недели",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Дни недели",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Клиенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Клиенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Периодичность по неделям",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Периодичность по неделям",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Территория",
+      "Пн",
+      "Вт",
+      "Ср",
+      "Чт",
+      "Пт",
+      "Сб",
+      "Вс",
+      "Итог"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Фильтр",
+      "Сбросить фильтр",
+      "Показать по",
+      "Excel",
+      "1",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/clients/client",
+    "seed": "/clients/client",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Client",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/clients_client.jpg",
+    "fields": [
+      {
+        "label": "Ставка НсП",
+        "name": "nsp-bulk",
+        "type": "select",
+        "required": false
+      },
+      {
+        "label": "Максимальное кол-во заказов в день",
+        "name": "order[maxOrderQtyPerDay]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Минимальная сумма заказа",
+        "name": "order[minSumma]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальная сумма заказа",
+        "name": "order[maxSumma]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальная сумма долга",
+        "name": "order[maxDebt]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальный срок просрочки (день)",
+        "name": "order[maxDebtDay]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Срок консигнации по умолчанию (день)",
+        "name": "payment[consignmentPeriod]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Направление торговли",
+        "name": "bot_order[tradeDirection][]",
+        "type": "select",
+        "required": false
+      },
+      {
+        "label": "Максимальное кол-во заказов в день",
+        "name": "trade[2][maxOrderQtyPerDay]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Минимальная сумма заказа",
+        "name": "trade[2][minSumma]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальная сумма заказа",
+        "name": "trade[2][maxSumma]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальная сумма долга",
+        "name": "trade[2][maxDebt]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальный срок просрочки (день)",
+        "name": "trade[2][maxDebtDay]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальное кол-во заказов в день",
+        "name": "trade[11][maxOrderQtyPerDay]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Минимальная сумма заказа",
+        "name": "trade[11][minSumma]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальная сумма заказа",
+        "name": "trade[11][maxSumma]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальная сумма долга",
+        "name": "trade[11][maxDebt]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальный срок просрочки (день)",
+        "name": "trade[11][maxDebtDay]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальное кол-во заказов в день",
+        "name": "trade[14][maxOrderQtyPerDay]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Минимальная сумма заказа",
+        "name": "trade[14][minSumma]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальная сумма заказа",
+        "name": "trade[14][maxSumma]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальная сумма долга",
+        "name": "trade[14][maxDebt]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальный срок просрочки (день)",
+        "name": "trade[14][maxDebtDay]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальное кол-во заказов в день",
+        "name": "trade[15][maxOrderQtyPerDay]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Минимальная сумма заказа",
+        "name": "trade[15][minSumma]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальная сумма заказа",
+        "name": "trade[15][maxSumma]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальная сумма долга",
+        "name": "trade[15][maxDebt]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальный срок просрочки (день)",
+        "name": "trade[15][maxDebtDay]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальное кол-во заказов в день",
+        "name": "trade[16][maxOrderQtyPerDay]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Минимальная сумма заказа",
+        "name": "trade[16][minSumma]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальная сумма заказа",
+        "name": "trade[16][maxSumma]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальная сумма долга",
+        "name": "trade[16][maxDebt]",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Максимальный срок просрочки (день)",
+        "name": "trade[16][maxDebtDay]",
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Неподтвержденные клиенты",
+      "История изменения визитов",
+      "QR-kod",
+      "Общая конфигурация",
+      "Экспорт в файл Google Earth",
+      "Групповая обработка",
+      "Toggle Dropdown",
+      "Импортировать из 2GIS ссылок",
+      "Добавить клиента",
+      "Мерчендайзер",
+      "Выбрать все",
+      "Убрать все",
+      "Агент",
+      "Территория",
+      "Категории клиентов",
+      "Тип цены",
+      "День",
+      "Экспедитор",
+      "Активный",
+      "Локация",
+      "май 12 - май 15",
+      "Тип ТТ",
+      "Канал сбыта",
+      "Класс клиента",
+      "Все недели",
+      "ИНН"
+    ]
+  },
+  {
+    "url": "/clients/client/duplicate",
+    "seed": "/clients/client/duplicate",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Duplicate Client",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/clients_client_duplicate.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Агент",
+      "Выбрать все",
+      "Убрать все",
+      "Мерчендайзер",
+      "Территория",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/clients/stock",
+    "seed": "/clients/stock",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Stock",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/clients_stock.jpg",
+    "fields": [],
+    "columns": [
+      "Дата",
+      "Клиент",
+      "Территория",
+      "Агент",
+      "Категория продукта",
+      "Продукт",
+      "Кол-во",
+      "Кол-во (Продажа)",
+      "Объём",
+      "Сумма"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Базовая представленность",
+      "Коэффициент продажи",
+      "Агенты",
+      "Выбрать все",
+      "Убрать все",
+      "Территория",
+      "май 9 - май 15",
+      "Категории продуктов",
+      "Продукты",
+      "Закуп",
+      "По 20",
+      "Показ./Скр. столбцы",
+      "Excel",
+      "Скачать шаблон",
+      "Загрузить шаблон",
+      "×",
+      "Обновить",
+      "Блокировать",
+      "Разрешить",
+      "OK",
+      "Отменить"
+    ]
+  },
+  {
+    "url": "/clients/taradoc",
+    "seed": "/clients/taradoc",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Taradoc",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/clients_taradoc.jpg",
+    "fields": [
+      {
+        "label": "Тары",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тары",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиента",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиента",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Тара",
+      "Остаток"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Показать по",
+      "Excel",
+      "1",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/clients/view/clientMap",
+    "seed": "/clients/view/clientMap",
+    "role": "admin",
+    "status": 200,
+    "title": "Клиенты на карте",
+    "h1": "Агенты",
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/clients_view_clientMap.jpg",
+    "fields": [
+      {
+        "label": "Дни недели",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Дни недели",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиента",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиента",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип клиента",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип клиента",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Активность клиентов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Активность клиентов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип визита",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип визита",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Категория клиента",
+      "Кол.клиентов"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Печать",
+      "Фильтр",
+      "Сбросить фильтр",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/dashboard/kpi",
+    "seed": "/dashboard/kpi",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Kpi",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/dashboard_kpi.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Супервайзер",
+      "Выбрать все",
+      "Убрать все",
+      "Агент",
+      "Май",
+      "2026",
+      "установите план",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/dashboard/kpi",
+    "seed": "/dashboard/kpi?superviser=y",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Kpi",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/dashboard_kpi.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Супервайзер",
+      "Выбрать все",
+      "Убрать все",
+      "Агент",
+      "Май",
+      "2026",
+      "установите план",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/dashboard/kpiExpeditor",
+    "seed": "/dashboard/kpiExpeditor",
+    "role": "admin",
+    "status": 200,
+    "title": "KPI Экспедитора",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/dashboard_kpiExpeditor.jpg",
+    "fields": [
+      {
+        "label": "Поиск",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "ИД установки",
+      "Месяц",
+      "Экспедиторы",
+      "Задачи",
+      "Установка",
+      "Редакт.",
+      "Удалить"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Установка KPI",
+      "Установка KPI c excel",
+      "Новая задача",
+      "Задачи",
+      "Результаты",
+      "Настройки",
+      "Установить",
+      "1",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/dashboard/kpiExpeditor/results",
+    "seed": "/dashboard/kpiExpeditor/results",
+    "role": "admin",
+    "status": 200,
+    "title": "KPI Результаты",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/dashboard_kpiExpeditor_results.jpg",
+    "fields": [
+      {
+        "label": "Вид",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Вид",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Экспедиторы",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Экспедиторы",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Задачи",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Задачи",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Сортировка по KPI",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Сортировка по KPI",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/dashboard/supervayzer",
+    "seed": "/dashboard/supervayzer",
+    "role": "admin",
+    "status": 200,
+    "title": "Дашборд",
+    "h1": "Общая сумма заявок на 15 мая.",
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/dashboard_supervayzer.jpg",
+    "fields": [
+      {
+        "label": "Название задачи *",
+        "name": "NAME",
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Дата выполнения *",
+        "name": null,
+        "type": "div",
+        "required": false
+      },
+      {
+        "label": "Комментарий",
+        "name": "COMMENT",
+        "type": "textarea",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Категория",
+      "Доля",
+      "Сумма",
+      "Объем",
+      "Блок",
+      "Количество",
+      "АКБ"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Новый, Отгружен, Доставлен",
+      "Выбрать все",
+      "Убрать все",
+      "Категории продуктов",
+      "Территория",
+      "Категория клиентов",
+      "15 мая.",
+      "По 10",
+      "Excel",
+      "По 20",
+      "Показ./Скр. столбцы",
+      "Скрыть категории без продаж",
+      "×",
+      "Сбросить",
+      "Вернуться назад",
+      "Текущее фото",
+      "Все фото",
+      "Выбрать",
+      "angela (Мерчендайзер)",
+      "Полка",
+      "Загрузить еще",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/gps2",
+    "seed": "/gps2",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Client",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/gps2.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Печать",
+      "Дни",
+      "Агенты",
+      "Территории",
+      "Категории",
+      "Тип клиента",
+      "Тег клиента",
+      "Активный",
+      "Все торговые точки",
+      "По типу визитов",
+      "Все",
+      "×",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/integration/view/idokon",
+    "seed": "/integration/view/idokon",
+    "role": "admin",
+    "status": 200,
+    "title": "Клиенты с iDokon (POS)",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/integration_view_idokon.jpg",
+    "fields": [
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агент",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агент",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "День посещения",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "День посещения",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Клиент Идокона",
+      "Телефон",
+      "Статус",
+      "Название клиента",
+      "Агент",
+      "Тип цены",
+      "День",
+      "Дата создания",
+      "Действие"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Скачать QR для iDokon",
+      "Рекомендованная продажа",
+      "Показать по",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/inventory/list",
+    "seed": "/inventory/list",
+    "role": "admin",
+    "status": 200,
+    "title": "Список оборудований",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/inventory_list.jpg",
+    "fields": [
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Клиенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Клиенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип оборудования",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип оборудования",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "ID Инвентаря",
+      "Тип инвентаря",
+      "Название инвентаря",
+      "Клиент",
+      "Статус",
+      "Номер телефона",
+      "Локация",
+      "Состояние",
+      "Агенты",
+      "Дата прикрепления",
+      "Серийный номер"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Добавить",
+      "Групповая обработка",
+      "Показать по",
+      "Excel",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/markirovka/view/incomingInvoices",
+    "seed": "/markirovka/view/incomingInvoices",
+    "role": "admin",
+    "status": 200,
+    "title": "Входящие ЭСФ",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/markirovka_view_incomingInvoices.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "#",
+      "Роуминг ID документа",
+      "Роуминг ID исправленного документа",
+      "Номер счёт фактуры",
+      "Дата счёт фактуры",
+      "Номер договора",
+      "Дата договора",
+      "Статус документа",
+      "Состояние кодов",
+      "Состояние приёмки",
+      "Отправитель",
+      "ИНН отправителя",
+      "Сумма"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Синхронизация с Faktura.UZ",
+      "Обновить API-ключ для маркировки",
+      "Показать по",
+      "Excel",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/markirovka/view/outgoingInvoices",
+    "seed": "/markirovka/view/outgoingInvoices",
+    "role": "admin",
+    "status": 200,
+    "title": "Исходящие ЭСФ",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/markirovka_view_outgoingInvoices.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Способ оплаты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Способ оплаты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Заказ",
+      "Дата заявки",
+      "Дата отгрузки",
+      "Статус заказа",
+      "Статус ЭСФ",
+      "Статус КИ",
+      "Клиент",
+      "ИНН клиента",
+      "Тел. клиента",
+      "Экспедитор",
+      "Тел. экспедитора",
+      "Документ ЭСФ",
+      "Оператор ЭСФ",
+      "Сумма"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Групповая обработка",
+      "Показать по",
+      "Excel",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/onlineOrder/contact",
+    "seed": "/onlineOrder/contact",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Contact",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/onlineOrder_contact.jpg",
+    "fields": [
+      {
+        "label": "Пакеты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Только реферальные клиенты",
+        "name": null,
+        "type": "checkbox",
+        "required": false
+      },
+      {
+        "label": "Поиск",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Пакеты",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Id",
+      "Имя",
+      "Номер",
+      "Никнейм",
+      "Клиент",
+      "Кол-во заказов",
+      "Реферер",
+      "Кол-во приглашенных клиентов",
+      "Действия"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Export",
+      "edit",
+      "list",
+      "how_to_reg",
+      "Прикрепить пакеты",
+      "Открепить пакеты",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/onlineOrder/order",
+    "seed": "/onlineOrder/order",
+    "role": "admin",
+    "status": 200,
+    "title": "Онлайн заявки",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/onlineOrder_order.jpg",
+    "fields": [
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Контакт",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Поиск",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Id",
+      "Имя",
+      "Номер",
+      "Дата заказа",
+      "Клиент",
+      "Комм-ий",
+      "Способ оплаты",
+      "Адрес",
+      "Сумма",
+      "Бонус",
+      "Статус"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Excel",
+      "×",
+      "{{ $t('Показать на карте') }}",
+      "{{ $t('Закрыть') }}",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/orders/addOrder",
+    "seed": "/orders/createOrder",
+    "role": "admin",
+    "status": 200,
+    "title": "Новый заказ",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/orders_addOrder.jpg",
+    "fields": [
+      {
+        "label": "Агент",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Поиск",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Id",
+      "Название",
+      "Название фирмы",
+      "Телефон",
+      "Категория",
+      "Территория",
+      "Адрес",
+      "Ориентир",
+      "Баланс клиента",
+      "Просрочки"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Open Dialog",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/orders/importOrder",
+    "seed": "/orders/importOrder",
+    "role": "admin",
+    "status": 200,
+    "title": "Импорт заказов",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/orders_importOrder.jpg",
+    "fields": [
+      {
+        "label": "Заказы.xlsx",
+        "name": null,
+        "type": "file",
+        "required": false
+      },
+      {
+        "label": "Заказы.xlsx",
+        "name": null,
+        "type": "file",
+        "required": false
+      }
+    ],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Проверить",
+      "Скачать шаблон",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/orders/importOrder/returns",
+    "seed": "/orders/importOrder/returns",
+    "role": "admin",
+    "status": 200,
+    "title": "Импорт возвратов",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/orders_importOrder_returns.jpg",
+    "fields": [
+      {
+        "label": "Заказы.xlsx",
+        "name": null,
+        "type": "file",
+        "required": false
+      },
+      {
+        "label": "Заказы.xlsx",
+        "name": null,
+        "type": "file",
+        "required": false
+      }
+    ],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Проверить",
+      "Скачать шаблон",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/orders/list",
+    "seed": "/orders/list",
+    "role": "admin",
+    "status": 200,
+    "title": "Список заявок",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/orders_list.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус заявки",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус заявки",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип заявки",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип заявки",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиента",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиента",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Супервайзер",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Супервайзер",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агент",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агент",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Экспедитор",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Экспедитор",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип цены",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип цены",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Направление торговли",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Направление торговли",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория товара",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория товара",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Номер документа",
+      "Тип заявки",
+      "Статус",
+      "Агент",
+      "Клиент",
+      "Баланс",
+      "Сумма",
+      "Остаток долга",
+      "Дата заявки",
+      "Дата отгрузки",
+      "Экспедитор",
+      "Склад",
+      "Количество",
+      "Объём",
+      "Тег",
+      "Комментарий"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Сбросить фильтр",
+      "Добавить",
+      "Накладные",
+      "Групповая обработка",
+      "Отчёты",
+      "Показать по",
+      "Excel",
+      "Развернуть",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/orders/orders/editStatus",
+    "seed": "/orders/orders/editStatus",
+    "role": "admin",
+    "status": 200,
+    "title": "Изменить статус заявок",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/orders_orders_editStatus.jpg",
+    "fields": [
+      {
+        "label": "Заказы.xlsx",
+        "name": null,
+        "type": "file",
+        "required": false
+      },
+      {
+        "label": "Заказы.xlsx",
+        "name": null,
+        "type": "file",
+        "required": false
+      },
+      {
+        "label": "Выберите статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Выберите статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "выбрать столбцы",
+      "применить",
+      "шаблон",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/orders/recovery",
+    "seed": "/orders/recoveryOrder/create",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Recovery",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/orders_recovery.jpg",
+    "fields": [
+      {
+        "label": "Поиск",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Id",
+      "Название",
+      "Название фирмы",
+      "Телефон",
+      "Категория",
+      "Территория",
+      "Адрес",
+      "Ориентир",
+      "Баланс клиента",
+      "Просрочки"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/orders/recovery",
+    "seed": "/orders/recoveryOrder/createReplace",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Recovery",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/orders_recovery.jpg",
+    "fields": [
+      {
+        "label": "Поиск",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Id",
+      "Название",
+      "Название фирмы",
+      "Телефон",
+      "Категория",
+      "Территория",
+      "Адрес",
+      "Ориентир",
+      "Баланс клиента",
+      "Просрочки"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/orders/rejects",
+    "seed": "/orders/rejects",
+    "role": "admin",
+    "status": 200,
+    "title": "Отказы",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/orders_rejects.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Агент",
+      "Выбрать все",
+      "Убрать все",
+      "Причина отказа",
+      "Категории клиентов",
+      "Город",
+      "май 15 - май 15",
+      "Блокировать",
+      "Разрешить",
+      "OK",
+      "Отменить"
+    ]
+  },
+  {
+    "url": "/orders/view/createOrder",
+    "seed": "/orders/view/createOrder",
+    "role": "admin",
+    "status": 200,
+    "title": "Новый заказ - Список клиентов",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/orders_view_createOrder.jpg",
+    "fields": [
+      {
+        "label": "Агент",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агент",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиентов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиентов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Дни посещений",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Дни посещений",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "ID Клиента",
+      "Название клиента",
+      "Номер телефона",
+      "Агенты",
+      "Дни посещений",
+      "Территория",
+      "Адрес",
+      "Ориентир",
+      "Баланс",
+      "Срок оплаты"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Показать по",
+      "Excel",
+      "Выбрать",
+      "1",
+      "2",
+      "3",
+      "4",
+      "...",
+      "9",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/orders/view/onMap",
+    "seed": "/orders/view/onMap",
+    "role": "admin",
+    "status": 200,
+    "title": "Заявки на карте",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/orders_view_onMap.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Экспедитор",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Экспедитор",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип заявки",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип заявки",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиента",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория клиента",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Территория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Прикрепить экспедитора",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Прикрепить экспедитора",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Рейс",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Рейс",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Сохранить рейс",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/orders/view/trips",
+    "seed": "/orders/view/trips",
+    "role": "admin",
+    "status": 200,
+    "title": "Рейсы",
+    "h1": "Рейсы",
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/orders_view_trips.jpg",
+    "fields": [
+      {
+        "label": "Автомобиль",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Автомобиль",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Курьер",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Курьер",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Экспедитор",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Экспедитор",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "ID",
+      "Автомобиль",
+      "Заказы",
+      "Вес",
+      "Объем",
+      "Загруженность",
+      "Курьер",
+      "Экспедитор",
+      "Дата прикрепления",
+      "Статус"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Всего2",
+      "Активные0",
+      "В ожидании0",
+      "Отмененные0",
+      "Выполненные2",
+      "Добавить",
+      "Групповая обработка",
+      "Показать по",
+      "Excel",
+      "Готов",
+      "1",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/planning",
+    "seed": "/planning",
+    "role": "admin",
+    "status": 200,
+    "title": "Установка плана",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/planning.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Настроить план",
+      "Рекомендации",
+      "2026",
+      "Май",
+      "Ничего не выбрано",
+      "×",
+      "Последний месяц",
+      "Получить рекомендацию",
+      "Excel",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/planning/monthly2",
+    "seed": "/planning/monthly2",
+    "role": "admin",
+    "status": 200,
+    "title": "Результаты выполнения плана",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/planning_monthly2.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Кол-во рабочих дней: 26",
+      "Отработано: 13",
+      "Осталось: 13",
+      "Категория товара",
+      "Выбрать все",
+      "Убрать все",
+      "Супервайзер",
+      "2026",
+      "Май",
+      "Дата отгрузки",
+      "×",
+      "Последний месяц",
+      "Получить рекомендацию",
+      "Факт",
+      "Факт (общий)",
+      "Прогноз",
+      "Развернуть все",
+      "Excel",
+      "Все категории Категория с планом Категория без плана",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/planning/outlet",
+    "seed": "/planning/outlet",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Outlet",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/planning_outlet.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Кол-во рабочих дней: 26",
+      "Отработано: 13",
+      "Осталось: 13",
+      "2026",
+      "Май",
+      "Ничего не выбрано",
+      "×",
+      "Последний месяц",
+      "Получить рекомендацию",
+      "Сумма",
+      "Количество",
+      "Объем",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/report/reportVisit/auditor",
+    "seed": "/report/reportVisit/auditor",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Auditor ReportVisit",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/report_reportVisit_auditor.jpg",
+    "fields": [],
+    "columns": [
+      "Мерчендайзер",
+      "День (Май)",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Все визиты",
+      "% от заплан. визитов",
+      "Посещенные",
+      "Май",
+      "2026",
+      "По 20",
+      "Показ./Скр. столбцы",
+      "Excel",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/sms/view/list",
+    "seed": "/sms/view/list",
+    "role": "admin",
+    "status": 200,
+    "title": "Рассылки СМС",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/sms_view_list.jpg",
+    "fields": [],
+    "columns": [
+      "#",
+      "Шаблон сообщения",
+      "Получатели",
+      "Дата отправки",
+      "Создано",
+      "Действие"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "СМС рассылка",
+      "Шаблоны сообщений",
+      "Новая рассылка",
+      "Купить CMC пакет",
+      "Перезагрузить",
+      "Загрузить",
+      "Блокировать",
+      "Разрешить",
+      "×",
+      "OK",
+      "No",
+      "Cancel"
+    ]
+  },
+  {
+    "url": "/staff/view/agent",
+    "seed": "/staff/view/agent",
+    "role": "admin",
+    "status": 200,
+    "title": "Список агентов",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/staff_view_agent.jpg",
+    "fields": [
+      {
+        "label": "Тип",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "ИД",
+      "Ф.И.О.",
+      "Логин",
+      "Телефон",
+      "Последняя синхронизация",
+      "Тип",
+      "Код агента",
+      "Доступные товары",
+      "Доступные типы цен"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Конфигурация",
+      "Добавить агента",
+      "Групповая обработка",
+      "Показать по",
+      "Excel",
+      "1",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/staff/view/expeditor",
+    "seed": "/staff/view/expeditor",
+    "role": "admin",
+    "status": 200,
+    "title": "Экспедиторы",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/staff_view_expeditor.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Ф.И.О.",
+      "Логин",
+      "Телефон",
+      "Версия приложения",
+      "Адрес",
+      "Доступ к приложению"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Конфигурация",
+      "Добавить экспедитора",
+      "Групповая обработка",
+      "Показать по",
+      "Excel",
+      "Удалить доступ",
+      "Добавить доступ",
+      "1",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/staff/view/supervisor",
+    "seed": "/staff/view/supervisor",
+    "role": "admin",
+    "status": 200,
+    "title": "Супервайзеры",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/staff_view_supervisor.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "#",
+      "Ф.И.О.",
+      "Агент",
+      "Логин",
+      "Активность",
+      "Доступ к приложению",
+      "Действия"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Добавить супервайзера",
+      "Показать по",
+      "Удалить доступ",
+      "Добавить доступ",
+      "1",
+      "2",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/stock/excretion",
+    "seed": "/stock/excretion",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Excretion",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_excretion.jpg",
+    "fields": [],
+    "columns": [
+      "Дата списания",
+      "Дата создания",
+      "Количество",
+      "Склад",
+      "Сумма (Оценка)",
+      "Комментарии"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Добавить",
+      "Отчет за период",
+      "Склад",
+      "Выбрать все",
+      "Убрать все",
+      "Выберите тип цены для оценки",
+      "май 1 - май 31",
+      "По 20",
+      "Показ./Скр. столбцы",
+      "Excel",
+      "Блокировать",
+      "Разрешить",
+      "OK",
+      "Отменить"
+    ]
+  },
+  {
+    "url": "/stock/financialReport",
+    "seed": "/stock/financialReport",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - FinancialReport",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_financialReport.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Категории продуктов",
+      "Выбрать все",
+      "Убрать все",
+      "Группа товаров",
+      "Продукты",
+      "Типы цен",
+      "Тип операции",
+      "Склад",
+      "май 9 - май 15",
+      "Нет",
+      "Да",
+      "×",
+      "Начальный отчет",
+      "Отменить",
+      "Блокировать",
+      "Разрешить",
+      "OK"
+    ]
+  },
+  {
+    "url": "/stock/lotReport",
+    "seed": "/stock/lotReport",
+    "role": "admin",
+    "status": 200,
+    "title": "Остатки по партиям",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_lotReport.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Дата",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Дата",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория продуктов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория продуктов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Направление торговли",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Направление торговли",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип партии",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип партии",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Подкатегория продуктов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Подкатегория продуктов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Группа продуктов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Группа продуктов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Бренд",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Бренд",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Производитель",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Производитель",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/stock/planProduct",
+    "seed": "/stock/planProduct",
+    "role": "admin",
+    "status": 200,
+    "title": "Результат выполнения плана",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_planProduct.jpg",
+    "fields": [
+      {
+        "label": "Показано в",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Супервайзеры",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Сегмент",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Товары",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Только с планом",
+        "name": null,
+        "type": "checkbox",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Продукты",
+      "11111",
+      "Agent Javoxir",
+      "Agent007",
+      "Anvar Rashidowv",
+      "Avazhon",
+      "beck",
+      "Bobz",
+      "dimaprod",
+      "Dmitriy M VS",
+      "Dmitry Agent",
+      "Feruzov Anvar",
+      "Gleb agent",
+      "Sotuvchi",
+      "TP-22",
+      "Usmon",
+      "Van selling",
+      "Vansell Max",
+      "Авдеев Севдар",
+      "Азизбек Азизбеков",
+      "Александр Кузнецcкий",
+      "Мадаминбек",
+      "Михаил Леонтьев",
+      "№3 Van-Sell Jack",
+      "№5 Мадаминбек VS",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт",
+      "План",
+      "Факт"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Экспорт",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/stock/planProduct/create",
+    "seed": "/stock/planProduct/create",
+    "role": "admin",
+    "status": 200,
+    "title": "Установка плана по товарам",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_planProduct_create.jpg",
+    "fields": [
+      {
+        "label": "Тип продукта",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип продукта",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория продукта",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория продукта",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Товары",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Товары",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Продукты",
+      "11111",
+      "Agent Javoxir",
+      "Agent007",
+      "Anvar Rashidowv",
+      "Avazhon",
+      "Bobz",
+      "Dmitriy M VS",
+      "Dmitry Agent",
+      "Feruzov Anvar",
+      "Gleb agent",
+      "Sotuvchi",
+      "TP-22",
+      "Usmon",
+      "Van selling",
+      "Vansell Max",
+      "beck",
+      "dimaprod",
+      "Авдеев Севдар",
+      "Азизбек Азизбеков",
+      "Александр Кузнецcкий",
+      "Мадаминбек",
+      "Михаил Леонтьев",
+      "№3 Van-Sell Jack",
+      "№5 Мадаминбек VS"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Образец",
+      "Импортировать с Excel",
+      "Фильтр",
+      "+",
+      "−",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/stock/purchase/refund",
+    "seed": "/stock/purchase/refund",
+    "role": "admin",
+    "status": 500,
+    "title": "CDbException",
+    "h1": "CDbException",
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_purchase_refund.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": []
+  },
+  {
+    "url": "/stock/purchaseReport",
+    "seed": "/stock/purchaseReport",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - PurchaseReport",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_purchaseReport.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Склад",
+      "Выбрать все",
+      "Убрать все",
+      "Категории продуктов",
+      "Продукт",
+      "Поставщик",
+      "май 1 - май 31",
+      "Показать все",
+      "Экспорт в excel",
+      "Детальный отчет по датам",
+      "Сбросить фильтр",
+      "Блокировать",
+      "Разрешить",
+      "OK",
+      "Отменить"
+    ]
+  },
+  {
+    "url": "/stock/purchaseReport/dailyRemainder",
+    "seed": "/stock/purchaseReport/dailyRemainder",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - DailyRemainder PurchaseReport",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_purchaseReport_dailyRemainder.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Навои возврат",
+      "Выбрать все",
+      "Убрать все",
+      "Категории продуктов",
+      "Продукт",
+      "Дата операции",
+      "-",
+      "По 10000",
+      "Показ./Скр. столбцы",
+      "Excel",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/stock/purchaseReport/profit",
+    "seed": "/stock/purchaseReport/profit",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Profit PurchaseReport",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_purchaseReport_profit.jpg",
+    "fields": [],
+    "columns": [
+      "Категория",
+      "Наименование",
+      "Тип цены",
+      "Блок",
+      "Количество",
+      "Цена приходная",
+      "Сумма прихода",
+      "Цена продажи",
+      "Сумма скидки",
+      "Сумма продажи",
+      "Прибыль"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Категории продуктов",
+      "Выбрать все",
+      "Убрать все",
+      "Продукт",
+      "Агент",
+      "Экспедитор",
+      "Территория",
+      "Сегменты клиентов",
+      "Тип цены",
+      "май 1 - май 31",
+      "Блокировать",
+      "Разрешить",
+      "OK",
+      "Отменить"
+    ]
+  },
+  {
+    "url": "/stock/purchaseReportPivot",
+    "seed": "/stock/purchaseReportPivot",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - PurchaseReportPivot",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_purchaseReportPivot.jpg",
+    "fields": [],
+    "columns": [
+      "Май 2026",
+      "вс",
+      "пн",
+      "вт",
+      "ср",
+      "чт",
+      "пт",
+      "сб"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "май 9 - май 15",
+      "×",
+      "Отменить",
+      "Удалить",
+      "Блокировать",
+      "Разрешить",
+      "OK"
+    ]
+  },
+  {
+    "url": "/stock/report",
+    "seed": "/stock/report",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Report",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_report.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Категория",
+      "Выбрать все",
+      "Убрать все",
+      "Группа товаров",
+      "Бренд",
+      "Склад",
+      "Продукт",
+      "Количество",
+      "6 дней, 10 дней, 30 дней",
+      "Количество дней продаж",
+      "Продажи + Бонус",
+      "Все товары",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/stock/stock/detail",
+    "seed": "/stock/stock/detail",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Detail Stock",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_stock_detail.jpg",
+    "fields": [],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Склад реализации",
+      "Склад возврата",
+      "Склад резерва",
+      "Склад",
+      "Выбрать все",
+      "Убрать все",
+      "Категории продуктов",
+      "Группа продуктов",
+      "Подкатегории продуктов",
+      "Все продукты",
+      "Количество",
+      "Все",
+      "По сорт. номеру продукта и категории",
+      "Бренд",
+      "Показать все",
+      "Все данные",
+      "Основные данные",
+      "Сбросить фильтр",
+      "Excel",
+      "Движения товаров на складе",
+      "Движение одного товара",
+      "×",
+      "ЗАКРЫТЬ",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/stock/stockReport/pivotDetail",
+    "seed": "/stock/stockReport/pivotDetail",
+    "role": "admin",
+    "status": 200,
+    "title": "Отчёт об остатках",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_stockReport_pivotDetail.jpg",
+    "fields": [
+      {
+        "label": "Типы складов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Типы складов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склады",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склады",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категории товаров",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категории товаров",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Группа товаров",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Группа товаров",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Товары",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Товары",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Направление торговли",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Направление торговли",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Активность товаров",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Активность товаров",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/stock/storeCorrector/fileImport",
+    "seed": "/stock/storeCorrector/fileImport",
+    "role": "admin",
+    "status": 200,
+    "title": "Импорт корректировок",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/stock_storeCorrector_fileImport.jpg",
+    "fields": [
+      {
+        "label": "Остатки.xlsx",
+        "name": null,
+        "type": "file",
+        "required": false
+      },
+      {
+        "label": "Остатки.xlsx",
+        "name": null,
+        "type": "file",
+        "required": false
+      }
+    ],
+    "columns": [],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Скачать шаблон",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/store/materialReport",
+    "seed": "/store/materialReport",
+    "role": "admin",
+    "status": 200,
+    "title": "Материальный отчёт",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/store_materialReport.jpg",
+    "fields": [
+      {
+        "label": "Склады",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склады",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория продуктов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Категория продуктов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Подкатегория продуктов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Подкатегория продуктов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Группа продуктов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Группа продуктов",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Бренд",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Бренд",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Производитель",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Производитель",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Продукты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Продукты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Направление торговли",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Направление торговли",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус товара",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус товара",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип данных",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип данных",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Товар",
+      "Остаток на 01/05/2026",
+      "Приход",
+      "Расход",
+      "Остаток на 15/05/2026",
+      "Поступление",
+      "Корректировка+",
+      "Возврат с полки",
+      "Перемещение +",
+      "Продажа",
+      "Возврат поставщику",
+      "Корректировка-",
+      "Бонус",
+      "Списание",
+      "Перемещение -",
+      "Обмен"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Развернуть",
+      "Скачать",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/team/auditor",
+    "seed": "/team/auditor",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - Auditor",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/team_auditor.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Пользователь",
+      "Логин",
+      "Версия apk",
+      "Последняя синхронизация"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Добавить",
+      "Конфигурация для компании",
+      "×",
+      "Завершить",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/vs/order",
+    "seed": "/vs/order",
+    "role": "admin",
+    "status": 200,
+    "title": "Заявки (Vansell)",
+    "h1": "За весь период",
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/vs_order.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агент",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агент",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад (Vansel)",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад (Vansel)",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад (Клиент)",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад (Клиент)",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип цены",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип цены",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Дата создания",
+      "Дата отгрузки",
+      "Агент",
+      "Тип цены",
+      "Количество",
+      "Сумма",
+      "Статус",
+      "Со склада",
+      "На склад",
+      "Создан кем"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Сбросить фильтр",
+      "Изменить статус",
+      "Документы",
+      "Отчёты",
+      "Показать по",
+      "Excel",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/vs/view/return",
+    "seed": "/vs/view/return",
+    "role": "admin",
+    "status": 200,
+    "title": "Возврат ванселлов",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/vs_view_return.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Статус",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад (Van selling)",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад (Van selling)",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип цены",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип цены",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Дата заявки",
+      "Дата возврата",
+      "Агенты",
+      "Тип цены",
+      "Количество",
+      "Сумма",
+      "Статус",
+      "Со склада",
+      "На склад",
+      "Создал"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Сбросить фильтр",
+      "Групповая обработка",
+      "Накладные",
+      "Показать по",
+      "Excel",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/warehouse/list",
+    "seed": "/warehouse/list",
+    "role": "admin",
+    "status": 200,
+    "title": "Склады",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/warehouse_list.jpg",
+    "fields": [
+      {
+        "label": "Тип",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Агенты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Способ оплаты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Способ оплаты",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Активность",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Активность",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "Название склада",
+      "Тип склада",
+      "Кладовщик",
+      "Агенты",
+      "Экспедиторы",
+      "Способ оплаты"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Добавить",
+      "Групповая обработка",
+      "Показать по",
+      "Excel",
+      "1",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/warehouse/view/exchangeList",
+    "seed": "/warehouse/view/exchangeList",
+    "role": "admin",
+    "status": 200,
+    "title": "Список перемещений",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/warehouse_view_exchangeList.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "#",
+      "ID документа",
+      "Дата перемещения",
+      "Со склада",
+      "На склад",
+      "Тип перемещения",
+      "Кол-во",
+      "Блок",
+      "Дата создания",
+      "Комментарий"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Добавить",
+      "Показать по",
+      "Excel",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/warehouse/view/listAdjustment",
+    "seed": "/warehouse/view/listAdjustment",
+    "role": "admin",
+    "status": 200,
+    "title": "Список корректировок",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/warehouse_view_listAdjustment.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "ID документа",
+      "Дата документа",
+      "Дата создания",
+      "Склад",
+      "Кол-во",
+      "Объём",
+      "Сумма",
+      "Комментарий",
+      "Кто создал"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Показать по",
+      "Excel",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/warehouse/view/listPurchase",
+    "seed": "/warehouse/view/listPurchase",
+    "role": "admin",
+    "status": 200,
+    "title": "Список поступлений",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/warehouse_view_listPurchase.jpg",
+    "fields": [
+      {
+        "label": "Склад",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Отправитель",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Отправитель",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "ID документа",
+      "Дата поступления",
+      "Дата создания",
+      "Поставщик",
+      "Склад",
+      "В блоках",
+      "В штуках",
+      "Объём",
+      "Сумма",
+      "Комментарий"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Добавить",
+      "Показать по",
+      "Excel",
+      "Блокировать",
+      "Разрешить"
+    ]
+  },
+  {
+    "url": "/warehouse/view/purchaseDraft",
+    "seed": "/warehouse/view/purchaseDraft",
+    "role": "admin",
+    "status": 200,
+    "title": "Sales Doctor - PurchaseDraft View",
+    "h1": null,
+    "breadcrumb": [],
+    "screenshot": "static/screens/admin/warehouse_view_purchaseDraft.jpg",
+    "fields": [
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Склад",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип цены",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Тип цены",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Поставщик",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "Поставщик",
+        "name": null,
+        "type": "text",
+        "required": false
+      },
+      {
+        "label": "",
+        "name": null,
+        "type": "text",
+        "required": false
+      }
+    ],
+    "columns": [
+      "ID",
+      "Дата поступления",
+      "Дата создания",
+      "Склад",
+      "Тип цены",
+      "Поставщик",
+      "Статус",
+      "Комментарий"
+    ],
+    "actions": [
+      "Найти страницы",
+      "Сохранить",
+      "Отмена",
+      "Закрыть",
+      "Загрузить",
+      "Показать по",
+      "Excel",
+      "Блокировать",
+      "Разрешить"
+    ]
+  }
+]

@@ -221,4 +221,4 @@ Once the sync chain finishes the agent can start working through the route — s
 
 ## For developers
 
-Developer reference: `docs/modules/sync.md`, `docs/api/api-v3-mobile.md`, `docs/api/api-v4-mobile.md`. The duplicate-protection logic on api4 is in `application.modules.api4.actions.agent.CreateOrderAction::checkSyncLog`; on api3 it is inlined in `OrderController::actionIndex`.
+Developer reference: `docs/modules/sync.md`, `docs/api/api-v3-mobile/index.md`, `docs/api/api-v4-mobile.md`. The duplicate-protection logic on api4 is in `application.modules.api4.actions.agent.CreateOrderAction::checkSyncLog`; on api3 it is inlined in `OrderController::actionIndex`.

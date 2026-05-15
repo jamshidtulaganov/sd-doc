@@ -251,3 +251,79 @@ sequenceDiagram
 - `ConsumptionController::actionCredit` (cashbox income, TYPE=1) does **not** call `TelegramReport::newConsumption`; only expense entries (TYPE=0 in `actionIndex`) trigger the Telegram notification.
 - P&L computation has two code paths gated by `ServerSettings::enableLotManagement()`. When enabled, `Finans::pnlTempTable` uses the `LotDistribution`-based SQL; when disabled, it falls back to the legacy `Finans::pnlSql`. Both populate the same `pnl` temp table but produce **different P&L numbers** on the same data. Verify which mode the target instance runs before trusting historical comparisons.
 - `PaymentTransferController::actionChangeStatus` runs `allowedStatus` twice — once in the sender's filial context (lines ~229–231), once in the receiver's after `BaseFilial::setFilial` (lines ~293–297). The STATUS update and Consumption deletes between them (lines ~237–247) execute **before** the second guard, so a partial mutation can land if the receiver-side check fails. Treat the two halves as non-atomic.
+
+## Cashbox displacement (move money)
+
+`CashboxDisplacementController::actionSave` (line 296) opens a single
+DB transaction, validates source/destination cashboxes and currencies,
+inserts one `CashboxDisplacement` row with `CB_FROM`/`CB_TO`/`SUMMA`/
+`CO_SUMMA`/`RATE`, then writes two paired `Consumption` rows via
+`createConsumption` — debit on the source cashbox, credit on the
+destination — both tagged `TRANS_TYPE=2`. Any failure rolls back the
+whole displacement.
+
+```mermaid
+flowchart LR
+  A(["POST /finans/cashboxDisplacement/save"]) --> B{"Validate transferFrom + transferTo + currency"}
+  B -->|invalid| R["fail() — Invalid Cashbox"]
+  B -->|ok| C["beginTransaction"]
+  C --> D["INSERT CashboxDisplacement CB_FROM CB_TO SUMMA CO_SUMMA RATE"]
+  D --> E["INSERT Consumption TYPE=0 TRANS_TYPE=2 CASHBOX=CB_FROM (debit)"]
+  D --> F["INSERT Consumption TYPE=1 TRANS_TYPE=2 CASHBOX=CB_TO (credit)"]
+  E --> G["commit"]
+  F --> G
+  G --> S(["success — done"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class A,C,D,E,F action
+  class B approval
+  class G,S success
+  class R reject
+```
+
+## Payment transfer (reassign across filial)
+
+`PaymentTransferController::actionCreate` (line 371) opens
+`$safeTrans`, calls `savePaymentTransfer(..., STATUS='2')` to insert
+the sender-side `payment_transfer` row, then writes a `Consumption
+TRANS_TYPE=4 TYPE=0` per item against the source cashbox.
+`switchFilialAndSaveTransfer` then crosses into the receiver filial
+context and saves the mirror `payment_transfer` row with
+`STATUS=1 OPERATION_ID=2`. The receiver later runs
+`actionChangeStatus` (line 203) to transition `STATUS` to ACCEPTED=3,
+REJECTED=4, or CANCELLED=5 — the rejected/cancelled paths delete the
+debit consumption rows.
+
+```mermaid
+flowchart TB
+  A(["POST /finans/paymentTransfer/create"]) --> B{"Currency + Filial active + cashbox balance ok?"}
+  B -->|no| R1["fail — reload_page / insufficient funds"]
+  B -->|yes| C["beginTransaction"]
+  C --> D["savePaymentTransfer STATUS=2 OPERATION_ID=1 (sender)"]
+  D --> E["INSERT Consumption TYPE=0 TRANS_TYPE=4 per item"]
+  E --> F["switchFilialAndSaveTransfer (receiver filial, STATUS=1 OPERATION_ID=2)"]
+  F --> G["commit"]
+  G --> H(["receiver opens /paymentTransfer/changeStatus"])
+  H --> I{"status?"}
+  I -->|"ACCEPTED=3, trans=1"| J["INSERT ClientTransaction TRANS_TYPE=3 + ClientFinans::correct"]
+  I -->|"ACCEPTED=3, trans=0"| K["INSERT Consumption TYPE=1 TRANS_TYPE=4"]
+  I -->|"REJECTED=4 / CANCELLED=5"| L["DELETE Consumption IDEN=DOCUMENT_ID TRANS_TYPE=4"]
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class A,C,D,E,F,H action
+  class B,I approval
+  class G,J,K success
+  class R1,L reject
+```

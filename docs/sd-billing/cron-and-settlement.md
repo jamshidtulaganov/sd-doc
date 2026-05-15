@@ -82,6 +82,117 @@ sequenceDiagram
 **Cron tenants gotcha:** sd-billing is single-tenant (one DB), so cron
 commands don't need to fan out across tenants like `sd-main` would.
 
+## botLicenseReminder cron (sequence)
+
+`BotLicenseReminderCommand` (`protected/commands/BotLicenseReminderCommand.php`)
+fires daily at 09:00. The SQL inside `run()` joins `Diler`, `City`,
+`Subscription`, and `Package` to find active dealers whose
+`bot_report` subscription has lapsed (`NOT EXISTS … sub.ACTIVE_TO`
+covers today), then iterates the result and posts to each dealer's
+`telegramLicense` endpoint via `sendRequest()` with retry-up-to-3.
+
+```mermaid
+sequenceDiagram
+  participant CR as 09:00 cron<br/>botLicenseReminder
+  participant DB as MySQL (d0_*)
+  participant LOG as upload/bot-report-reminder
+  participant SM as sd-main<br/>/api/billing/telegramLicense
+
+  CR->>DB: SELECT Diler WHERE no active<br/>bot_report Subscription
+  DB-->>CR: rows[]
+  loop per dealer
+    CR->>LOG: check stamp file for today
+    alt new today
+      CR->>SM: curl POST telegramLicense
+      alt 200 OK
+        SM-->>CR: ok
+        CR->>LOG: write success stamp
+      else fail (try ≤ 3)
+        CR->>SM: retry
+      else fail (try > 3)
+        CR->>LOG: append error log
+      end
+    end
+  end
+```
+
+## Operation: manual payment entry
+
+`operation/PaymentController::actionCreateOrUpdate`
+(`protected/modules/operation/controllers/PaymentController.php`) is
+the operator-side fallback when an inbound payment arrives off-gateway
+(P2P, cash, cashless). It checks `Access` on
+`operation.dealer.payment`, validates that the dealer's
+`CURRENCY_ID` matches the posted currency, opens a DB transaction,
+saves the `Payment` row, then commits and calls
+`$dealer->deleteLicense()` so the dealer's `sd-main` notices the new
+balance.
+
+```mermaid
+flowchart LR
+  S(["Operator submits<br/>Payment row"]) --> A["actionCreateOrUpdate"]
+  A --> CB{"Operator has cashbox?"}
+  CB -- "no" --> R1(["error: no cashbox"])
+  CB -- "yes" --> DLR{"Diler/Currency/Cashbox<br/>found?"}
+  DLR -- "no" --> R2(["error: not found"])
+  DLR -- "yes" --> CUR{"Diler.CURRENCY_ID<br/>matches?"}
+  CUR -- "no" --> R3(["error: валюта"])
+  CUR -- "yes" --> AC{"Access::check<br/>operation.dealer.payment"}
+  AC -- "deny" --> R4(["403"])
+  AC -- "allow" --> TX["BEGIN; Payment->save();<br/>COMMIT"]
+  TX --> DL["Diler::deleteLicense()"]
+  DL --> OK(["success"])
+
+  class S,A,TX,DL action
+  class CB,DLR,CUR,AC approval
+  class R1,R2,R3,R4 reject
+  class OK success
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+```
+
+## Cashbox transfer
+
+`cashbox/TransferController::actionAdd` /
+`actionCreateAjax`
+(`protected/modules/cashbox/controllers/TransferController.php`) moves
+money between two cash desks. The action saves a `Transfer` model
+then creates a paired `Consumption` outcome (negative `AMOUNT` on
+`FROM_CASHBOX_ID`, `flowType=transfer`) and `Consumption` income
+(positive on `TO_CASHBOX_ID`, `comingType=transfer`), backfilling
+`Transfer.FROM_COMP_ID` / `TO_COMP_ID`. Cross-currency rows multiply
+`EQUIVALENT` by `model->CURRENCY`.
+
+```mermaid
+flowchart LR
+  S(["Operator submits<br/>Transfer form"]) --> FT{"FlowType +<br/>ComingType 'transfer'<br/>exist?"}
+  FT -- "no" --> R1(["redirect: error flash"])
+  FT -- "yes" --> SAVE["Transfer->save()"]
+  SAVE --> OUT["Consumption OUTCOME<br/>(FROM_CASHBOX, -AMOUNT)"]
+  OUT --> IN["Consumption INCOME<br/>(TO_CASHBOX, +AMOUNT)"]
+  IN --> EQ{"isUZB()?"}
+  EQ -- "yes" --> E1["EQUIVALENT = AMOUNT"]
+  EQ -- "no" --> E2["EQUIVALENT = AMOUNT × CURRENCY"]
+  E1 --> LINK["Transfer.FROM_COMP_ID,<br/>TO_COMP_ID set"]
+  E2 --> LINK
+  LINK --> OK(["success flash"])
+
+  class S,SAVE,OUT,IN,E1,E2,LINK action
+  class FT,EQ approval
+  class R1 reject
+  class OK success
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+```
+
 ## Idempotency
 
 - Notify rows have a `sent` flag — once-only delivery.

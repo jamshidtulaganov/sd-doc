@@ -244,6 +244,38 @@ sequenceDiagram
 - Writes: `upload/status_config.txt` — consumed by `ServerSettings::substatuses()` (order sub-status labels on order views)
 - Writes: `tableControl` — consumed by `SettingsController::actionSaveSettings` / `actionSaveHeaderOrders` (per-user datatable preferences, read back by all datatable pages)
 
+### Workflow 1.4 — Bind user to role (RBAC)
+
+`access/BackendController::actionBindUser` and `actionBindAssignments`
+(`protected/modules/access/controllers/BackendController.php`) write
+new user-to-role / role-to-operation rows via `Access::BindUser` and
+`Access::BindAssignments` respectively. Once written, the
+`actionReloadAssignments` action calls `H::setAllUsersRole()` to rebuild
+the in-memory `authitem` hierarchy that gates every subsequent
+`H::access(...)` check.
+
+```mermaid
+flowchart LR
+  S(["Admin: assign group to user"]) --> A["BackendController::actionBindUser"]
+  A --> AC{"H::access<br/>operation.rbac.users"}
+  AC -- "deny" --> R1(["403"])
+  AC -- "allow" --> SAVE["Access::BindUser(data)<br/>(insert auth_assignment)"]
+  SAVE --> CASC["BackendController::actionBindAssignments<br/>Access::BindAssignments(...)"]
+  CASC --> RELOAD["actionReloadAssignments<br/>H::setAllUsersRole()"]
+  RELOAD --> CACHE(["authitem cache rebuilt<br/>(next H::access(...) sees new rights)"])
+
+  class S,A,SAVE,CASC,RELOAD action
+  class AC approval
+  class R1 reject
+  class CACHE success
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+```
+
 ### Gotchas
 
 - `PricesController::actionSaveWithout` only operates on price types where `HAND_EDIT = 0`; if the price type is already in manual-edit mode the method silently no-ops without an error response.

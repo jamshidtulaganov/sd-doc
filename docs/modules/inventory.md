@@ -69,6 +69,123 @@ flowchart LR
   class POST success
 ```
 
+## Mobile barcode scan
+
+`ScanController` (web report) + `api3/InventoryController::actionSet`
+(`protected/modules/api3/controllers/InventoryController.php:6`) drive
+per-scan entry from the operator's phone. Each scan posts a single
+SKU payload over the `deviceToken` channel, inserts an `Inventory`
+header row (or reuses one), opens an `InventoryHistory` row at
+`STATUS=2`, and links the optional photo on `upload/inventoryScanning`.
+
+```mermaid
+flowchart LR
+  S(["Operator scans SKU"]) --> POST["POST /api3/inventory/set (deviceToken, name, INV_TYPE_ID, serialNo)"]
+  POST --> IC["INSERT inventory (NAME, INV_NO, SERIAL_NUM, DATE_PRODUCTION)"]
+  IC --> IH["INSERT inventory_history (INVENTORY_ID, CLIENT_ID, STATUS=2, ACTIVE=Y, DATE_FROM)"]
+  IH --> P{"photo attached?"}
+  P -- "yes" --> PH["ScanController::actionPhoto save to upload/inventoryScanning"]
+  P -- "no" --> R(["respond {createAt, id, status:ok}"])
+  PH --> R
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class S,POST,IC,IH,PH action
+  class P approval
+  class R success
+```
+
+## Reconciliation — deltas vs current stock
+
+`EditController::actionInventory`
+(`protected/modules/inventory/controllers/EditController.php:21`)
+plus the related actions on the inventory document compute per-SKU
+deltas between the scanned `inventory` rows and the canonical
+`StoreDetail.COUNT`. The reconciliation produces an adjustment
+document (rows held in `inventory_history` against an open `Inventory`
+doc) which the manager later approves.
+
+```mermaid
+flowchart TB
+  Q(["Open inventory doc"]) --> SC["Sum scanned counts per PRODUCT_ID"]
+  SC --> ST["SELECT StoreDetail.COUNT WHERE STORE_ID=doc.STORE_ID"]
+  ST --> DD["delta = scanned - StoreDetail.COUNT"]
+  DD --> Z{"delta == 0?"}
+  Z -- "yes" --> SK(["row skipped (no adjustment)"])
+  Z -- "no" --> A["UPSERT inventory_history row with delta + ACTIVE=Y"]
+  A --> H{"more SKUs?"}
+  H -- "yes" --> SC
+  H -- "no" --> O(["doc ready for approval"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class Q,SC,ST,DD,A action
+  class Z,H approval
+  class O success
+  class SK reject
+```
+
+## Approve + post adjustments
+
+`StatusController::actionEdit` and `actionBulkEdit`
+(`protected/modules/inventory/controllers/StatusController.php:29`
+/ `:140`) gate the transition through `InventoryService::CAN_CHANGE_STATUS_TO`.
+On approval, deltas held in `inventory_history` post against the
+underlying stock via `InventoryService` inside a single transaction;
+on rollback nothing moves.
+
+```mermaid
+sequenceDiagram
+  participant Web
+  participant SC as StatusController
+  participant IS as InventoryService
+  participant DB as inventory_history + StoreDetail
+  participant TX as DB transaction
+
+  Web->>SC: POST actionEdit (or actionBulkEdit) {ids, status, client_id}
+  SC->>TX: BEGIN
+  SC->>DB: SELECT current STATUS per inventory_history ACTIVE=Y
+  SC->>IS: CAN_CHANGE_STATUS_TO[prev][next]?
+  alt not allowed
+    SC->>TX: ROLLBACK
+    SC-->>Web: failure {invalid transition}
+  else allowed
+    SC->>DB: UPDATE prev row ACTIVE=N, DATE_TO=now
+    SC->>DB: INSERT new inventory_history STATUS=next
+    SC->>DB: post delta to StoreDetail.COUNT
+    SC->>TX: COMMIT
+    SC-->>Web: success
+  end
+```
+
+```mermaid
+flowchart LR
+  W[Web: approve doc] --> S[StatusController::actionEdit / actionBulkEdit]
+  S --> OK([deltas posted to StoreDetail])
+  S --> RJ([rollback on invalid transition])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class W,S action
+  class OK success
+  class RJ reject
+```
+
 ## Photos
 
 `PhotoController` attaches per-row photo evidence (e.g. damaged

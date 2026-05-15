@@ -81,8 +81,8 @@ Har bir ko'rinadigan qatorni o'rab oling:
 [Birinchi oydagi muammolar](../team/onboarding.md#pitfalls-to-avoid-in-your-first-month) ga ko'ra:
 
 - **Qilmang** `api` (v1) yoki `api2` ga yangi endpoint qo'shing.
-- **Mobil** oqimlar → `api3` ([API v3 — mobile](../api/api-v3-mobile.md)).
-- **Online / web** oqimlar → `api4` ([API v4 — online](../api/api-v4-online.md)).
+- **Mobil** oqimlar → `api3` ([API v3 — mobile](../api/api-v3-mobile/index.md)).
+- **Online / web** oqimlar → `api4` ([API v4 — online](../api/api-v4-online/index.md)).
 
 Angular orollari uchun, qarang [ng-modules · PHP bilan aloqa](./ng-modules.md#php-bilan-aloqa) — kontekst (tenant, user va boshqalar) Yii view-dan Angular bundle-ga host elementdagi `data-*` atributlari orqali oqadi.
 

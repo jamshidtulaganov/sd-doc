@@ -48,6 +48,6 @@ JSON. A few endpoints accept XML (`xml1c`, `pradata`).
 ## Recommended migration
 
 If you're integrating today: prefer
-[API v4](./api-v4-online.md). If you're adding a feature for an existing
+[API v4](./api-v4-online/). If you're adding a feature for an existing
 v1 consumer, contact the platform team — many v1 endpoints are scheduled
 for retirement.

@@ -94,14 +94,22 @@ when the file exists. Provisioning a host therefore means writing a
 
 ### Database migrations
 
-Yii 1's `yiic migrate` is the only tool. There are currently no
-committed migration files in the canonical migrations directory, so most
-schema work happens via raw SQL applied out of band; new changes should
-be added via `yiic` going forward.
+The console entrypoint is `console.php` at the repo root (not `yiic`).
+There are currently no committed migration files in the canonical
+migrations directory, so most schema work happens via raw SQL applied
+out of band; new changes should be added via Yii 1 migrations going
+forward.
 
 ```bash
-docker compose exec web php protected/yiic migrate up
+docker compose exec web php console.php migrate up
 ```
+
+The committed console commands are `queue`, `internal`, `order`, `lot`
+(see [Jobs and scheduling](../architecture/jobs-and-scheduling.md)).
+There is **no `migrate` command file** in `protected/commands/` at audit
+time — `php console.php migrate` falls back to Yii's framework default,
+which expects migrations in `protected/migrations/`. Verify that
+directory exists before relying on the command in production.
 
 Migrations target the **default** DB from `main.php`. For the multi-DB
 fan-out, see [Multi-tenant fan-out](#multi-tenant-fan-out) below and
@@ -150,6 +158,29 @@ GET /                      → 200 (HTML login page)
 GET /api3/config/index     → 200 with JSON
 GET /api2/auth/login       → 401 with JSON (auth required, signals routing works)
 ```
+
+**Known broken page** that should be excluded from any auto-smoke until
+fixed: `GET /stock/purchase/refund` returns HTTP 500 (`CDbException`).
+See [security/sd-main-landmines L8](../security/sd-main-landmines.md#l8--stockpurchaserefund-returns-http-500).
+
+### Queue workers and console commands
+
+Production deploys must also restart the queue workers. The actual
+command (per `protected/commands/QueueCommand.php`):
+
+```bash
+docker compose exec web php console.php queue work \
+    --queue=default --memory=128 --timeout=1 --sleep=3
+```
+
+Workers are run under Supervisor — see
+[Jobs and scheduling](../architecture/jobs-and-scheduling.md#running-workers)
+for the supervisord stanza and signal handling
+(`SIGTERM` graceful shutdown, `SIGUSR2` pause/resume).
+
+One-shot data fixes (`OrderCommand`, `LotCommand`) are also invoked via
+`php console.php order restore filial <id>` and
+`php console.php lot run filial <id>` — operator-driven, no scheduling.
 
 ## sd-billing
 

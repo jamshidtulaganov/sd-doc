@@ -66,7 +66,7 @@ The single most important domain in sd-main. Mostly P0.
 | Feature / flow | Source (controller / action) | Existing diagram? | Priority | One-line sketch |
 |----------------|------------------------------|-------------------|----------|-----------------|
 | Order create (web) | `AddOrderController::actionCreate` | yes — orders.md | P0 | Operator builds order, prices/limits validated, Order + OrderProduct written, status NEW |
-| Order create (mobile) | `api3/OrderController::actionPost` | partial — orders.md | P0 | Agent posts order during visit; geofence + limits check; same pipeline as web |
+| Order create (mobile) | `api3/OrderController::actionPost` | yes — orders.md | P0 | Agent posts order during visit; geofence + limits check; same pipeline as web |
 | Order create (online B2B) | `api4/OrderController` + `onlineOrder/OrderController` | yes — onlineOrder.md | P0 | Customer self-service via api4, optional online-payment redirect |
 | Order draft autosave (mobile) | `api3/OrderController::actionPostDraft` / `actionGetDraft` | no | P1 | Mobile saves draft to server so it survives app close |
 | Order edit | `EditController::actionDetails` / `actionStatus` / `actionSubstatus` / `actionDateLoad` | no | P1 | Operator edits lines, dates, expeditor; logs OrderStatusHistory |
@@ -91,7 +91,7 @@ The single most important domain in sd-main. Mostly P0.
 | Feature / flow | Source (controller / action) | Existing diagram? | Priority | One-line sketch |
 |----------------|------------------------------|-------------------|----------|-----------------|
 | Client approval (Pending → Active) | `ApprovalController::actionSave` | yes — clients.md | P0 | Manager reviews pending client, approves / rejects, optional 1C export |
-| Field-created client (mobile) | `api3/ClientController` | no | P0 | Agent submits new client during visit; goes to ClientPending |
+| Field-created client (mobile) | `api3/ClientController` | yes — clients.md | P0 | Agent submits new client during visit; goes to ClientPending |
 | Client revise (debt reconciliation) | `ReviseController` | no | P1 | Reconcile client receivables vs payments; writes reconciliation record |
 | Client transactions ledger | `TransactionController` | no | P1 | Per-client running ledger (orders, payments, returns) |
 | Tara documents (returnable packaging) | `TaraController` / `TaradocController` | no | P1 | Tara doc lifecycle and per-client tara balance |
@@ -108,9 +108,9 @@ The single most important domain in sd-main. Mostly P0.
 |----------------|------------------------------|-------------------|----------|-----------------|
 | Agent CRUD + activation | `AgentController` | no | P1 | Create/edit/deactivate agent; cascades to Car, KPI, route |
 | Agent visit (mobile, with geofence) | `VisitingController` + `api3/VisitController::actionPost` | yes — sd-main-features.md#d-12 | P0 | Agent checks in at outlet; geofence verified; visit row written |
-| Visit confirmation (post-check) | `api3/VisitController::actionPostCheck` | no | P0 | Server-side recheck of visit data after sync |
+| Visit confirmation (post-check) | `api3/VisitController::actionPostCheck` | yes — agents.md | P0 | Server-side recheck of visit data after sync |
 | Daily KPI compute | `KpiNewController` | no | P1 | Plan-vs-actual rollup per agent for the day |
-| Limit enforcement (credit / discount) | `LimitController` + `LimitReportController` | no | P0 | Validate order against agent's credit and discount caps |
+| Limit enforcement (credit / discount) | `LimitController` + `LimitReportController` | yes — agents.md | P0 | Validate order against agent's credit and discount caps |
 | Reception (cash receipt) | `ReceptionController` | no | P1 | Agent-side cash reception; feeds payment pipeline |
 | Task assignment | `TaskNewController` | no | P1 | Assign tasks (calls/visits) to an agent for the day |
 | Supervayzer dashboard | `SupervayzerController` | no | P1 | Supervisor monitors team performance |
@@ -134,9 +134,9 @@ The single most important domain in sd-main. Mostly P0.
 | Feature / flow | Source (controller / action) | Existing diagram? | Priority | One-line sketch |
 |----------------|------------------------------|-------------------|----------|-----------------|
 | Create stocktake doc | `AddController::actionIndex` / `actionBatch` | yes — inventory.md | P0 | Manager opens stocktake doc, optional batch (multi-warehouse) |
-| Mobile barcode scan | `ScanController` + `api3/InventoryController::actionSet` | partial — inventory.md | P0 | Operator scans SKU; per-scan row + photo |
-| Reconciliation (deltas) | `EditController::actionInventory` | no | P0 | Compute deltas vs Stock; produce adjustment doc |
-| Approve + post adjustments | `StatusController::actionEdit` / `actionBulkEdit` | no | P0 | Manager approves; deltas post to stock |
+| Mobile barcode scan | `ScanController` + `api3/InventoryController::actionSet` | yes — inventory.md | P0 | Operator scans SKU; per-scan row + photo |
+| Reconciliation (deltas) | `EditController::actionInventory` | yes — inventory.md | P0 | Compute deltas vs Stock; produce adjustment doc |
+| Approve + post adjustments | `StatusController::actionEdit` / `actionBulkEdit` | yes — inventory.md | P0 | Manager approves; deltas post to stock |
 | Photo evidence per item | `PhotoController::actionAdd` | no | P1 | Attach photos for damaged/short items |
 | Bulk delete (stale docs) | `DeleteController::actionMultiple` | no | P2 | Admin bulk-deletes stale stocktakes |
 
@@ -145,8 +145,8 @@ The single most important domain in sd-main. Mostly P0.
 | Feature / flow | Source (controller / action) | Existing diagram? | Priority | One-line sketch |
 |----------------|------------------------------|-------------------|----------|-----------------|
 | Goods receipt (web) | `AddController` | yes — warehouse.md | P0 | Add doc; stock += count; integration log per receipt |
-| Stock transfer (between warehouses) | `ExchangeController` | no | P0 | Move between warehouses inside one filial; atomic stock op |
-| Inter-filial movement | `FilialMovementController` | no | P0 | Two-leg transfer doc between filials |
+| Stock transfer (between warehouses) | `ExchangeController` | yes — warehouse.md | P0 | Move between warehouses inside one filial; atomic stock op |
+| Inter-filial movement | `FilialMovementController` | yes — warehouse.md | P0 | Two-leg transfer doc between filials |
 | Pick & pack for order | `EditController` | no | P1 | Reserve and load lines for fulfilment |
 | Receipt API ingest | `ApiController` | no | P1 | External 1C / supplier system pushes receipts |
 
@@ -161,7 +161,7 @@ The single most important domain in sd-main. Mostly P0.
 | VS exchange (van-sales) | `VsExchangeController` + `VsExchangeDownloadController` | no | P1 | Van-sales stock exchange document |
 | VS return | `VsReturnController` + `VsReturnDownloadController` | no | P1 | Van-sales return-to-warehouse |
 | Store corrector | `StoreCorrectorController` | no | P2 | Manual stock correction with audit trail |
-| Stock reservation atomic op | `StockService::reserveForOrder` (called from order pipeline) | no | P0 | Atomic decrement available + increment reserved in one transaction |
+| Stock reservation atomic op | `StockService::reserveForOrder` (called from order pipeline) | yes — stock.md | P0 | Atomic decrement available + increment reserved in one transaction |
 | Plan product | `PlanProductController` | no | P2 | Per-product stock plan vs actual |
 
 ### `payment` + `pay`
@@ -171,18 +171,18 @@ The single most important domain in sd-main. Mostly P0.
 | Payment record + cashier approval | `payment/ApprovalController::actionSave` | yes — payment.md | P0 | Agent records payment, cashier approves/rejects, applies to debt + cashbox |
 | Reassign payment to other order | `payment/ApprovalController::actionUnlinkOrder` | no | P1 | Operator re-routes a misplaced payment |
 | Update payment delivery | `payment/ApprovalController::actionUpdatePaymentDeliver` | no | P1 | Mark which delivery a payment was tied to |
-| Click web-pay | `pay/ClickController::actionIndex` | no | P0 | Customer pays via Click in-app; HMAC verify; insert Payment |
-| Payme web-pay | `pay/PaymeController::actionIndex` | no | P0 | Customer pays via Payme JSON-RPC |
+| Click web-pay | `pay/ClickController::actionIndex` | yes — payment.md | P0 | Customer pays via Click in-app; HMAC verify; insert Payment |
+| Payme web-pay | `pay/PaymeController::actionIndex` | yes — payment.md | P0 | Customer pays via Payme JSON-RPC |
 | Apelsin web-pay | `pay/ApelsinController::actionIndex` | no | P1 | Customer pays via Apelsin gateway |
-| api4 online payment | `api4/OnlinePaymentController` | no | P0 | B2B portal initiates online payment redirect |
+| api4 online payment | `api4/OnlinePaymentController` | yes — payment.md | P0 | B2B portal initiates online payment redirect |
 
 ### `finans`
 
 | Feature / flow | Source (controller / action) | Existing diagram? | Priority | One-line sketch |
 |----------------|------------------------------|-------------------|----------|-----------------|
-| Cashbox displacement (move money) | `CashboxDisplacementController::actionSave` | no | P0 | Move money between cashboxes; double-entry |
+| Cashbox displacement (move money) | `CashboxDisplacementController::actionSave` | yes — finans.md | P0 | Move money between cashboxes; double-entry |
 | Cancel cashbox displacement | `CashboxDisplacementController::actionCancelDisplacement` | no | P1 | Reverse a cashbox displacement; create offset record |
-| Payment transfer (reassign) | `PaymentTransferController::actionCreate` / `actionChangeStatus` | no | P0 | Reassign payment to different cashbox/order with approval |
+| Payment transfer (reassign) | `PaymentTransferController::actionCreate` / `actionChangeStatus` | yes — finans.md | P0 | Reassign payment to different cashbox/order with approval |
 | P&L computation | `PnlController` (`actionGetConsumptions`, `actionGetBadDebts`) | no | P1 | Income / expense / margin per period |
 | Pivot P&L compute + save | `PivotPnlController::actionSaveReport` / `actionLoadByProduct` | no | P1 | Slice-and-dice P&L; report-template persistence |
 | Agent P&L | `AgentPnlController::actionLoad` | no | P1 | Per-agent profitability rollup |
@@ -192,12 +192,12 @@ The single most important domain in sd-main. Mostly P0.
 
 | Feature / flow | Source (controller / action) | Existing diagram? | Priority | One-line sketch |
 |----------------|------------------------------|-------------------|----------|-----------------|
-| GPS sample ingest | `gps/BackendController::actionLast` / `api3/GpsController::actionIndex` | no | P0 | Mobile posts GPS samples ~30 s; persist + index |
+| GPS sample ingest | `gps/BackendController::actionLast` / `api3/GpsController::actionIndex` | yes — gps.md | P0 | Mobile posts GPS samples ~30 s; persist + index |
 | Offline GPS replay | `api3/GpsController::actionOffline` | no | P1 | Bulk replay of buffered samples after reconnect |
 | Visit geofence verify | `gps/OrdersGpsController` (consumed by Visit) | yes — sd-main-features.md#d-12 | P0 | Per-visit check that lat/lng is within client radius |
 | Live monitoring (web) | `gps/MonitoringController` / `gps2/MonitoringController` / `gps3/ClientController::actionFetchVisits` | no | P1 | Real-time map of agents in a filial |
 | Trip playback | `gps/TrackingController::actionRoute` | no | P1 | Replay agent's day on map |
-| Out-of-zone reject | `gps/BackendController::actionReject` | no | P0 | Flag + reject visits outside radius for review |
+| Out-of-zone reject | `gps/BackendController::actionReject` | yes — gps.md | P0 | Flag + reject visits outside radius for review |
 | Route directive (gps3) | `gps3/DirectiveController::actionDirectivePreloader` | no | P2 | Push route updates to gps3 view |
 
 ### `integration`
@@ -205,10 +205,10 @@ The single most important domain in sd-main. Mostly P0.
 | Feature / flow | Source (controller / action) | Existing diagram? | Priority | One-line sketch |
 |----------------|------------------------------|-------------------|----------|-----------------|
 | Order export to 1C / Didox / Faktura | `ExportController` (via `ExportInvoiceJob`) | yes — integration.md | P0 | On Loaded/Delivered, dispatch job per provider; backoff on retry |
-| Didox e-invoice submit | `DidoxController` | no | P0 | Sign + submit e-invoice; persist Didox response |
-| Faktura.uz e-VAT submit | `FakturaController` | no | P0 | EIMZO sign + submit; capture state |
+| Didox e-invoice submit | `DidoxController` | yes — integration.md | P0 | Sign + submit e-invoice; persist Didox response |
+| Faktura.uz e-VAT submit | `FakturaController` | yes — integration.md | P0 | EIMZO sign + submit; capture state |
 | TraceIQ inbound | `TraceiqController::actionGetPurchases` / `actionGetPurchaseDetails` | no | P1 | Pull trace-purchase data from TraceIQ; upsert |
-| Generic 1C catalog import | `ImportController` | no | P0 | Inbound product/category/price; upsert into local |
+| Generic 1C catalog import | `ImportController` | yes — integration.md | P0 | Inbound product/category/price; upsert into local |
 | Idokon import view | `ViewController::actionIdokon` | no | P2 | Browse Idokon-source records |
 | Integration log browser | `ListController` / `GetController` | no | P2 | UI to browse failed jobs and re-trigger |
 
@@ -216,9 +216,9 @@ The single most important domain in sd-main. Mostly P0.
 
 | Feature / flow | Source (controller / action) | Existing diagram? | Priority | One-line sketch |
 |----------------|------------------------------|-------------------|----------|-----------------|
-| Buy packages (call to sd-billing) | `api/LicenseController::actionBuyPackages` | partial — sd-billing/subscription-flow.md | P0 | sd-main posts package buy to sd-billing; receives subscription |
-| License delete | `api/LicenseController::actionDelete` | no | P0 | sd-billing notifies sd-main to revoke a licence |
-| License pay | `api/LicenseController::actionPay` | no | P0 | Manual licence payment fallback |
+| Buy packages (call to sd-billing) | `api/LicenseController::actionBuyPackages` | yes — sd-billing/subscription-flow.md | P0 | sd-main posts package buy to sd-billing; receives subscription |
+| License delete | `api/LicenseController::actionDelete` | yes — sd-billing/api-reference.md | P0 | sd-billing notifies sd-main to revoke a licence |
+| License pay | `api/LicenseController::actionPay` | yes — sd-billing/api-reference.md | P0 | Manual licence payment fallback (uses operation/Payment) |
 | Exchange license | `api/LicenseController::actionExchange` | no | P1 | Swap one package for another within balance |
 | 1C JSON order ingest | `api/Json1CController::actionGetOrders` | no | P1 | 1C pulls orders in JSON form |
 | Mef1c product/client ingest | `api/Mef1cController::actionSetProducts` / `actionSetClients` / `actionSetPrices` | no | P1 | Mef1c-side push of catalog deltas |
@@ -236,7 +236,7 @@ The single most important domain in sd-main. Mostly P0.
 | Feature / flow | Source (controller / action) | Existing diagram? | Priority | One-line sketch |
 |----------------|------------------------------|-------------------|----------|-----------------|
 | Place order via portal | `onlineOrder/OrderController` + `api4/CreateController` | yes — onlineOrder.md | P0 | Customer submits cart; goes through standard order pipeline |
-| Online payment redirect | `onlineOrder/PaymentController` | no | P0 | Hand off to Click/Payme/Paynet for online payment |
+| Online payment redirect | `onlineOrder/PaymentController` | yes — onlineOrder.md | P0 | Hand off to Click/Payme/Paynet for online payment |
 | Telegram bot webhook | `onlineOrder/TelegramController` | no | P1 | Customer interacts via Telegram; bot translates to order |
 | Telegram WebApp host | `onlineOrder/WebAppController` + `WebappBotController` | no | P1 | Embedded SPA inside Telegram for full ordering |
 | Scheduled report email | `onlineOrder/ScheduledReportController` | no | P2 | Periodic emailed report digests for B2B customer |
@@ -246,9 +246,9 @@ The single most important domain in sd-main. Mostly P0.
 | Feature / flow | Source (controller / action) | Existing diagram? | Priority | One-line sketch |
 |----------------|------------------------------|-------------------|----------|-----------------|
 | SMS send (event-trigger) | `MessageController::actionSend` (via SendSmsJob) | yes — sms.md | P0 | Trigger event → enqueue → provider; persist |
-| SMS delivery callback (DLR) | `CallbackController::actionItem` | partial — sms.md sequence | P0 | Provider posts DLR; update SmsMessage status |
+| SMS delivery callback (DLR) | `CallbackController::actionItem` | yes — sms.md | P0 | Provider posts DLR; update SmsMessage status |
 | SMS template define + check | `TemplateController::actionCreate` / `actionChecking` | no | P1 | Author template; pre-flight validation |
-| SMS package buy | `PackageController::actionBuying` + `ViewController::actionBuyingPackage` | no | P1 | Tenant buys SMS package via sd-billing |
+| SMS package buy | `PackageController::actionBuying` + `ViewController::actionBuyingPackage` | yes — sd-billing/integration.md | P1 | Tenant buys SMS package via sd-billing |
 | Bulk message send | `MessageController::actionSend` | no | P1 | Cohort send for marketing campaign |
 
 ### `dashboard`
@@ -306,7 +306,7 @@ have non-trivial computation pipelines.
 |----------------|------------------------------|-------------------|----------|-----------------|
 | Activate / deactivate user | `team/UserController::actionActive` | no | P1 | Toggle active flag; cascade to sessions |
 | Auditor activate | `team/AuditorController::actionActive` | no | P1 | Specialised auditor activation path |
-| Bind user to role | `access/BackendController::actionBindUser` / `actionBindAssignments` | no | P0 | RBAC: assign permission group to user; reload authitem cache |
+| Bind user to role | `access/BackendController::actionBindUser` / `actionBindAssignments` | yes — settings-access-staff.md | P0 | RBAC: assign permission group to user; reload authitem cache |
 | Reload assignments | `access/BackendController::actionReloadAssignments` | no | P1 | Force authitem hierarchy reload after change |
 
 ### `vs` (van-sales)
@@ -340,10 +340,10 @@ have non-trivial computation pipelines.
 |----------------|------------------------------|-------------------|----------|-----------------|
 | Click prepare/confirm | `ClickController::actionIndex` | yes — payment-gateways.md | P0 | Two-phase HMAC-signed prepare/confirm; idempotent insert |
 | Payme JSON-RPC | `PaymeController::actionIndex` | yes — payment-gateways.md | P0 | CheckPerform / Create / PerformTransaction; HMAC verify |
-| Paynet SOAP | `PaynetController::actionIndex` | partial — payment-gateways.md | P0 | SOAP gateway; insert PaynetTransaction + Payment |
+| Paynet SOAP | `PaynetController::actionIndex` | yes — payment-gateways.md | P0 | SOAP gateway; insert PaynetTransaction + Payment |
 | License buy packages | `LicenseController::actionBuyPackages` | yes — subscription-flow.md | P0 | sd-main calls; validation, Subscription rows, Payment(license), Diler.refresh |
-| License batch buy | `LicenseController::actionIndexBatch` | no | P0 | Batch variant of buyPackages; per-row failure isolation |
-| License delete | `LicenseController::actionDeleteOne` | no | P0 | Revoke a single subscription |
+| License batch buy | `LicenseController::actionIndexBatch` | yes — api-reference.md | P0 | Batch variant of buyPackages; per-row failure isolation |
+| License delete | `LicenseController::actionDeleteOne` | yes — api-reference.md | P0 | Revoke a single subscription |
 | License exchange | `LicenseController::actionExchange` | no | P1 | Swap subscription for another within balance |
 | License revise | `LicenseController::actionRevise` / `actionDistrRevise` | no | P1 | Reconcile licence usage between distributor and dealer |
 | Payments list | `LicenseController::actionPayments` | no | P2 | Read-only payments list |
@@ -351,19 +351,19 @@ have non-trivial computation pipelines.
 | Min-amount check | `LicenseController::actionCheckMin` | no | P1 | Anti-abuse threshold validation |
 | 1C cashless add | `Api1CController::actionAddCashless` | no | P1 | 1C posts a cashless payment for a dealer |
 | 1C subscriptions read | `Api1CController::actionGetSubscriptions` | no | P2 | 1C pulls dealer's active subscriptions |
-| Host status report (sd-main → sd-billing) | `HostController::actionAuth` / `actionActiveHosts` | no | P0 | sd-main reports its server status; sd-billing tracks per-host activity |
-| SMS package buy | `SmsController::actionBuySmsPackage` | no | P0 | sd-main buys SMS package; debits Diler.BALANS |
+| Host status report (sd-main → sd-billing) | `HostController::actionAuth` / `actionActiveHosts` | yes — api-reference.md | P0 | sd-main reports its server status; sd-billing tracks per-host activity |
+| SMS package buy | `SmsController::actionBuySmsPackage` | yes — integration.md | P0 | sd-main buys SMS package; debits Diler.BALANS |
 | SMS template create + check | `SmsController::actionCreateTemplate` / `actionCheckingTemplates` | no | P1 | Pre-vet template before allowing send |
-| SMS send + forward | `SmsController::actionSend` / `actionSendingForward` | no | P0 | Tenant-side trigger sends via central SMS |
-| SMS delivery callback | `SmsController::actionCallback` | no | P0 | Provider DLR callback updates SmsMessage |
-| App auth (sd-main) | `AppController::actionAuth` / `actionExecute` | no | P0 | Fixed-user session for sd-main → sd-billing API |
+| SMS send + forward | `SmsController::actionSend` / `actionSendingForward` | yes — integration.md | P0 | Tenant-side trigger sends via central SMS |
+| SMS delivery callback | `SmsController::actionCallback` | yes — integration.md | P0 | Provider DLR callback updates SmsMessage |
+| App auth (sd-main) | `AppController::actionAuth` / `actionExecute` | yes — api-reference.md | P0 | Fixed-user session for sd-main → sd-billing API |
 | Quest endpoints | `QuestController::actionDetail` | no | P2 | Custom quest API (specialised) |
 
 ### `operation`
 
 | Feature / flow | Source (controller / action) | Existing diagram? | Priority | One-line sketch |
 |----------------|------------------------------|-------------------|----------|-----------------|
-| Manual payment entry | `operation/PaymentController::actionCreateOrUpdate` | partial — payment-gateways.md | P0 | Operator records P2P / cash / cashless payment; triggers Diler.refresh |
+| Manual payment entry | `operation/PaymentController::actionCreateOrUpdate` | yes — cron-and-settlement.md | P0 | Operator records P2P / cash / cashless payment; triggers Diler.refresh |
 | Subscription CRUD | `operation/SubscriptionController` | no | P1 | Admin edit of dealer subscriptions |
 | SubscriptionSMPro CRUD | `operation/SubscriptionSMProController` | no | P2 | SM-Pro tier subscription |
 | Package CRUD | `operation/PackageController` | no | P2 | Define purchasable packages |
@@ -377,11 +377,11 @@ have non-trivial computation pipelines.
 
 | Feature / flow | Source (controller / action) | Existing diagram? | Priority | One-line sketch |
 |----------------|------------------------------|-------------------|----------|-----------------|
-| Distributor payment create/update | `DistrPaymentController::actionCreateAjax` / `actionUpdateAjax` | no | P0 | Manual distributor payment entry; settles toward dealers |
-| Manual payment entry | `dashboard/PaymentController::actionCreateAjax` / `actionUpdateAjax` | no | P0 | Same as operation/Payment but from a different screen |
+| Distributor payment create/update | `DistrPaymentController::actionCreateAjax` / `actionUpdateAjax` | yes — payment-gateways.md | P0 | Manual distributor payment entry; settles toward dealers |
+| Manual payment entry | `dashboard/PaymentController::actionCreateAjax` / `actionUpdateAjax` | yes — payment-gateways.md | P0 | Same as operation/Payment but from a different screen |
 | Reset / fix server | `ResetController::actionFixServer` / `actionDeleteServer` | no | P1 | Wipe / reset server entry for a dealer |
 | Give discount | `FixController::actionGiveDiscount` / `actionGdProgress` | no | P1 | One-off discount applied to a dealer |
-| Write-server (push licence file) | `FixController::actionWriteServer` / `actionCheckStatusServer` | no | P0 | Manually push licence file to dealer's sd-main |
+| Write-server (push licence file) | `FixController::actionWriteServer` / `actionCheckStatusServer` | yes — payment-gateways.md | P0 | Manually push licence file to dealer's sd-main |
 | Add operation / add types | `FixController::actionAddOperation` / `actionAddTypes` | no | P2 | One-off ops fix (add a missing operation row) |
 | Diler computation refresh | `ComputationController` (called by various) | no | P1 | Recompute BALANS, FREE_TO, MONTHLY for one Diler |
 | Distr computation | `DistrComputationController` | no | P1 | Distributor-side computation pipeline |

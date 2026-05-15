@@ -112,7 +112,7 @@ sequenceDiagram
 | `GET /api3/order/list` | api3 | Agentning o'z buyurtmalari |
 | `POST /orders/approve` | orders | Web tasdiqlash |
 
-To'liq payloadlar uchun [API v3 ma'lumotnomasi](../api/api-v3-mobile.md) ga qarang.
+To'liq payloadlar uchun [API v3 ma'lumotnomasi](../api/api-v3-mobile/index.md) ga qarang.
 
 ## Ruxsatlar
 

@@ -1,0 +1,1000 @@
+{
+  "groups": [
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/planning/monthly2",
+          "label": "Результаты"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/planning/outlet",
+          "label": "Outlet targeting"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/planning",
+          "label": "Установка планов"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/planProduct/create",
+          "label": "Установка план по товарам"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/planProduct",
+          "label": "План по товарам"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/orders/list",
+          "label": "Заявки  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/orders/view/createOrder",
+          "label": "Создать заказ  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/orders/createOrder",
+          "label": "Создать заказ (версия 1)"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/orders/recoveryOrder/create",
+          "label": "Создать возврат с полки"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/orders/rejects",
+          "label": "Отказы"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/orders/recoveryOrder/createReplace",
+          "label": "Создать обмен"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/onlineOrder/order",
+          "label": "Онлайн заявки"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/orders/view/onMap",
+          "label": "Заявки на карте  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/orders/view/trips",
+          "label": "Рейсы  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/orders/orders/editStatus",
+          "label": "Импорт статусов заявок  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/vs/order",
+          "label": "Заявки (Van Selling)"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/orders/importOrder",
+          "label": "Импорт заказов  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/vs/view/return",
+          "label": "Возврат (Van Selling)  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/orders/importOrder/returns",
+          "label": "Импорт возвратов с полки  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/warehouse/list",
+          "label": "Склады"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/stock/detail",
+          "label": "Остатки"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/warehouse/view/listPurchase",
+          "label": "Поступления  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/report",
+          "label": "Остатки (реком.запас)"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/excretion",
+          "label": "Cписания"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/stockReport/pivotDetail",
+          "label": "Отчёт по остаткам (pivot)"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/warehouse/view/listAdjustment",
+          "label": "Корректировки  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/purchaseReport/dailyRemainder",
+          "label": "Остатки на определенную дату"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/warehouse/view/exchangeList",
+          "label": "Перемещения товаров  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/purchaseReport",
+          "label": "Отчет по поступлениям"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/purchase/refund",
+          "label": "Возвраты поставщикам"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/purchaseReportPivot",
+          "label": "Отчет по поступлениям (pivot)"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/storeCorrector/fileImport",
+          "label": "Импорт остатков"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/purchaseReport/profit",
+          "label": "Склад фин. отчет"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/store/materialReport",
+          "label": "Материальный отчет"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/financialReport",
+          "label": "Отчет по движ. товаров"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/stock/lotReport",
+          "label": "Остатки по партиям  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/warehouse/view/purchaseDraft",
+          "label": "Не подтвержденные поступления  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/markirovka/view/incomingInvoices",
+          "label": "Приёмка"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/markirovka/view/outgoingInvoices",
+          "label": "Реализация"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/clients/client",
+          "label": "Клиенты"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/gps2",
+          "label": "Клиенты на карте"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/clients/agentRoute",
+          "label": "Визиты агентов  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/clients/view/clientMap",
+          "label": "Клиенты на карте  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/inventory/list",
+          "label": "Оборудования"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/clients/stock",
+          "label": "Остатки в торговых точках"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/clients/client/duplicate",
+          "label": "Объединение клиентов"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/onlineOrder/contact",
+          "label": "Контакты"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/clients/taradoc",
+          "label": "Отчеты по тарам"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/integration/view/idokon",
+          "label": "iDokon POS  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/sms/view/list",
+          "label": "СМС рассылка  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/staff/view/agent",
+          "label": "Агенты  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/staff/view/supervisor",
+          "label": "Супервайзеры  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/staff/view/expeditor",
+          "label": "Экспедиторы  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/team/auditor",
+          "label": "Торговая команда"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/dashboard/kpi",
+          "label": "KPI агентов"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/agents/kpiNew",
+          "label": "KPI установка (агент)"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/dashboard/kpi?superviser=y",
+          "label": "KPI супервайзеров"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/agents/kpiNew/superviser",
+          "label": "KPI установка (супервайзер)"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/dashboard/kpiExpeditor/results",
+          "label": "KPI экспедиторов"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/dashboard/kpiExpeditor",
+          "label": "KPI установка (экспедитор)"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/agents/limit",
+          "label": "Распределение товаров"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/agents/taskNew",
+          "label": "Задачи  Новый"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/adt/dashboard",
+          "label": "Дневной отчет"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/adt/adtAudit/fullReport",
+          "label": "Ритейл аудит"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/adt/mixReport/index",
+          "label": "Контроль мерчендайзеров"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/report/reportVisit/auditor",
+          "label": "Отчет по дневному посещению"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/adt/client",
+          "label": "Клиенты"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/adt/settings",
+          "label": "Настройки"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/adt/reports",
+          "label": "Отчёты"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/audit/photoReport",
+          "label": "Рейтинг фото-отчётов"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "items": [
+        {
+          "href": "/adt/visitReport",
+          "label": "Отчет по визиту мерчандайзеров"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "href": "/planning/monthly2",
+      "label": "Результаты",
+      "group": ""
+    },
+    {
+      "href": "/planning/outlet",
+      "label": "Outlet targeting",
+      "group": ""
+    },
+    {
+      "href": "/planning",
+      "label": "Установка планов",
+      "group": ""
+    },
+    {
+      "href": "/stock/planProduct/create",
+      "label": "Установка план по товарам",
+      "group": ""
+    },
+    {
+      "href": "/stock/planProduct",
+      "label": "План по товарам",
+      "group": ""
+    },
+    {
+      "href": "/orders/list",
+      "label": "Заявки  Новый",
+      "group": ""
+    },
+    {
+      "href": "/orders/view/createOrder",
+      "label": "Создать заказ  Новый",
+      "group": ""
+    },
+    {
+      "href": "/orders/createOrder",
+      "label": "Создать заказ (версия 1)",
+      "group": ""
+    },
+    {
+      "href": "/orders/recoveryOrder/create",
+      "label": "Создать возврат с полки",
+      "group": ""
+    },
+    {
+      "href": "/orders/rejects",
+      "label": "Отказы",
+      "group": ""
+    },
+    {
+      "href": "/orders/recoveryOrder/createReplace",
+      "label": "Создать обмен",
+      "group": ""
+    },
+    {
+      "href": "/onlineOrder/order",
+      "label": "Онлайн заявки",
+      "group": ""
+    },
+    {
+      "href": "/orders/view/onMap",
+      "label": "Заявки на карте  Новый",
+      "group": ""
+    },
+    {
+      "href": "/orders/view/trips",
+      "label": "Рейсы  Новый",
+      "group": ""
+    },
+    {
+      "href": "/orders/orders/editStatus",
+      "label": "Импорт статусов заявок  Новый",
+      "group": ""
+    },
+    {
+      "href": "/vs/order",
+      "label": "Заявки (Van Selling)",
+      "group": ""
+    },
+    {
+      "href": "/orders/importOrder",
+      "label": "Импорт заказов  Новый",
+      "group": ""
+    },
+    {
+      "href": "/vs/view/return",
+      "label": "Возврат (Van Selling)  Новый",
+      "group": ""
+    },
+    {
+      "href": "/orders/importOrder/returns",
+      "label": "Импорт возвратов с полки  Новый",
+      "group": ""
+    },
+    {
+      "href": "/warehouse/list",
+      "label": "Склады",
+      "group": ""
+    },
+    {
+      "href": "/stock/stock/detail",
+      "label": "Остатки",
+      "group": ""
+    },
+    {
+      "href": "/warehouse/view/listPurchase",
+      "label": "Поступления  Новый",
+      "group": ""
+    },
+    {
+      "href": "/stock/report",
+      "label": "Остатки (реком.запас)",
+      "group": ""
+    },
+    {
+      "href": "/stock/excretion",
+      "label": "Cписания",
+      "group": ""
+    },
+    {
+      "href": "/stock/stockReport/pivotDetail",
+      "label": "Отчёт по остаткам (pivot)",
+      "group": ""
+    },
+    {
+      "href": "/warehouse/view/listAdjustment",
+      "label": "Корректировки  Новый",
+      "group": ""
+    },
+    {
+      "href": "/stock/purchaseReport/dailyRemainder",
+      "label": "Остатки на определенную дату",
+      "group": ""
+    },
+    {
+      "href": "/warehouse/view/exchangeList",
+      "label": "Перемещения товаров  Новый",
+      "group": ""
+    },
+    {
+      "href": "/stock/purchaseReport",
+      "label": "Отчет по поступлениям",
+      "group": ""
+    },
+    {
+      "href": "/stock/purchase/refund",
+      "label": "Возвраты поставщикам",
+      "group": ""
+    },
+    {
+      "href": "/stock/purchaseReportPivot",
+      "label": "Отчет по поступлениям (pivot)",
+      "group": ""
+    },
+    {
+      "href": "/stock/storeCorrector/fileImport",
+      "label": "Импорт остатков",
+      "group": ""
+    },
+    {
+      "href": "/stock/purchaseReport/profit",
+      "label": "Склад фин. отчет",
+      "group": ""
+    },
+    {
+      "href": "/store/materialReport",
+      "label": "Материальный отчет",
+      "group": ""
+    },
+    {
+      "href": "/stock/financialReport",
+      "label": "Отчет по движ. товаров",
+      "group": ""
+    },
+    {
+      "href": "/stock/lotReport",
+      "label": "Остатки по партиям  Новый",
+      "group": ""
+    },
+    {
+      "href": "/warehouse/view/purchaseDraft",
+      "label": "Не подтвержденные поступления  Новый",
+      "group": ""
+    },
+    {
+      "href": "/markirovka/view/incomingInvoices",
+      "label": "Приёмка",
+      "group": ""
+    },
+    {
+      "href": "/markirovka/view/outgoingInvoices",
+      "label": "Реализация",
+      "group": ""
+    },
+    {
+      "href": "/clients/client",
+      "label": "Клиенты",
+      "group": ""
+    },
+    {
+      "href": "/gps2",
+      "label": "Клиенты на карте",
+      "group": ""
+    },
+    {
+      "href": "/clients/agentRoute",
+      "label": "Визиты агентов  Новый",
+      "group": ""
+    },
+    {
+      "href": "/clients/view/clientMap",
+      "label": "Клиенты на карте  Новый",
+      "group": ""
+    },
+    {
+      "href": "/inventory/list",
+      "label": "Оборудования",
+      "group": ""
+    },
+    {
+      "href": "/clients/stock",
+      "label": "Остатки в торговых точках",
+      "group": ""
+    },
+    {
+      "href": "/clients/client/duplicate",
+      "label": "Объединение клиентов",
+      "group": ""
+    },
+    {
+      "href": "/onlineOrder/contact",
+      "label": "Контакты",
+      "group": ""
+    },
+    {
+      "href": "/clients/taradoc",
+      "label": "Отчеты по тарам",
+      "group": ""
+    },
+    {
+      "href": "/integration/view/idokon",
+      "label": "iDokon POS  Новый",
+      "group": ""
+    },
+    {
+      "href": "/sms/view/list",
+      "label": "СМС рассылка  Новый",
+      "group": ""
+    },
+    {
+      "href": "/staff/view/agent",
+      "label": "Агенты  Новый",
+      "group": ""
+    },
+    {
+      "href": "/staff/view/supervisor",
+      "label": "Супервайзеры  Новый",
+      "group": ""
+    },
+    {
+      "href": "/staff/view/expeditor",
+      "label": "Экспедиторы  Новый",
+      "group": ""
+    },
+    {
+      "href": "/team/auditor",
+      "label": "Торговая команда",
+      "group": ""
+    },
+    {
+      "href": "/dashboard/kpi",
+      "label": "KPI агентов",
+      "group": ""
+    },
+    {
+      "href": "/agents/kpiNew",
+      "label": "KPI установка (агент)",
+      "group": ""
+    },
+    {
+      "href": "/dashboard/kpi?superviser=y",
+      "label": "KPI супервайзеров",
+      "group": ""
+    },
+    {
+      "href": "/agents/kpiNew/superviser",
+      "label": "KPI установка (супервайзер)",
+      "group": ""
+    },
+    {
+      "href": "/dashboard/kpiExpeditor/results",
+      "label": "KPI экспедиторов",
+      "group": ""
+    },
+    {
+      "href": "/dashboard/kpiExpeditor",
+      "label": "KPI установка (экспедитор)",
+      "group": ""
+    },
+    {
+      "href": "/agents/limit",
+      "label": "Распределение товаров",
+      "group": ""
+    },
+    {
+      "href": "/agents/taskNew",
+      "label": "Задачи  Новый",
+      "group": ""
+    },
+    {
+      "href": "/adt/dashboard",
+      "label": "Дневной отчет",
+      "group": ""
+    },
+    {
+      "href": "/adt/adtAudit/fullReport",
+      "label": "Ритейл аудит",
+      "group": ""
+    },
+    {
+      "href": "/adt/mixReport/index",
+      "label": "Контроль мерчендайзеров",
+      "group": ""
+    },
+    {
+      "href": "/report/reportVisit/auditor",
+      "label": "Отчет по дневному посещению",
+      "group": ""
+    },
+    {
+      "href": "/adt/client",
+      "label": "Клиенты",
+      "group": ""
+    },
+    {
+      "href": "/adt/settings",
+      "label": "Настройки",
+      "group": ""
+    },
+    {
+      "href": "/adt/reports",
+      "label": "Отчёты",
+      "group": ""
+    },
+    {
+      "href": "/audit/photoReport",
+      "label": "Рейтинг фото-отчётов",
+      "group": ""
+    },
+    {
+      "href": "/adt/visitReport",
+      "label": "Отчет по визиту мерчандайзеров",
+      "group": ""
+    }
+  ]
+}

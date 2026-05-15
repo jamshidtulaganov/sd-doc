@@ -93,10 +93,33 @@ PHP 7.3 + Yii 1.x. The same codebase serves:
   islands)
 - **API v1, v2, v3, v4** under `protected/modules/api*`
 - **Queue workers** running `BaseJob` subclasses pulled from Redis db1
+  via `php console.php queue work` (see [`QueueCommand`](../modules/integration.md)
+  and `protected/components/jobs/README.md`)
 - **Cron** entries triggering scheduled jobs
 
 App containers are **stateless**. Anything stateful goes to MySQL, Redis or
 the filesystem mount.
+
+### Module inventory
+
+The committed module list lives in
+`protected/config/main_static.php` (lines 22–66). As of the May 2026
+audit, the 35 active Yii modules are:
+
+| Group | Modules |
+|-------|---------|
+| Domain (admin UI) | `agents`, `clients`, `dashboard`, `doctor`, `finans`, `inventory`, `onlineOrder`, `orders`, `partners`, `pay`, `payment`, `planning`, `rating`, `report`, `settings`, `sms`, `staff`, `stock`, `store`, `sync`, `team`, `vs`, `warehouse` |
+| Audit & retail audit | `audit`, `adt` |
+| Compliance | `markirovka` (CRPT / GTIN) |
+| Integrations | `integration` (Didox, Faktura, TraceIQ, Smartup) |
+| GPS / tracking | `gps`, `gps2`, `gps3` |
+| Platform | `access` (RBAC), `api`, `api2`, `api3`, `api4` |
+| Dev | `gii` (Gii code-gen — IP-restricted to `127.0.0.1` and `::1`) |
+
+Three modules are committed-but-commented in `main_static.php` and are
+**not loaded**: `neakb`, `manager`. The `aidesign` module exists in
+sister projects but is not registered here. Per-module documentation
+lives under `/docs/modules/`.
 
 ### Data
 
@@ -112,14 +135,20 @@ the filesystem mount.
 
 ## Cross-cutting components
 
+All located under `protected/components/`. Confirmed present at audit time:
+
 | Component | Purpose | Location |
 |-----------|---------|----------|
-| `TenantContext` | Resolves DB + filial from the request host | `protected/components/TenantContext.php` |
-| `DbAuthManager` | Cached RBAC over `authitem`, `authitemchild`, `authassignment` | `protected/components/DbAuthManager.php` |
-| `WebUser` | Yii user component with auto-login + filial scoping | `protected/components/WebUser.php` |
-| `BaseJob` | Base class for all queue jobs | `protected/components/BaseJob.php` |
-| `Queue` | Redis-backed dispatcher | `protected/components/Queue.php` (or framework component) |
-| `ScopedCache` | Tenant- and filial-scoped Redis cache wrapper | `protected/components/ScopedCache.php` |
+| `TenantContext` | Resolves tenant (DB name) by `SELECT DATABASE()`, exposes `tenantCache()` / `filialCache()` scoped wrappers | `protected/components/TenantContext.php` |
+| `ScopedCache` | Key-prefixing wrapper around any `ICache` | `protected/components/ScopedCache.php` |
+| `FilialComponent` | Resolves and switches active filial | `protected/components/FilialComponent.php` |
+| `DbAuthManager` | Cached RBAC over `authitem`, `authitemchild`, `authassignment` (cachingDuration 600s, tenantContextID-aware) | `protected/components/DbAuthManager.php` |
+| `WebUser` | Yii user component, `allowAutoLogin=true`, `stateKeyPrefix=salesdoc_user` | `protected/components/WebUser.php` |
+| `BaseJob` | Abstract base for all queue jobs (`dispatch()`, `dispatchLater()`, `dispatchAt()`) | `protected/components/BaseJob.php` |
+| `Queue` | Redis-backed dispatcher with delayed, reserved, failed lists | `protected/components/Queue.php` |
+| `RedisConnection` | Raw Redis socket connection used by `queueRedis` | `protected/components/RedisConnection.php` |
+| `FcmV1` | Firebase Cloud Messaging v1 sender for mobile push | `protected/components/FcmV1.php` |
+| `BasicFunctions` | Legacy global helpers (formatting, sanitisation) | `protected/components/BasicFunctions.php` |
 
 ## Why this stack
 

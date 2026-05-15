@@ -62,3 +62,29 @@ required.
 | New API endpoint for mobile | `protected/modules/api3/controllers/` |
 | New API endpoint for B2B / online | `protected/modules/api4/controllers/` |
 | New domain area | A new module under `protected/modules/` + register it |
+
+## Skeleton / cleanup modules
+
+A small set of modules exist on disk but carry **no controllers / no
+routed actions**, or are documented under a sibling module rather
+than as a standalone page. They are listed here for completeness so
+the module map matches the source tree.
+
+| Module | Controllers | Routes | Status | Where documented |
+|--------|-------------|--------|--------|------------------|
+| `aidesign` | 0 | 0 | **Skeleton** — only empty `controllers/` and `views/` folders; no `AidesignModule.php`. Placeholder for a future AI-design surface. | This row only. Treat as not-yet-implemented. |
+| `neakb` | 0 | 0 | **Obsolete skeleton** — `NeakbModule.php.obsolete` is renamed off, `controllers/` empty; `models/`, `views/` and `assets/` retained. Was once an "non-active client base" tool. | This row only. Do **not** wire into routing or RBAC. |
+| `pay` | 3 (`ApelsinController`, `ClickController`, `PaymeController`) | 3 (one action each — payment-gateway callback endpoints) | **Active** — only consumed by external providers (Click, Payme, Apelsin). | Documented inside [`payment`](./payment.md) (the `payment / pay` page). No standalone page. |
+
+Key cross-references for these skeletons:
+
+- For **`pay`** routes (`/pay/click/index`, `/pay/payme/index`,
+  `/pay/apelsin/index`), see the **"`pay` callback endpoints"**
+  section of [`modules/payment`](./payment.md) — that page already
+  documents the gateway-side state machines (`ClickTransaction`,
+  `ClientPaymeTransaction`) and the `OnlinePayment` envelope rows.
+- For **`aidesign`** and **`neakb`**, the source-walker
+  (`walk-source-routes.py`) emits **zero rows** in
+  `static/data/routes.json`. If a controller is ever added, those
+  routes will appear and this overview should be updated.
+

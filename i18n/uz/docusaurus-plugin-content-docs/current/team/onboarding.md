@@ -85,7 +85,7 @@ o'qimang; ticket ularga teganida tortib oling):
 - [ ] Bitta foydalanuvchiga ko'rinadigan oqimni tanlang va uchidan
       uchigacha kuzating:
       Tavsiya etilgan oqim: *agent mobil buyurtmani jo'natadi*.
-      - Mobil so'rov: [API v3 — `POST /api3/order/create`](../api/api-v3-mobile.md)
+      - Mobil so'rov: [API v3 — `POST /api3/order/create`](../api/api-v3-mobile/index.md)
       - `protected/modules/api3/controllers/OrderController.php` dagi
         controller handler
       - `OrderService` / `Order` modelidagi validatsiya + insert

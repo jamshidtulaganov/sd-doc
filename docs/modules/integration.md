@@ -287,3 +287,101 @@ stateDiagram-v2
 - **Didox `baseUrl` flips in production**: `DidoxController::init()` switches from `stage.goodsign.biz` to `api-partners.didox.uz` only when `ServerSettings::countryCode() === 'UZ'` _and_ the host ends in `.salesdoc.io`. Dev/staging environments always hit the stage endpoint.
 - **No async retry queue in this module**: the `IntegrationLog` referenced in the module overview page does not correspond to a model class in this directory. The integration module makes synchronous HTTP calls and returns errors directly to the caller. Retry on failure is the responsibility of the UI (user re-triggers). The Didox/Faktura `check-invoice` and `sync-incoming-invoices` actions are polled manually, not by a cron job — see [Didox](../integrations/didox.md) and [Faktura.uz](../integrations/faktura-uz.md) for protocol-level detail.
 - **Smartup `create_clients` / `create_products` flags**: when enabled in saved settings, `ImportOrdersAction` (smartupx) will auto-create `Client` or `Product` rows on first import. This can silently seed your catalog with Smartup records if misconfigured — verify `category_id` and `city_id` before enabling.
+
+## Didox e-invoice submit
+
+`DidoxController` (in
+`protected/modules/integration/controllers/DidoxController.php`) wires
+sub-actions to `application.modules.integration.actions.didox.*` and
+flips `baseUrl` to `https://api-partners.didox.uz` in UZ-prod only.
+The signing flow lives in `CreateInvoiceAction::run` (line 12), which
+calls `Http::sendPostRequest` against
+`{baseUrl}/v1/documents/002/create` with the EIMZO-signed `token` in
+the `user-key` header, then persists the resulting `_id` in
+`OrderEsf` (`ESF_OPERATOR=ESF_OPEATOR_DIDOX`, `SIGNED=false`).
+
+```mermaid
+sequenceDiagram
+  participant UI as Operator UI
+  participant EIMZO as EIMZO client (browser)
+  participant Action as didox/CreateInvoiceAction
+  participant Didox as api-partners.didox.uz
+  participant DB as OrderEsf (d0_order_esf)
+
+  UI->>EIMZO: sign(invoice xml)
+  EIMZO-->>UI: token
+  UI->>Action: POST order_id + token
+  Action->>Action: loadOrder + OrderEsf existing-check (if SIGNED -> error)
+  Action->>Action: prepareRequest (HasMarking, getOrderCises if needed)
+  Action->>Didox: POST /v1/documents/002/create (user-key=token, Partner-Authorization)
+  alt 200 + status=error
+    Didox-->>Action: error body
+    Action-->>UI: didox-error
+  else 200 + ok
+    Didox-->>Action: {_id: uniqueId}
+    Action->>DB: INSERT OrderEsf ESF_DOCUMENT_ID=uniqueId SIGNED=false
+    Action-->>UI: uniqueId
+  else 401/403
+    Action-->>UI: ERROR_CODE_AUTH_FAILED
+  end
+```
+
+## Faktura.uz e-VAT submit
+
+`FakturaController` mirrors the Didox controller and wires sub-actions
+to `application.modules.integration.actions.faktura.*`. The submit
+path (`CreateInvoiceAction::run`, line 13) calls
+`Http::sendPostRequest` against
+`{apiUrl}/Api/Document/ImportDocumentRegister`, then persists an
+`OrderEsf` row with `ESF_OPERATOR=ESF_OPERATOR_FAKTURA`. The
+downstream signed-state of the invoice is tracked through
+`CheckInvoiceAction` polling, which flips `OrderEsf.SIGNED` as the
+document moves through the e-VAT state machine.
+
+```mermaid
+stateDiagram-v2
+  [*] --> Draft: CreateInvoiceAction (INSERT OrderEsf SIGNED=false)
+  Draft --> Submitted: Faktura accepts ImportDocumentRegister
+  Submitted --> AwaitingSign: EIMZO sign performed client-side
+  AwaitingSign --> Signed: CheckInvoiceAction polls and flips SIGNED=true
+  Submitted --> Rejected: Faktura rejects
+  Signed --> Cancelled: DeleteInvoiceAction (pre-counterparty)
+  Draft --> [*]: DeleteInvoiceAction (drop pre-submit)
+```
+
+## Generic 1C catalog import
+
+`ImportController` (in
+`protected/modules/integration/controllers/ImportController.php`)
+wires three POST sub-actions:
+`application.modules.integration.actions.ritm5.ImportOrdersAction`,
+`ritm5.ImportReturnsAction`, and `smartupx.ImportOrdersAction`. The
+ritm5 path (`ImportOrdersAction::run`, line 26) authenticates,
+validates `price_type_id` + `warehouse_id`, loads `Stock` and
+`Product` caches, then fetches remote orders and upserts each `Order`
++ `OrderDetail` row.
+
+```mermaid
+flowchart LR
+  A(["POST /integration/import/ritm5-import-orders"]) --> B["authenticate + authorize integration.ritm5.import.orders"]
+  B --> C{"price_type + warehouse valid?"}
+  C -->|no| R["sendError NOT_FOUND"]
+  C -->|yes| D["loadStock + loadProducts (cache catalog)"]
+  D --> E["buildFilters + fetchOrders from remote 1C"]
+  E --> F{"per deal"}
+  F --> G["findClient by XML_ID / INN (optional create)"]
+  F --> H["upsert Order + OrderDetail (Order->save, OrderDetail->save)"]
+  H --> S(["sendResult — per-row outcome"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class A,B,D,E,G,H action
+  class C,F approval
+  class S success
+  class R reject
+```

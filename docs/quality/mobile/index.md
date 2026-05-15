@@ -8,7 +8,7 @@ audience: QA
 
 > **Who this is for.** QA team members who need to write test plans against any of the mobile-facing surfaces of sd-main: the agent phone app, the expeditor phone app, the merchandiser app, GPS monitoring screens on the web, and the SMS broadcast tool.
 >
-> **Who this is *not* for.** Mobile-app developers — the corresponding developer reference lives at `docs/modules/sync.md` plus the API references at `docs/api/api-v3-mobile.md` and `docs/api/api-v4-mobile.md`.
+> **Who this is *not* for.** Mobile-app developers — the corresponding developer reference lives at `docs/modules/sync.md` plus the API references at `docs/api/api-v3-mobile/index.md` and `docs/api/api-v4-mobile.md`.
 
 ---
 
@@ -142,4 +142,4 @@ The light arrows are usually invisible to the agent — they are the silent hous
 
 ## For developers
 
-The developer-facing equivalent of this section lives under `docs/modules/sync.md` (sync flow), `docs/api/api-v3-mobile.md` and `docs/api/api-v4-mobile.md` (endpoint references), and `docs/modules/gps.md` (server-side GPS handling).
+The developer-facing equivalent of this section lives under `docs/modules/sync.md` (sync flow), `docs/api/api-v3-mobile/index.md` and `docs/api/api-v4-mobile.md` (endpoint references), and `docs/modules/gps.md` (server-side GPS handling).

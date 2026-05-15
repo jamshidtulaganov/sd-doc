@@ -115,7 +115,7 @@ sequenceDiagram
 | `GET /api3/order/list` | api3 | Собственные заказы агента |
 | `POST /orders/approve` | orders | Утверждение в web |
 
-См. [Справочник API v3](../api/api-v3-mobile.md) для полных payload-ов.
+См. [Справочник API v3](../api/api-v3-mobile/index.md) для полных payload-ов.
 
 ## Права доступа
 

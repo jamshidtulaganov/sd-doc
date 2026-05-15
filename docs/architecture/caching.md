@@ -7,13 +7,20 @@ title: Caching
 
 ## Three Redis databases, one job each
 
-| Redis DB | Component | Purpose |
-|----------|-----------|---------|
-| **db0** | `redis_session` (`CRedisCache`) | HTTP session storage. Prefix: `HTTP_HOST:` |
-| **db1** | `queueRedis` (`RedisConnection`) | Background job queue (`BaseJob` payloads) |
-| **db2** | `redis_app` (`CRedisCache`) | Application cache, scoped via `TenantContext` |
+Verified against `protected/config/main_static.php:71-129`. Single Redis
+instance at `10.0.0.11:6379`, three logical DBs:
 
-`FLUSHDB` on one does **not** affect the others.
+| Redis DB | Component | Class | Key prefix | Purpose |
+|----------|-----------|-------|-----------|---------|
+| **db0** | `redis_session` | `CRedisCache` | `HTTP_HOST:` (cli on CLI) | HTTP session storage |
+| **db1** | `queueRedis` | `RedisConnection` | `queue:{name}*` (see [Jobs](./jobs-and-scheduling.md)) | Background job queue (`BaseJob` payloads) |
+| **db2** | `redis_app` | `CRedisCache` | none global; scoped at app level | Application cache, scoped via `TenantContext` |
+
+`FLUSHDB` on one does **not** affect the others. Application code MUST
+go through `Yii::app()->tenantContext->tenantCache()` or `filialCache()`
+— never directly read/write `Yii::app()->redis_app` or callers will
+leak data across tenants. See `TenantContext.php:84-115` for the wrapper
+contract.
 
 ## When to use the cache
 
@@ -39,9 +46,11 @@ Always invalidate at write time. Patterns:
 
 ```php
 // After saving a price
-$cache = Yii::app()->tenantContext->scopedFilial();
-$cache->delete('catalog:price-types');
-$cache->delete("product:{$id}:prices");
+$cache = Yii::app()->tenantContext->filialCache();   // ScopedCache wrapper
+if ($cache !== null) {                               // null if tenant not resolved
+    $cache->delete('catalog:price-types');
+    $cache->delete("product:{$id}:prices");
+}
 ```
 
 For cache *bumps* (versioned keys):
@@ -52,3 +61,20 @@ $key = "catalog:tree:v{$ver}";
 ```
 
 This avoids fan-out invalidation when many keys depend on one source.
+
+## RBAC caching
+
+`DbAuthManager` (`main_static.php:143-152`) caches the auth-item tree
+with `cachingDuration => 600` (10 minutes). The tenant context ID is
+plumbed in via `tenantContextID => 'tenantContext'`, so the auth cache
+respects the same tenant scoping as the application cache. A change to
+a user's `authassignment` propagates within 600 s unless the writer
+also calls the targeted invalidation hook on `DbAuthManager`.
+
+## Anti-patterns spotted in code
+
+- Reading from `Yii::app()->cache` directly — there is no such component
+  registered (`main_static.php` declares `redis_session`, `queueRedis`,
+  `redis_app`, but not a generic `cache`). Any such call is dead.
+- Calling `Yii::app()->redis_app->set(...)` from controllers without
+  scoping. Search for those and route them through `tenantContext`.

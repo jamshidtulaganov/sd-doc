@@ -60,8 +60,8 @@ Agent rejalari oylik boshqariladi. `KpiController` haqiqiy va reja raqamlarini h
 
 Agent mobil ilovasi api3 ni chaqiradi:
 
-- [`POST /api3/login/index`](../api/api-v3-mobile.md#login)
-- [`POST /api3/visit/index`](../api/api-v3-mobile.md#visits)
+- [`POST /api3/login/index`](../api/api-v3-mobile/index.md#login)
+- [`POST /api3/visit/index`](../api/api-v3-mobile/index.md#visits)
 - `GET /api3/agent/route` — bugungi mijozlar
 - `GET /api3/kpi/index` — agentning o'z KPI plitkasi
 

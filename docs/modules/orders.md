@@ -106,6 +106,60 @@ sequenceDiagram
   end
 ```
 
+## Order create — mobile (api3) with geofence + limits + reserve
+
+Mobile-side end-to-end pipeline for `api3/OrderController::actionPost`
+(`protected/modules/api3/controllers/OrderController.php:37`). The
+controller is idempotent on `SyncLog (DEVICE_TOKEN, MOBILE_ORDER_ID)`,
+verifies the agent's visit geofence via `GpsService::isRequiredRadiusVisit`,
+runs the agent product-limit check in `WarehouseDetail::Sale`, then
+performs the stock check + reservation against `StoreDetail.COUNT` /
+`RESERVE_COUNT` before writing the `Order` + `OrderDetail` rows.
+
+```mermaid
+sequenceDiagram
+  participant M as Mobile
+  participant API as api3/OrderController::actionPost
+  participant SL as SyncLog
+  participant GPS as GpsService
+  participant WD as WarehouseDetail
+  participant SD as StoreDetail
+  participant DB as Order + OrderDetail
+
+  M->>API: POST /api3/order (deviceToken, items, clientId)
+  API->>SL: SELECT by (DEVICE_TOKEN, MOBILE_ORDER_ID)
+  alt already success
+    API-->>M: status=success (replay)
+  else first attempt
+    API->>GPS: isRequiredRadiusVisit(Client, Visit, radius_visit)
+    API->>WD: Check / Sale (AGENT_ID, PRODUCT_ID, STORE_ID)
+    API->>SD: BEGIN tx, verify COUNT vs req, increment RESERVE_COUNT
+    API->>DB: INSERT Order STATUS=1, INSERT OrderDetail x N, then COMMIT
+    API->>SL: UPDATE STATUS=success, ORDER_ID
+    API-->>M: status=success, orderId
+  end
+```
+
+Outcome legend (sequenceDiagram does not render `classDef` styling
+itself, so the standard colour roles are summarised here):
+
+```mermaid
+flowchart LR
+  V[Validate geofence + limit] --> R([RESERVE_COUNT += req])
+  V --> ER([reject: out of zone / limit / stock])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class V action
+  class R success
+  class ER reject
+```
+
 ## API endpoints
 
 | Endpoint | Module | Purpose |
@@ -115,7 +169,7 @@ sequenceDiagram
 | `GET /api3/order/list` | api3 | Agent's own orders |
 | `POST /orders/approve` | orders | Web approval |
 
-See [API v3 reference](../api/api-v3-mobile.md) for full payloads.
+See [API v3 reference](../api/api-v3-mobile/index.md) for full payloads.
 
 ## Permissions
 

@@ -66,8 +66,8 @@ exceeds either limit forces the order into manager-approval state.
 
 The agent mobile app calls api3:
 
-- [`POST /api3/login/index`](../api/api-v3-mobile.md#login)
-- [`POST /api3/visit/index`](../api/api-v3-mobile.md#visits)
+- [`POST /api3/login/index`](../api/api-v3-mobile/index.md#login)
+- [`POST /api3/visit/index`](../api/api-v3-mobile/index.md#visits)
 - `GET /api3/agent/route` — today's clients
 - `GET /api3/kpi/index` — agent's own KPI tile
 
@@ -95,6 +95,80 @@ classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
 class CK,POS,POST,WORK,CO action
 class OK success
 class WARN reject
+```
+
+## Visit post-check (server-side recheck of synced visits)
+
+After the mobile app uploads visits via `api3/VisitController::actionPost`,
+it follows up with `actionPostCheck`
+(`protected/modules/api3/controllers/VisitController.php:97`). The
+endpoint re-fetches the canonical `Visit` row by
+`(AGENT_ID, CLIENT_ID, day)`, applies the device-side `startTime` /
+`endTime` to `CHECK_IN_TIME` / `CHECK_OUT_TIME`, sets `VISITED=1`,
+and calls `Visit::sync_end_method` to close the agent's session.
+Synthetic `new_*` client IDs are skipped (those are agent-created
+clients still pending approval).
+
+```mermaid
+flowchart LR
+  M(["Mobile: POST /api3/visit/postCheck"]) --> ITER["foreach visit in payload"]
+  ITER --> SK{"clientId starts with new_ ?"}
+  SK -- "yes" --> SKIP(["skip - unresolved client"])
+  SK -- "no" --> LK["Visit::return_model AGENT_ID, clientId, day"]
+  LK --> UP["UPDATE visit SET VISITED=1, CHECK_IN_TIME, CHECK_OUT_TIME"]
+  UP --> RSP["append {id, clientId, status:1, ok:true}"]
+  RSP --> END{more visits?}
+  END -- "yes" --> ITER
+  END -- "no" --> SYNC["Visit::sync_end_method AGENT_ID"]
+  SYNC --> OK(["respond JSON"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class M,ITER,LK,UP,RSP,SYNC action
+  class SK,END approval
+  class OK success
+  class SKIP reject
+```
+
+## Limit enforcement (agent product / credit caps)
+
+`LimitController::actionEdit`
+(`protected/modules/agents/controllers/LimitController.php`)
+defines per-agent product quantity caps stored in
+`Warehouse` + `WarehouseDetail`. `LimitReportController` surfaces
+remaining counts; the actual enforcement happens at order-save time
+when `api3/OrderController` triggers `WarehouseDetail::Sale` to
+decrement `COUNT` per `(AGENT_ID, PRODUCT_ID, STORE_ID)`. A would-be
+negative count blocks the sale.
+
+```mermaid
+flowchart LR
+  E(["Admin: POST /agents/limit/edit"]) --> EC["LimitController::actionEdit"]
+  EC --> WH["UPSERT Warehouse IDEN=agent, TYPE_LIMIT"]
+  WH --> WD["INSERT/UPDATE WarehouseDetail per PRODUCT_ID, STORE_ID"]
+  WD --> RPT["LimitReportController: read remaining COUNT"]
+  O(["Mobile: POST /api3/order"]) --> WS["WarehouseDetail::Check by AGENT_ID + PRODUCT_ID + STORE_ID"]
+  WS --> CK{"remaining COUNT >= order COUNT?"}
+  CK -- "yes" --> SALE["WarehouseDetail::Sale: COUNT -= order COUNT"]
+  SALE --> OK(["Order accepted"])
+  CK -- "no" --> ERR(["error: limit exceeded"])
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class E,EC,WH,WD,RPT,O,WS,SALE action
+  class CK approval
+  class OK success
+  class ERR reject
 ```
 
 ## Permissions

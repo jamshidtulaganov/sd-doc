@@ -270,6 +270,37 @@ and `countSms` are used internally to bill in correct units.
 | Permanent Telegram errors flood logs | Stale `chat_id` (user blocked the bot) | `error_response` column on the row | Mark the row delivered; clear the offending `chat_id` from the source data |
 | Mass alert misfired | Bug in caller (e.g. wrong template substitution) | Recent commits to caller | Pause cron (`crontab -l | sed -i …`), drain queue manually, fix |
 
+## 10b. Phone directory sync
+
+A second cross-project wire piggybacks on the same dealer-host pattern:
+sd-billing pushes phone-number updates to each dealer's
+`sd-main` so the licence-renewal SMS (sent by
+`BotLicenseReminderCommand` and the broader Eskiz pipeline) can reach
+the right human. The receiving endpoint is sd-main
+`BillingController::actionPhone` — it pulls the central Spravochnik
+via `Report::getSpravochnik()` and overwrites local `User.TEL` for
+agents, expeditors, and partners.
+
+```mermaid
+flowchart LR
+  S(["sd-billing<br/>updates Spravochnik / Diler.PHONE"]) --> ENQ["NotifyCron<br/>(or direct cron call)"]
+  ENQ --> CR(["cron drains row"])
+  CR --> SM["POST {Diler.DOMAIN}/api/billing/phone"]
+  SM --> RG["sd-main: Report::getSpravochnik()"]
+  RG --> WR["UPDATE User.TEL<br/>for agents/expeditors/partners"]
+  WR --> OK(["next SMS run hits<br/>correct numbers"])
+
+  class S,ENQ,SM,RG,WR action
+  class CR cron
+  class OK success
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+```
+
 ## 11. Hardening checklist
 
 - [ ] Move Eskiz / Mobizon credentials to environment variables.

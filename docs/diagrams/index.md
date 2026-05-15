@@ -16,12 +16,13 @@ This is the canonical home for every diagram in the docs. Each group has its own
 | # | Group | Page | Count |
 |---|-------|------|-------|
 | 01 | **Ecosystem** | [open](./ecosystem.md) | 3 |
-| 02 | **sd-billing** | [open](./sd-billing.md) | 12 |
-| 03 | **sd-cs (HQ)** | [open](./sd-cs.md) | 11 |
-| 04 | **sd-main · System design** | [open](./sd-main-system.md) | 7 |
+| 02 | **sd-billing** | [open](./sd-billing.md) | 33 |
+| 03 | **sd-cs (HQ)** | [open](./sd-cs.md) | 14 |
+| 04 | **sd-main · System design** | [open](./sd-main-system.md) | 10 |
 | 05 | **Data · ERDs** | [open](./data.md) | 2 |
-| 06 | **sd-main · Feature flows** | [open](./sd-main-features.md) | 16 |
-| 07 | **Process workflows** | [open](./workflows.md) | 3 |
+| 06 | **sd-main · Feature flows** | [open](./sd-main-features.md) | 116 |
+| 07 | **Process workflows** | [open](./workflows.md) | 64 |
+| 99 | **Other** | [open](./other.md) | 26 |
 
 ## Visual taxonomy used in every flowchart
 
@@ -38,11 +39,11 @@ This is the canonical home for every diagram in the docs. Each group has its own
 
 ## Stats
 
-- **54** diagrams total
-- **6** `er` diagrams
-- **31** `flowchart` diagrams
-- **16** `sequence` diagrams
-- **1** `state` diagrams
+- **268** diagrams total
+- **15** `er` diagrams
+- **121** `flowchart` diagrams
+- **121** `sequence` diagrams
+- **11** `state` diagrams
 
 ## Refresh procedure
 

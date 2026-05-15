@@ -124,8 +124,8 @@ Wrap every visible string:
 Per [Pitfalls in your first month](../team/onboarding.md#pitfalls-to-avoid-in-your-first-month):
 
 - **Do not** add new endpoints to `api` (v1) or `api2`.
-- **Mobile** flows → `api3` ([API v3 — mobile](../api/api-v3-mobile.md)).
-- **Online / web** flows → `api4` ([API v4 — online](../api/api-v4-online.md)).
+- **Mobile** flows → `api3` ([API v3 — mobile](../api/api-v3-mobile/index.md)).
+- **Online / web** flows → `api4` ([API v4 — online](../api/api-v4-online/index.md)).
 
 For Angular islands, see [ng-modules · Communication with PHP](./ng-modules.md#communication-with-php)
 — context (tenant, user, etc.) flows from the Yii view to the

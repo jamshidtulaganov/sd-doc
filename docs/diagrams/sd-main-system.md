@@ -10,7 +10,7 @@ topics: [diagrams, sd, main, system]
 
 Tier-level architecture of sd-main — HTTP, app tier, MySQL, Redis (3 DBs), queue, cron, file storage.
 
-All 7 diagrams in this group, drawn inline.
+All 10 diagrams in this group, drawn inline.
 
 ## Index
 
@@ -23,6 +23,9 @@ All 7 diagrams in this group, drawn inline.
 | 05 | [3.2 buyPackages — the canonical path](#d-05) | `sequence` | [architecture/cross-project-integration](/docs/architecture/cross-project-integration) |
 | 06 | [4.4 Sequence — cross-dealer report](#d-06) | `sequence` | [architecture/cross-project-integration](/docs/architecture/cross-project-integration) |
 | 07 | [6. Provisioning a new dealer (end-to-end)](#d-07) | `flowchart` | [architecture/cross-project-integration](/docs/architecture/cross-project-integration) |
+| 08 | [Buy packages (full round-trip)](#d-08) | `sequence` | [architecture/cross-project-integration](/docs/architecture/cross-project-integration) |
+| 09 | [Online gateway (Paynet) end-to-end](#d-09) | `sequence` | [architecture/cross-project-integration](/docs/architecture/cross-project-integration) |
+| 10 | [SMS round-trip (sd-main → sd-billing → provider → callback)](#d-10) | `sequence` | [architecture/cross-project-integration](/docs/architecture/cross-project-integration) |
 
 ## 01. Topology overview {#d-01}
 
@@ -271,5 +274,89 @@ flowchart LR
   classDef success fill:#dcfce7,stroke:#166534,color:#000
   class A,B,C,D,E,F,G,H action
   class I success
+```
+
+## 08. Buy packages (full round-trip) {#d-08}
+
+- **Kind**: `sequence`
+- **Source page**: [architecture/cross-project-integration](/docs/architecture/cross-project-integration)
+- **Originating section**: Buy packages (full round-trip)
+
+```mermaid
+sequenceDiagram
+  participant U as Dealer admin
+  participant SM as sd-main
+  participant BL as sd-billing /api/license/buyPackages
+  participant DB as billing MySQL
+
+  U->>SM: Click "Buy package"
+  SM->>BL: POST {token, host, packages[], start_date, month_count}
+  BL->>BL: UserIdentity("sd","sd") authenticate
+  BL->>DB: validate (currency, day-of-month, balance)
+  loop each month × package
+    BL->>DB: INSERT Subscription
+    BL->>DB: INSERT Payment TYPE=license (-amount)
+  end
+  BL->>BL: writeVisit() + deleteLicenseImmediately
+  BL-->>SM: 200 {success, diler_id}
+  SM->>BL: POST /api/license/indexBatch (refresh)
+  BL-->>SM: balance + subscriptions[]
+  SM-->>U: render new package list
+```
+
+## 09. Online gateway (Paynet) end-to-end {#d-09}
+
+- **Kind**: `sequence`
+- **Source page**: [architecture/cross-project-integration](/docs/architecture/cross-project-integration)
+- **Originating section**: Online gateway (Paynet) end-to-end
+
+```mermaid
+sequenceDiagram
+  participant C as Customer
+  participant PN as Paynet
+  participant BL as sd-billing<br/>api/paynet (SOAP)
+  participant DB as billing MySQL
+  participant Q as d0_notify_cron
+  participant CR as cron notify
+  participant SM as sd-main<br/>/api/billing/license
+
+  C->>PN: Pay invoice
+  PN->>BL: SOAP Pay
+  BL->>DB: INSERT PaynetTransaction
+  BL->>DB: INSERT Payment TYPE=paynetonline
+  BL->>DB: Diler.BALANS += summa (trigger)
+  BL->>Q: NotifyCron::createLicenseDelete(domain+/api/billing/license)
+  BL-->>PN: 200 SOAP result
+  CR->>Q: pop pending row
+  CR->>SM: POST /api/billing/license
+  SM->>SM: glob protected/license2/* → unlink
+  SM-->>CR: 200 {status:true}
+```
+
+## 10. SMS round-trip (sd-main → sd-billing → provider → callback) {#d-10}
+
+- **Kind**: `sequence`
+- **Source page**: [architecture/cross-project-integration](/docs/architecture/cross-project-integration)
+- **Originating section**: SMS round-trip (sd-main → sd-billing → provider → callback)
+
+```mermaid
+sequenceDiagram
+  participant SM as sd-main<br/>MessageController::actionSend
+  participant BL as sd-billing<br/>api/sms/send
+  participant DB as billing MySQL
+  participant ES as Provider<br/>(Eskiz/Mobizon)
+  participant CB as sd-billing<br/>api/sms/callback
+  participant SC as sd-main<br/>/sms/callback/item
+
+  SM->>BL: POST {type=dealer, host, messages[]}
+  BL->>DB: load SmsBoughtPackage rows
+  BL->>BL: maxSmsLimit >= countSMS?
+  BL->>ES: Sms::multy(messages, host)
+  ES-->>BL: status, batch_id
+  BL-->>SM: success {left_sms_limit}
+  ES->>CB: POST DLR {host, status, sms_count}
+  CB->>DB: USED_LIMIT += sms_count
+  CB->>SC: POST forward payload
+  SC-->>CB: 2xx
 ```
 

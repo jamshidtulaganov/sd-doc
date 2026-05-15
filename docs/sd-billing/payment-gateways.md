@@ -97,9 +97,33 @@ sequenceDiagram
 
 ## Paynet flow
 
-SOAP-based. The gateway provider hits a SOAP endpoint exposed by the
-`paynetuz` extension; the controller turns the request into a
-`PaynetTransaction` and matching `Payment` row.
+SOAP-based. `PaynetController::actionIndex` (in
+`protected/modules/api/controllers/PaynetController.php`) sets the
+`text/xml` content type, authenticates as the fixed `paynet` user via
+`UserIdentity`, then hands the request off to a `SoapServer` bound to
+`paynetuz\services\PaynetService` (the `paynetuz` extension supplies
+the WSDL at `PAYNET_WSDL_URL`). The service maps each SOAP call into a
+`PaynetTransaction` and, on success, a `Payment` row of
+`TYPE_PAYNETONLINE`.
+
+```mermaid
+sequenceDiagram
+  participant PN as Paynet gateway
+  participant API as api/paynet (actionIndex)
+  participant SVC as PaynetService<br/>(paynetuz extension)
+  participant DB as MySQL
+  participant D as Diler
+
+  PN->>API: SOAP POST (XML)
+  API->>API: UserIdentity("paynet","paynet")<br/>authenticate
+  API->>SVC: SoapServer dispatch
+  SVC->>DB: insert/update PaynetTransaction
+  SVC->>DB: insert Payment TYPE=paynetonline
+  SVC->>D: BALANS += summa (trigger)
+  SVC->>D: Diler::deleteLicense() + refresh()
+  SVC-->>API: SOAP result
+  API-->>PN: 200 text/xml
+```
 
 ## Idempotency
 
@@ -126,3 +150,98 @@ before logging** — never log card details or full payment payloads.
 
 Cashiers / operators add payments through the dashboard `operation`
 module. Uses `Payment::create([...])` directly — same DB triggers fire.
+
+## Distributor payment create/update
+
+`DistrPaymentController::actionCreateAjax` / `actionUpdateAjax`
+(`protected/modules/dashboard/controllers/DistrPaymentController.php`)
+records a payment against a `Distributor`. The controller enforces
+`Access::check('operation.distr.payment', CREATE|UPDATE)`, verifies the
+posted `CURRENCY_ID` matches `Distributor.CURRENCY_ID`, and binds the
+first cashbox owned by the current user when only one is available.
+
+```mermaid
+flowchart LR
+  S(["Operator submits<br/>DistrPayment form"]) --> A["actionCreateAjax /<br/>actionUpdateAjax"]
+  A --> AC{"Access::check<br/>operation.distr.payment"}
+  AC -- "deny" --> R1(["403"])
+  AC -- "allow" --> CB{"User has cashbox?"}
+  CB -- "none" --> R2(["error: no cashbox"])
+  CB -- "ok" --> CUR{"Distr.CURRENCY_ID<br/>== posted CURRENCY_ID?"}
+  CUR -- "no" --> R3(["error: валюта неверно"])
+  CUR -- "yes" --> SAVE["DistrPayment->save()<br/>(CASHBOX_ID auto-set)"]
+  SAVE --> OK(["success"])
+
+  class S,A,SAVE action
+  class AC,CB,CUR approval
+  class R1,R2,R3 reject
+  class OK success
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+```
+
+## Manual payment entry (dashboard variant)
+
+`dashboard/PaymentController::actionCreateAjax` / `actionUpdateAjax`
+(`protected/modules/dashboard/controllers/PaymentController.php`) is
+the dealer-facing equivalent of the `operation` payment screen. After
+saving, the controller calls `$diler->deleteLicense()` so the dealer's
+`sd-main` re-pulls its licence with the new balance.
+
+```mermaid
+flowchart LR
+  S(["Operator submits<br/>Dealer payment"]) --> A["actionCreateAjax /<br/>actionUpdateAjax"]
+  A --> AC{"Access::check<br/>operation.dealer.payment"}
+  AC -- "deny" --> R1(["403"])
+  AC -- "allow" --> CB{"User has cashbox?"}
+  CB -- "none" --> R2(["error: no cashbox"])
+  CB -- "ok" --> CUR{"Diler.CURRENCY_ID<br/>== posted CURRENCY_ID?"}
+  CUR -- "no" --> R3(["error: валюта неверно"])
+  CUR -- "yes" --> SAVE["Payment->save()<br/>(CASHBOX_ID auto-set)"]
+  SAVE --> DL["Diler::deleteLicense()<br/>→ NotifyCron license_delete"]
+  DL --> OK(["success"])
+
+  class S,A,SAVE,DL action
+  class AC,CB,CUR approval
+  class R1,R2,R3 reject
+  class OK success
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+```
+
+## Write-server (push licence file)
+
+`FixController::actionWriteServer` /
+`actionCheckStatusServer`
+(`protected/modules/dashboard/controllers/FixController.php`) walks
+non-archive `Diler` rows in pages of 10 and posts to each dealer's
+`{DOMAIN}/api/billing/checkBranch` to refresh the local `Server` row
+(`db_server`, `web_server`, `web_branch`). The status pass then flips
+each `Server.status` to `OPENED` or `DELETED` depending on the dealer
+state, which gates whether sd-main accepts new licence files.
+
+```mermaid
+sequenceDiagram
+  participant Adm as Admin
+  participant FX as FixController
+  participant DLR as Diler (paged 10)
+  participant SD as sd-main /api/billing/checkBranch
+  participant SRV as Server row
+
+  Adm->>FX: GET writeServer?offset&limit
+  loop each Diler in page
+    FX->>SD: POST /api/billing/checkBranch
+    SD-->>FX: {db_server, web_branch}
+    FX->>SRV: save(db_server, web_server, web_branch)
+  end
+  Adm->>FX: GET checkStatusServer
+  FX->>SRV: status = OPENED (or DELETED)<br/>per dealer.isDeleted()
+```

@@ -347,6 +347,174 @@ the old shapes.
 - [ ] Add per-endpoint structured request/response audit (replace
       ad-hoc per-day JSON files).
 
+## 15. Workflow diagrams
+
+### License delete (revoke a subscription)
+
+`LicenseController::actionDeleteOne` (line 1090 of
+`protected/modules/api/controllers/LicenseController.php`) only accepts
+`bot_report` / `bot_order` subscriptions and refuses any call past the
+5th of the month. On success it marks every same-period sibling row
+deleted and immediately invalidates the dealer's cached licence via
+`deleteLicenseImmediately`.
+
+```mermaid
+sequenceDiagram
+  participant SM as sd-main / ops UI
+  participant API as api/license/deleteOne
+  participant DB as MySQL
+  participant D as Diler
+
+  SM->>API: POST {token, id, sd_id, sd_login}
+  API->>API: auth() + day-of-month <= 5
+  API->>DB: load Subscription (IS_DELETED=0)
+  alt missing or non-bot type
+    API-->>SM: fail
+  else day > 5
+    API-->>SM: fail "доступ запрещен"
+  else allowed
+    API->>DB: load siblings (DILER_ID, START_FROM, ACTIVE_TO)
+    loop each sibling
+      API->>DB: save SD_USER_* + deleteSubscrip()
+    end
+    API->>D: writeVisit() + deleteLicenseImmediately()
+    API-->>SM: success {subscription_id}
+  end
+```
+
+### License pay (manual fallback)
+
+There is **no** `LicenseController::actionPay` today; the manual
+payment path uses `operation/PaymentController::actionCreateOrUpdate`
+(see [Cron & settlement → Operation: manual payment entry](./cron-and-settlement.md#operation-manual-payment-entry)).
+The flow below illustrates the operator-side fallback that takes the
+role of a "license pay" endpoint when the dealer cannot reach a
+gateway.
+
+```mermaid
+flowchart LR
+  S(["Operator receives<br/>off-channel payment"]) --> A["operation/PaymentController<br/>::actionCreateOrUpdate"]
+  A --> AC{"Access<br/>operation.dealer.payment"}
+  AC -- "deny" --> R1(["403"])
+  AC -- "allow" --> SAVE["Payment->save()<br/>(TYPE=cash/p2p/cashless)"]
+  SAVE --> DL["Diler::deleteLicense()<br/>(refresh licence on sd-main)"]
+  DL --> OK(["success"])
+
+  class S,A,SAVE,DL action
+  class AC approval
+  class R1 reject
+  class OK success
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+```
+
+### License batch buy (read-side variant)
+
+`LicenseController::actionIndexBatch` (line 68 of the same file) is the
+batched read companion to `buyPackages` — UI loads a 13-month
+subscription window in one shot via `getSubscriptionsBatch($dilerId)`,
+which fetches all `Subscription` rows + their `Payment`s in two
+queries and folds them per month in PHP. Failures inside the loop
+isolate per-row so a single bad month doesn't break the whole batch.
+
+```mermaid
+flowchart LR
+  S(["sd-main loads<br/>billing screen"]) --> A["actionIndexBatch"]
+  A --> AU{"auth() token"}
+  AU -- "fail" --> R1(["fail"])
+  AU -- "ok" --> D["getDilerWithRelations(host)"]
+  D --> BAT["getSubscriptionsBatch(dilerId)<br/>13-month window"]
+  BAT --> SQ["one SELECT Subscription<br/>+ one SELECT Payment"]
+  SQ --> FOLD["group rows by month"]
+  FOLD --> OUT["return balance, types,<br/>bonusLimit, subscriptions"]
+  OUT --> OK(["success"])
+
+  class S,A,D,BAT,SQ,FOLD,OUT action
+  class AU approval
+  class R1 reject
+  class OK success
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+```
+
+### Host status report
+
+`HostController::actionAuth` and `actionActiveHosts`
+(`protected/modules/api/controllers/HostController.php`) implement a
+two-step session: login swaps `login`/`password` (MD5) for a bearer
+`User.TOKEN`, then subsequent calls read it from
+`Authorization: Bearer …`. `beforeAction` blocks all non-auth actions
+during peak hours (08:00–19:00) with a 403.
+
+```mermaid
+sequenceDiagram
+  participant CL as Caller (ops tool)
+  participant H as api/host
+  participant U as User
+  participant DLR as Diler
+
+  CL->>H: POST /auth {login, password}
+  H->>U: findByAttributes(LOGIN)
+  H->>U: PASSWORD == md5(password)?
+  alt invalid
+    H-->>CL: 401
+  else valid
+    U->>U: generateToken()
+    H-->>CL: 200 {token}
+  end
+  CL->>H: GET /activeHosts<br/>Authorization: Bearer …
+  H->>H: checkPeakHours() (08–19 → 403)
+  H->>DLR: findAll STATUS=ACTIVE
+  DLR-->>H: rows
+  H-->>CL: 200 {data:[{host,domain}]}
+```
+
+### App auth (sd-main → sd-billing)
+
+`AppController::actionAuth` / `actionExecute`
+(`protected/modules/api/controllers/AppController.php`) is the fixed
+"desktop / sd-main app" session. `actionAuth` verifies
+`User.PASSWORD == md5($password)` and `User::isActive()`, then
+`UserIdentity::authenticate()` followed by `User::generateToken()`
+returns a token. `actionExecute` accepts arbitrary SQL keyed by the
+returned token — `User` must still be `isActive()`.
+
+```mermaid
+sequenceDiagram
+  participant APP as sd-main / desktop app
+  participant H as api/app
+  participant U as User
+  participant DB as MySQL
+
+  APP->>H: POST /auth {login, password}
+  H->>U: findByAttributes(LOGIN)
+  H->>U: md5(password) match? isActive()?
+  alt invalid
+    H-->>APP: {success:false}
+  else valid
+    H->>H: UserIdentity::authenticate()
+    H->>U: generateToken()
+    H-->>APP: {success:true, token}
+  end
+  APP->>H: POST /execute {sql, token}
+  H->>U: findByAttributes(TOKEN)
+  alt token invalid or inactive
+    H-->>APP: {success:false}
+  else ok
+    H->>DB: $db->createCommand(sql)->queryAll()
+    DB-->>H: rows
+    H-->>APP: {success:true, data}
+  end
+```
+
 ## See also
 
 - [Payment gateways](./payment-gateways.md) — Click/Payme/Paynet flows in detail.

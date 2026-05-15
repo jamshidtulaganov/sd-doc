@@ -85,6 +85,105 @@ part of the auth hardening track**.
   sd-main).
 - Replace `UserIdentity("sd","sd")` machine logins with API tokens.
 
+## SMS workflows
+
+### SMS package buy
+
+`SmsController::actionBuySmsPackage` in
+`protected/modules/api/controllers/SmsController.php` (around line 127)
+charges a `Diler` for a `SmsPackage`. After resolving the `Diler` by
+`object_id` or `host`, it asserts `BALANS >= PRICE`, writes
+`SmsBoughtPackage`, then a sibling `Service` row of `TYPE_DILER`
+status `DONE`, and finally a `BoughtPackage` joining them. The closing
+`$dealer->deleteLicense()` propagates the new balance back to the
+dealer's `sd-main`.
+
+```mermaid
+sequenceDiagram
+  participant SM as sd-main (dealer)
+  participant API as api/sms/buySmsPackage
+  participant DB as MySQL
+  participant D as Diler
+
+  SM->>API: POST {package_id, host, sd_id, sd_login, type=dealer}
+  API->>DB: SmsPackage active?
+  API->>D: Diler by id or HOST
+  API->>API: BALANS >= PRICE?
+  alt insufficient
+    API-->>SM: not_enough_balance
+  else ok
+    API->>DB: INSERT SmsBoughtPackage
+    API->>DB: INSERT Service (TYPE_DILER, DONE)
+    API->>DB: INSERT BoughtPackage (joins)
+    API->>D: deleteLicense()
+    API-->>SM: success [{id, name, count, ...}]
+  end
+```
+
+### SMS send + forward
+
+`SmsController::actionSend` and `actionSendingForward` are the two
+inbound entry points from a dealer's `sd-main`. `actionSend` validates
+the dealer's remaining SMS limit by summing `SmsBoughtPackage.getLimit()`
+across non-deleted packages where the dealer id appears in
+`DEALERS`. `actionSendingForward` is the lighter variant used when the
+dealer already authorised the batch — it skips the limit math and
+delegates straight to `Sms::multy`.
+
+```mermaid
+sequenceDiagram
+  participant SM as sd-main
+  participant API as api/sms
+  participant DB as MySQL
+  participant SMS as Sms component<br/>(Eskiz/Mobizon)
+
+  SM->>API: POST /send {type, object_id, host, messages}
+  API->>API: hasAccessIpAddress() check
+  API->>DB: load SmsBoughtPackage rows (USED_LIMIT != SMS_LIMIT)
+  API->>API: maxSmsLimit ≥ countSMS?
+  alt over limit
+    API-->>SM: fail "недостаточно SMS"
+  else ok
+    API->>SMS: Sms::multy(messages, host)
+    SMS-->>API: status, response
+    API-->>SM: success {left_sms_limit, status}
+  end
+  Note over API: actionSendingForward skips<br/>limit math and calls multy() directly
+```
+
+### SMS delivery callback
+
+`SmsController::actionCallback` is the DLR webhook receiver. It logs
+the raw params to `log/sms-callback-all.json`, resolves the `Diler` by
+`HOST`, and on `status=DELIVERED` increments
+`SmsBoughtPackage.USED_LIMIT` across the dealer's active packages
+(packing `sms_count` greedily). For both `DELIVERED` and `REJECTED`
+the controller forwards the original payload to
+`{Diler.DOMAIN}/sms/callback/item` so sd-main can update its own
+`SmsMessage` rows.
+
+```mermaid
+sequenceDiagram
+  participant P as Provider (Eskiz/Mobizon)
+  participant API as api/sms/callback
+  participant DB as MySQL
+  participant SM as sd-main /sms/callback/item
+
+  P->>API: POST DLR {host, status, sms_count, ...}
+  API->>API: Logger::writeLog (sms-callback-all.json)
+  API->>DB: find Diler by HOST
+  alt status == DELIVERED
+    API->>DB: load active SmsBoughtPackage rows
+    loop pack sms_count
+      API->>DB: USED_LIMIT += min(left, smsCount)
+    end
+  end
+  alt status in (DELIVERED, REJECTED)
+    API->>SM: POST {host, status, ...}
+    SM-->>API: 2xx
+  end
+```
+
 ## See also
 
 - [sd-main billing-integration surface (legacy redirect)](/docs/billing/overview)

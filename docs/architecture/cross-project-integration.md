@@ -375,6 +375,103 @@ Known weak spots (tracked in the per-project landmines pages):
 
 ---
 
+## 9.5 Cross-project user scenarios
+
+### Buy packages (full round-trip)
+
+Dealer admin clicks "Buy packages" in sd-main → `sd-main` proxies to
+sd-billing `LicenseController::actionBuyPackages` → sd-billing writes
+`Subscription` + negative `Payment(TYPE_LICENSE)` rows in a loop and
+calls `deleteLicenseImmediately($diler)` → sd-main re-reads the updated
+package list via `api/license/indexBatch` on the next render.
+
+```mermaid
+sequenceDiagram
+  participant U as Dealer admin
+  participant SM as sd-main
+  participant BL as sd-billing /api/license/buyPackages
+  participant DB as billing MySQL
+
+  U->>SM: Click "Buy package"
+  SM->>BL: POST {token, host, packages[], start_date, month_count}
+  BL->>BL: UserIdentity("sd","sd") authenticate
+  BL->>DB: validate (currency, day-of-month, balance)
+  loop each month × package
+    BL->>DB: INSERT Subscription
+    BL->>DB: INSERT Payment TYPE=license (-amount)
+  end
+  BL->>BL: writeVisit() + deleteLicenseImmediately
+  BL-->>SM: 200 {success, diler_id}
+  SM->>BL: POST /api/license/indexBatch (refresh)
+  BL-->>SM: balance + subscriptions[]
+  SM-->>U: render new package list
+```
+
+### Online gateway (Paynet) end-to-end
+
+`PaynetController::actionIndex` (sd-billing) accepts the SOAP
+callback, the `paynetuz` extension's `PaynetService` writes
+`PaynetTransaction` + `Payment(TYPE_PAYNETONLINE)`, DB triggers update
+`Diler.BALANS`, and `Diler::deleteLicense()` queues a
+`NotifyCron::createLicenseDelete` row pointing at the dealer's
+`/api/billing/license`. The `notify` cron drains the row within a
+minute and the dealer's sd-main wipes `protected/license2/*`.
+
+```mermaid
+sequenceDiagram
+  participant C as Customer
+  participant PN as Paynet
+  participant BL as sd-billing<br/>api/paynet (SOAP)
+  participant DB as billing MySQL
+  participant Q as d0_notify_cron
+  participant CR as cron notify
+  participant SM as sd-main<br/>/api/billing/license
+
+  C->>PN: Pay invoice
+  PN->>BL: SOAP Pay
+  BL->>DB: INSERT PaynetTransaction
+  BL->>DB: INSERT Payment TYPE=paynetonline
+  BL->>DB: Diler.BALANS += summa (trigger)
+  BL->>Q: NotifyCron::createLicenseDelete(domain+/api/billing/license)
+  BL-->>PN: 200 SOAP result
+  CR->>Q: pop pending row
+  CR->>SM: POST /api/billing/license
+  SM->>SM: glob protected/license2/* → unlink
+  SM-->>CR: 200 {status:true}
+```
+
+### SMS round-trip (sd-main → sd-billing → provider → callback)
+
+A dealer's `sd-main` triggers a send through
+`sms/MessageController::actionSend`, forwards to sd-billing
+`SmsController::actionSend`, which validates the dealer's
+`SmsBoughtPackage` limit and calls `Sms::multy` (Eskiz UZ or Mobizon
+KZ). On DLR, the provider posts back to
+`SmsController::actionCallback?host=…`, which increments
+`USED_LIMIT` and forwards to the dealer's
+`/sms/callback/item` so sd-main updates `SmsMessage`.
+
+```mermaid
+sequenceDiagram
+  participant SM as sd-main<br/>MessageController::actionSend
+  participant BL as sd-billing<br/>api/sms/send
+  participant DB as billing MySQL
+  participant ES as Provider<br/>(Eskiz/Mobizon)
+  participant CB as sd-billing<br/>api/sms/callback
+  participant SC as sd-main<br/>/sms/callback/item
+
+  SM->>BL: POST {type=dealer, host, messages[]}
+  BL->>DB: load SmsBoughtPackage rows
+  BL->>BL: maxSmsLimit >= countSMS?
+  BL->>ES: Sms::multy(messages, host)
+  ES-->>BL: status, batch_id
+  BL-->>SM: success {left_sms_limit}
+  ES->>CB: POST DLR {host, status, sms_count}
+  CB->>DB: USED_LIMIT += sms_count
+  CB->>SC: POST forward payload
+  SC-->>CB: 2xx
+```
+
 ## 10. See also
 
 - [Ecosystem overview](../ecosystem.md) — start here for the mental model.

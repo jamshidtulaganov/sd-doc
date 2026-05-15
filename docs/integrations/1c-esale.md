@@ -43,7 +43,38 @@ If 1C returns an error mid-batch:
 3. The job re-enqueues with backoff (max 6 retries).
 4. After 6 failures, an alert is dispatched to `adminEmail`.
 
+## Controller endpoints in sd-main
+
+The active 1C surface lives under `protected/modules/api/controllers/`:
+
+| Controller | File | Notable actions |
+|-----------|------|----------------|
+| `Json1CController` | `protected/modules/api/controllers/Json1CController.php` | `getOrders` — primary JSON pull endpoint |
+| `Mef1cController` | `protected/modules/api/controllers/Mef1cController.php` | `getClients`, `getOrders`, `getOrderBonus`, `setClients`, `setFinans`, `setPrices`, `setProducts`, `setPurchase` — the bidirectional surface |
+
+Live URL shape (from `routes.json`):
+
+```
+POST /api/json1C/getOrders
+POST /api/mef1c/getClients
+POST /api/mef1c/setProducts
+POST /api/mef1c/setOrders
+```
+
+All `api/*` 1C actions resolve under the `api` module's controller path
+(Yii URL manager rewrites `/api/json1C/foo` → `Json1CController::actionFoo`).
+RBAC tag in `routes.json` is `noRbac` for every endpoint — auth is by
+shared secret in the `Authorization` header, not by RBAC role.
+
+**Frozen / obsolete (do not extend):**
+`Xml1CController.php.obsolete`, `OnecController.php.obsolete`,
+`OneController.php.obsolete`, `EsaleController.php.obsolete`,
+`Export1CController.php.obsolete` (under `api3/`). New 1C surfaces
+must extend `Json1CController` or `Mef1cController`.
+
 ## See also
 
 - [`integration` module](../modules/integration.md)
 - [`sync` module](../modules/sync.md)
+- [API v3 mobile reference](../api/api-v3-mobile/) — for the mobile-app
+  side of the same data flow.

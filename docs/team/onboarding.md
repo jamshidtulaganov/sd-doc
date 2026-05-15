@@ -83,7 +83,7 @@ in when the ticket touches them):
 
 - [ ] Pick one user-visible flow and trace it end-to-end:
       Suggested flow: *agent submits a mobile order*.
-      - Mobile request: [API v3 — `POST /api3/order/create`](../api/api-v3-mobile.md)
+      - Mobile request: [API v3 — `POST /api3/order/create`](../api/api-v3-mobile/index.md)
       - Controller handler in `protected/modules/api3/controllers/OrderController.php`
       - Validation + insert in `OrderService` / `Order` model
       - Stock reservation queue job

@@ -267,3 +267,72 @@ sequenceDiagram
 - **`actionOffline` is a stub.** It writes a raw text file (`Gps_Offline-<time>.txt`) to the working directory and returns no data — it is not a functional offline buffer.
 - **`GPS_CHANGED` flag affects geofence verdict.** If a client's LAT/LON was edited on the same day as a visit (`ClientLog` records a LON/LAT change), `Route::FetchData` sets `GPS_CHANGED=1` and `onGetDistance` reports the visit as "unknown" regardless of the computed distance. Supervisors should be aware that coordinate corrections invalidate same-day verdicts.
 - **Legacy gps/gps2 modules.** Do not add new features to `gps` or `gps2`. Both remain live for existing clients; breaking changes there are high-risk.
+
+## GPS sample ingest
+
+Mobile clients post batches of samples to `POST /api3/gps/index`
+(`api3/GpsController::actionIndex`, line 7). The endpoint authenticates
+via the `HTTP_DEVICETOKEN` header, then loops the JSON array — for each
+sample it instantiates a `Gps` AR model, copies
+`BATTERY`/`PROVIDER`/`SIGNAL`/`LAT`/`LON`/`MOB_TIMESTAMP`, tags
+`TYPE='track'` (or `'current'` if `checkCurrentLocation` is set), and
+calls `$model->save()` per row. Samples whose device-hour falls
+outside 08–20 are acked as `success` but never written. The web
+`gps/BackendController::actionLast` reads the latest rows for live
+monitoring.
+
+```mermaid
+sequenceDiagram
+  participant Mobile as Mobile app
+  participant Api as POST /api3/gps/index
+  participant DB as Gps (d0_gps)
+  participant Web as gps/BackendController::actionLast
+
+  Mobile->>Api: POST batch (latitude, longitude, batteryLevel, timestamp)
+  Api->>Api: User::userByDeviceToken(HTTP_DEVICETOKEN)
+  Api->>Api: checkLatestQueryTime (rate limit)
+  loop per sample
+    Api->>Api: filter hours 08..20 (else ack-only)
+    Api->>DB: INSERT Gps LAT LON AGENT_ID USER_ID TYPE=track DATE
+  end
+  Api-->>Mobile: [{timestamp: success}, ...]
+  Web->>DB: SELECT latest per AGENT_ID since c_datetime
+  DB-->>Web: live track for map
+```
+
+## Out-of-zone reject flow
+
+`gps/BackendController::actionReject` (line 54) is the supervisor
+review endpoint for visits flagged as out-of-zone. It delegates to
+`Gps::Reject($rejectId, $type, $clientId, $date)` in
+`gps/models/Gps.php` (line 331). For `type='reject'` it pulls the
+`RejectClient` rows for the day and joins the `Reject` dictionary to
+produce a human-readable list of rejection reasons; otherwise it
+pulls the matching `Order` + `OrderDetail` rows so the supervisor can
+inspect what the visit was about before deciding.
+
+```mermaid
+flowchart LR
+  A(["Visit GPS lat/lng"]) --> B{"Within Client radius?"}
+  B -->|yes| S(["Visit kept — geofence OK"])
+  B -->|no| F["Visit flagged out-of-zone"]
+  F --> R(["Supervisor opens /gps/backend/reject"])
+  R --> D{"type=reject?"}
+  D -->|yes| G["Gps::Reject — SELECT RejectClient + Reject dictionary"]
+  D -->|order| H["SELECT Order + OrderDetail join Client"]
+  G --> V["Supervisor decides: reassign or write-off"]
+  H --> V
+
+  classDef action   fill:#dbeafe,stroke:#1e40af,color:#000
+  classDef approval fill:#fef3c7,stroke:#92400e,color:#000
+  classDef success  fill:#dcfce7,stroke:#166534,color:#000
+  classDef reject   fill:#fee2e2,stroke:#991b1b,color:#000
+  classDef external fill:#f3f4f6,stroke:#374151,color:#000
+  classDef cron     fill:#ede9fe,stroke:#6d28d9,color:#000
+
+  class A,R,G,H action
+  class B,D approval
+  class S success
+  class F reject
+  class V approval
+```
